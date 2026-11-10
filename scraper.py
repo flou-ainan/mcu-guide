@@ -899,7 +899,13 @@ def run_scraper(output_file="mcu_data.json", force_refresh=False):
             yt_info = {
                 'video_id': cached.get('video_id', ''),
                 'trailer_url': cached.get('trailer_url', ''),
-                'trailer_embed': cached.get('trailer_embed', '')
+                'trailer_embed': cached.get('trailer_embed', ''),
+                'trailer_dublado_id': cached.get('trailer_dublado_id', ''),
+                'trailer_dublado_url': cached.get('trailer_dublado_url', ''),
+                'trailer_dublado_embed': cached.get('trailer_dublado_embed', ''),
+                'trailer_legendado_id': cached.get('trailer_legendado_id', ''),
+                'trailer_legendado_url': cached.get('trailer_legendado_url', ''),
+                'trailer_legendado_embed': cached.get('trailer_legendado_embed', '')
             }
             print("  ✓ Trailer (cache)")
         else:
@@ -927,7 +933,13 @@ def run_scraper(output_file="mcu_data.json", force_refresh=False):
             "stars": imdb_info.get("stars", ""),
             "video_id": yt_info.get("video_id", ""),
             "trailer_url": yt_info.get("trailer_url", ""),
-            "trailer_embed": yt_info.get("trailer_embed", "")
+            "trailer_embed": yt_info.get("trailer_embed", ""),
+            "trailer_dublado_id": yt_info.get("trailer_dublado_id", yt_info.get("video_id", "")),
+            "trailer_dublado_url": yt_info.get("trailer_dublado_url", yt_info.get("trailer_url", "")),
+            "trailer_dublado_embed": yt_info.get("trailer_dublado_embed", yt_info.get("trailer_embed", "")),
+            "trailer_legendado_id": yt_info.get("trailer_legendado_id", yt_info.get("video_id", "")),
+            "trailer_legendado_url": yt_info.get("trailer_legendado_url", yt_info.get("trailer_url", "")),
+            "trailer_legendado_embed": yt_info.get("trailer_legendado_embed", yt_info.get("trailer_embed", ""))
         }
         scraped_records.append(record)
 

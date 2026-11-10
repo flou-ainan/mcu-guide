@@ -193,15 +193,26 @@
   </main>
 
   <!-- Video Trailer Modal -->
-  <div id="video-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl">
-      <div class="flex items-center justify-between p-3.5 border-b border-zinc-800 bg-zinc-900/60">
+  <div id="video-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4 cursor-pointer" onclick="closeTrailerModal()">
+    <div class="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl cursor-default" onclick="event.stopPropagation()">
+      <div class="flex flex-wrap items-center justify-between gap-3 p-3.5 border-b border-zinc-800 bg-zinc-900/80">
         <h4 id="modal-title" class="text-sm font-bold text-white flex items-center gap-2">
           <i class="fa-brands fa-youtube text-red-500"></i> Trailer Oficial
         </h4>
-        <button onclick="closeTrailerModal()" class="text-zinc-400 hover:text-white px-2 py-1 rounded text-sm transition">
-          <i class="fa-solid fa-xmark"></i> Fechar
-        </button>
+        <div class="flex items-center gap-2">
+          <!-- Dublado / Legendado toggle buttons inside modal -->
+          <div id="modal-audio-toggles" class="flex items-center bg-zinc-950 rounded-lg p-0.5 border border-zinc-800 text-xs">
+            <button id="btn-modal-dub" onclick="switchModalAudio('dub')" class="px-2.5 py-1 rounded text-xs font-semibold transition bg-red-600 text-white">
+              <i class="fa-solid fa-volume-high text-[11px] mr-1"></i> Dublado
+            </button>
+            <button id="btn-modal-leg" onclick="switchModalAudio('leg')" class="px-2.5 py-1 rounded text-xs font-semibold transition text-zinc-400 hover:text-white">
+              <i class="fa-solid fa-closed-captioning text-[11px] mr-1"></i> Legendado
+            </button>
+          </div>
+          <button id="btn-close-video-modal" onclick="closeTrailerModal()" class="text-zinc-400 hover:text-white hover:bg-zinc-800 px-2.5 py-1 rounded-lg text-sm transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-xmark text-base"></i> <span class="text-xs">Fechar</span>
+          </button>
+        </div>
       </div>
       <div class="relative aspect-video w-full bg-black">
         <iframe id="modal-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -329,13 +340,62 @@
       updateProgress();
     }
 
-    function openTrailerModal(embedUrl, title, event) {
+    // Trailer Modal State & Functions
+    let currentTrailerItem = null;
+    let currentTrailerAudio = 'dub'; // 'dub' or 'leg'
+
+    function openTrailerModal(id, audioType, event) {
       if (event) event.stopPropagation();
-      if (!embedUrl) return;
-      modalTitle.innerHTML = `<i class="fa-brands fa-youtube text-red-500"></i> ${title} - Trailer Oficial`;
-      modalIframe.src = embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1';
+      const item = mcuData.find(x => x.id === id);
+      if (!item) return;
+
+      currentTrailerItem = item;
+      currentTrailerAudio = audioType || 'dub';
+
+      updateModalTrailerContent();
+
       videoModal.classList.remove('hidden');
       videoModal.classList.add('flex');
+      document.body.style.overflow = 'hidden'; // prevent scrolling while modal is open
+    }
+
+    function switchModalAudio(type) {
+      currentTrailerAudio = type;
+      updateModalTrailerContent();
+    }
+
+    function updateModalTrailerContent() {
+      if (!currentTrailerItem) return;
+      const title = currentTrailerItem.title_pt || currentTrailerItem.title;
+      const isDub = currentTrailerAudio === 'dub';
+
+      const embedUrl = isDub 
+        ? (currentTrailerItem.trailer_dublado_embed || currentTrailerItem.trailer_embed)
+        : (currentTrailerItem.trailer_legendado_embed || currentTrailerItem.trailer_embed);
+
+      modalTitle.innerHTML = `<i class="fa-brands fa-youtube text-red-500"></i> ${title} - Trailer Oficial (${isDub ? 'Dublado' : 'Legendado'})`;
+      modalIframe.src = embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1';
+
+      // Update button styling in modal
+      const btnDub = document.getElementById('btn-modal-dub');
+      const btnLeg = document.getElementById('btn-modal-leg');
+      if (btnDub && btnLeg) {
+        if (isDub) {
+          btnDub.className = 'px-2.5 py-1 rounded text-xs font-semibold transition bg-red-600 text-white cursor-pointer';
+          btnLeg.className = 'px-2.5 py-1 rounded text-xs font-semibold transition text-zinc-400 hover:text-white cursor-pointer';
+        } else {
+          btnDub.className = 'px-2.5 py-1 rounded text-xs font-semibold transition text-zinc-400 hover:text-white cursor-pointer';
+          btnLeg.className = 'px-2.5 py-1 rounded text-xs font-semibold transition bg-red-600 text-white cursor-pointer';
+        }
+      }
+    }
+
+    function closeTrailerModal() {
+      videoModal.classList.add('hidden');
+      videoModal.classList.remove('flex');
+      modalIframe.src = '';
+      currentTrailerItem = null;
+      document.body.style.overflow = '';
     }
 
     // Image Modal Functions
@@ -531,16 +591,18 @@
                     </div>
                     <p class="leading-relaxed text-zinc-300 mb-3">${item.synopsis}</p>
                     <div class="flex flex-wrap items-center gap-2">
-                      ${item.trailer_embed ? `
-                        <button onclick="openTrailerModal('${item.trailer_embed}', '${titlePt.replace(/'/g, "\\'")}', event)" 
-                          class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold transition shadow">
-                          <i class="fa-brands fa-youtube"></i> Ver no Site
-                        </button>
-                      ` : ''}
+                      <button onclick="openTrailerModal('${item.id}', 'dub', event)" 
+                        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-marvel-red hover:bg-red-600 text-white rounded-lg text-xs font-bold transition shadow">
+                        <i class="fa-brands fa-youtube"></i> Trailer Dublado
+                      </button>
+                      <button onclick="openTrailerModal('${item.id}', 'leg', event)" 
+                        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-semibold transition">
+                        <i class="fa-solid fa-closed-captioning"></i> Legendado
+                      </button>
                       ${item.trailer_url ? `
                         <a href="${item.trailer_url}" target="_blank" onclick="event.stopPropagation()"
-                          class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg text-xs transition">
-                          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Abrir YouTube
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 rounded-lg text-xs transition">
+                          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> YouTube
                         </a>
                       ` : ''}
                       ${item.imdb_url ? `
@@ -634,16 +696,19 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2.5 mt-2">
-                      ${item.trailer_embed ? `
-                        <button onclick="openTrailerModal('${item.trailer_embed}', '${titlePt.replace(/'/g, "\\'")}', event)" 
-                          class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-marvel-red hover:bg-red-600 text-white text-xs font-bold rounded-lg shadow-lg shadow-red-950/40 transition">
-                          <i class="fa-brands fa-youtube text-sm"></i> Assistir Trailer
-                        </button>
-                      ` : ''}
+                      <button onclick="openTrailerModal('${item.id}', 'dub', event)" 
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-marvel-red hover:bg-red-600 text-white text-xs font-bold rounded-lg shadow-lg shadow-red-950/40 transition">
+                        <i class="fa-brands fa-youtube"></i> Trailer Dublado
+                      </button>
+
+                      <button onclick="openTrailerModal('${item.id}', 'leg', event)" 
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium rounded-lg transition">
+                        <i class="fa-solid fa-closed-captioning"></i> Legendado
+                      </button>
 
                       ${item.trailer_url ? `
                         <a href="${item.trailer_url}" target="_blank" onclick="event.stopPropagation()"
-                          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium rounded-lg transition">
+                          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs font-medium rounded-lg transition">
                           <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> YouTube
                         </a>
                       ` : ''}

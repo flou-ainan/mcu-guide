@@ -19,7 +19,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=RfJrn8QcHdA",
     "trailer_embed": "https://www.youtube.com/embed/RfJrn8QcHdA",
     "title_pt": "Capitão América: O Primeiro Vingador",
-    "title_en": "Captain America: The First Avenger"
+    "title_en": "Captain America: The First Avenger",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=-006iHDHK34",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/-006iHDHK34",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=4IFeP-tdvGY",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/4IFeP-tdvGY"
   },
   {
     "id": "cm",
@@ -41,7 +45,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=FV7AxLbHcrE",
     "trailer_embed": "https://www.youtube.com/embed/FV7AxLbHcrE",
     "title_pt": "Capitã Marvel",
-    "title_en": "Captain Marvel"
+    "title_en": "Captain Marvel",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=EOqelPmvskY",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/EOqelPmvskY",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=FV7AxLbHcrE",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/FV7AxLbHcrE"
   },
   {
     "id": "im1",
@@ -63,7 +71,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=j_Ez4QVs_1g",
     "trailer_embed": "https://www.youtube.com/embed/j_Ez4QVs_1g",
     "title_pt": "Homem de Ferro",
-    "title_en": "Iron Man"
+    "title_en": "Iron Man",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=j_Ez4QVs_1g",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/j_Ez4QVs_1g",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=yP6Hy-FBaw0",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/yP6Hy-FBaw0"
   },
   {
     "id": "im2",
@@ -85,7 +97,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=msxQMX9Nczk",
     "trailer_embed": "https://www.youtube.com/embed/msxQMX9Nczk",
     "title_pt": "Homem de Ferro 2",
-    "title_en": "Iron Man 2"
+    "title_en": "Iron Man 2",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=msxQMX9Nczk",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/msxQMX9Nczk",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=hsT-xTBj7is",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/hsT-xTBj7is"
   },
   {
     "id": "hulk",
@@ -107,7 +123,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=e9u0nIKgdDY",
     "trailer_embed": "https://www.youtube.com/embed/e9u0nIKgdDY",
     "title_pt": "O Incrível Hulk",
-    "title_en": "The Incredible Hulk"
+    "title_en": "The Incredible Hulk",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=vZWg0TBJSD4",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/vZWg0TBJSD4",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=vZWg0TBJSD4",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/vZWg0TBJSD4"
   },
   {
     "id": "thor1",
@@ -129,7 +149,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=GI-NJq82kH8",
     "trailer_embed": "https://www.youtube.com/embed/GI-NJq82kH8",
     "title_pt": "Thor",
-    "title_en": "Thor"
+    "title_en": "Thor",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=RPNQ9Iz8hag",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/RPNQ9Iz8hag",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=TyJIwpnqdsc",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/TyJIwpnqdsc"
   },
   {
     "id": "av1",
@@ -151,7 +175,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=KeNEGtsCWEk",
     "trailer_embed": "https://www.youtube.com/embed/KeNEGtsCWEk",
     "title_pt": "Os Vingadores",
-    "title_en": "The Avengers"
+    "title_en": "The Avengers",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=KeNEGtsCWEk",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/KeNEGtsCWEk",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=6Y6zOSn8ff4",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/6Y6zOSn8ff4"
   },
   {
     "id": "im3",
@@ -173,7 +201,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=igfXmU1r_mc",
     "trailer_embed": "https://www.youtube.com/embed/igfXmU1r_mc",
     "title_pt": "Homem de Ferro 3",
-    "title_en": "Iron Man 3"
+    "title_en": "Iron Man 3",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=igfXmU1r_mc",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/igfXmU1r_mc",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=s7MHXDEdjS0",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/s7MHXDEdjS0"
   },
   {
     "id": "aos_s1",
@@ -195,7 +227,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=sAWlMlSFXe0",
     "trailer_embed": "https://www.youtube.com/embed/sAWlMlSFXe0",
     "title_pt": "Agents of S.H.I.E.L.D. (Temp 1 - Ep 1 a 16)",
-    "title_en": "Agents of S.H.I.E.L.D."
+    "title_en": "Agents of S.H.I.E.L.D.",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=wOZ_jdPk_gA",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/wOZ_jdPk_gA",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=T3T-evQZiQo",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/T3T-evQZiQo"
   },
   {
     "id": "thor2",
@@ -217,7 +253,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=5sUfuOj7zOw",
     "trailer_embed": "https://www.youtube.com/embed/5sUfuOj7zOw",
     "title_pt": "Thor: O Mundo Sombrio",
-    "title_en": "Thor: The Dark World"
+    "title_en": "Thor: The Dark World",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=Cl-Xkm-6Psw",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/Cl-Xkm-6Psw",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=5sUfuOj7zOw",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/5sUfuOj7zOw"
   },
   {
     "id": "ca2",
@@ -239,7 +279,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=Fl89Ym_fQJc",
     "trailer_embed": "https://www.youtube.com/embed/Fl89Ym_fQJc",
     "title_pt": "Capitão América: O Soldado Invernal",
-    "title_en": "Captain America: The Winter Soldier"
+    "title_en": "Captain America: The Winter Soldier",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=Fl89Ym_fQJc",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/Fl89Ym_fQJc",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=tbayiPxkUMM",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/tbayiPxkUMM"
   },
   {
     "id": "aos_s1_end",
@@ -261,7 +305,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=T3T-evQZiQo",
     "trailer_embed": "https://www.youtube.com/embed/T3T-evQZiQo",
     "title_pt": "Agents of S.H.I.E.L.D. (Temp 1 - Ep 17 em diante)",
-    "title_en": "Agents of S.H.I.E.L.D."
+    "title_en": "Agents of S.H.I.E.L.D.",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=_AuPtRXA9Ok",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/_AuPtRXA9Ok",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=_AuPtRXA9Ok",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/_AuPtRXA9Ok"
   },
   {
     "id": "gotg1",
@@ -283,7 +331,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=d1yNc9skssk",
     "trailer_embed": "https://www.youtube.com/embed/d1yNc9skssk",
     "title_pt": "Guardiões da Galáxia",
-    "title_en": "Guardians of the Galaxy"
+    "title_en": "Guardians of the Galaxy",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=TIKTVMb7750",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/TIKTVMb7750",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=8VN_l57QWyQ",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/8VN_l57QWyQ"
   },
   {
     "id": "gotg2",
@@ -305,7 +357,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=6FVulnc4poc",
     "trailer_embed": "https://www.youtube.com/embed/6FVulnc4poc",
     "title_pt": "Guardiões da Galáxia Vol. 2",
-    "title_en": "Guardians of the Galaxy Vol. 2"
+    "title_en": "Guardians of the Galaxy Vol. 2",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=6FVulnc4poc",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/6FVulnc4poc",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=4-i8nTNSQFI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/4-i8nTNSQFI"
   },
   {
     "id": "daredevil_s1",
@@ -327,7 +383,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=9rukwqrSwHM",
     "trailer_embed": "https://www.youtube.com/embed/9rukwqrSwHM",
     "title_pt": "Demolidor (Temporada 1)",
-    "title_en": "Daredevil"
+    "title_en": "Daredevil",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=9KZyUQpihsE",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/9KZyUQpihsE",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=y3GkQ6yoAA4",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/y3GkQ6yoAA4"
   },
   {
     "id": "av2",
@@ -349,7 +409,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=lGO6FcnZ0ek",
     "trailer_embed": "https://www.youtube.com/embed/lGO6FcnZ0ek",
     "title_pt": "Vingadores: Era de Ultron",
-    "title_en": "Avengers: Age of Ultron"
+    "title_en": "Avengers: Age of Ultron",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=lGO6FcnZ0ek",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/lGO6FcnZ0ek",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=lGO6FcnZ0ek",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/lGO6FcnZ0ek"
   },
   {
     "id": "ant1",
@@ -371,7 +435,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=6jIz_8tokvg",
     "trailer_embed": "https://www.youtube.com/embed/6jIz_8tokvg",
     "title_pt": "Homem-Formiga",
-    "title_en": "Ant-Man"
+    "title_en": "Ant-Man",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=jbbJ5WoLc1I",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/jbbJ5WoLc1I",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=wITUolzfkwI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/wITUolzfkwI"
   },
   {
     "id": "ca3",
@@ -393,7 +461,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=FRLYZn5PGuA",
     "trailer_embed": "https://www.youtube.com/embed/FRLYZn5PGuA",
     "title_pt": "Capitão América: Guerra Civil",
-    "title_en": "Captain America: Civil War"
+    "title_en": "Captain America: Civil War",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=eLAFMkLnf3M",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/eLAFMkLnf3M",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=FRLYZn5PGuA",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/FRLYZn5PGuA"
   },
   {
     "id": "bw",
@@ -415,7 +487,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=uNAxHLp7wv8",
     "trailer_embed": "https://www.youtube.com/embed/uNAxHLp7wv8",
     "title_pt": "Viúva Negra",
-    "title_en": "Black Widow"
+    "title_en": "Black Widow",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=uNAxHLp7wv8",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/uNAxHLp7wv8",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=dwzJ-oi7BbI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/dwzJ-oi7BbI"
   },
   {
     "id": "bp",
@@ -437,7 +513,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=Fn4tlUYJajA",
     "trailer_embed": "https://www.youtube.com/embed/Fn4tlUYJajA",
     "title_pt": "Pantera Negra",
-    "title_en": "Black Panther"
+    "title_en": "Black Panther",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=H6A6GvryOG8",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/H6A6GvryOG8",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=wL4a4MafSjQ",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/wL4a4MafSjQ"
   },
   {
     "id": "sm1",
@@ -459,7 +539,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=2x-2iYxgMFU",
     "trailer_embed": "https://www.youtube.com/embed/2x-2iYxgMFU",
     "title_pt": "Homem-Aranha: De Volta ao Lar",
-    "title_en": "Spider-Man: Homecoming"
+    "title_en": "Spider-Man: Homecoming",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=2x-2iYxgMFU",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/2x-2iYxgMFU",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=LBRrh_97QZI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/LBRrh_97QZI"
   },
   {
     "id": "ds1",
@@ -481,7 +565,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=X23XCFgdh2M",
     "trailer_embed": "https://www.youtube.com/embed/X23XCFgdh2M",
     "title_pt": "Doutor Estranho",
-    "title_en": "Doctor Strange"
+    "title_en": "Doctor Strange",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=oaLko5zhjgY",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/oaLko5zhjgY",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=YUfWrIcX4zw",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/YUfWrIcX4zw"
   },
   {
     "id": "thor3",
@@ -503,7 +591,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=UvNnqWLruXA",
     "trailer_embed": "https://www.youtube.com/embed/UvNnqWLruXA",
     "title_pt": "Thor: Ragnarok",
-    "title_en": "Thor: Ragnarok"
+    "title_en": "Thor: Ragnarok",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=8zJkPuHtZhU",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/8zJkPuHtZhU",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=UvNnqWLruXA",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/UvNnqWLruXA"
   },
   {
     "id": "ant2",
@@ -525,7 +617,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=6jIz_8tokvg",
     "trailer_embed": "https://www.youtube.com/embed/6jIz_8tokvg",
     "title_pt": "Homem-Formiga e a Vespa",
-    "title_en": "Ant-Man and the Wasp"
+    "title_en": "Ant-Man and the Wasp",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=6jIz_8tokvg",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/6jIz_8tokvg",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=g1BbrEGkRuc",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/g1BbrEGkRuc"
   },
   {
     "id": "av3",
@@ -547,7 +643,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=4jGRyEa2jhE",
     "trailer_embed": "https://www.youtube.com/embed/4jGRyEa2jhE",
     "title_pt": "Vingadores: Guerra Infinita",
-    "title_en": "Avengers: Infinity War"
+    "title_en": "Avengers: Infinity War",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=HTzdzyUVpoI",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/HTzdzyUVpoI",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=6ZfuNTqbHE8",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/6ZfuNTqbHE8"
   },
   {
     "id": "av4",
@@ -569,7 +669,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=PgrmbRID0eY",
     "trailer_embed": "https://www.youtube.com/embed/PgrmbRID0eY",
     "title_pt": "Vingadores: Ultimato",
-    "title_en": "Avengers: Endgame"
+    "title_en": "Avengers: Endgame",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=LMOqLeoP2yw",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/LMOqLeoP2yw",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=PgrmbRID0eY",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/PgrmbRID0eY"
   },
   {
     "id": "sm2",
@@ -591,7 +695,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=vaw_8DoqXfk",
     "trailer_embed": "https://www.youtube.com/embed/vaw_8DoqXfk",
     "title_pt": "Homem-Aranha: Longe de Casa",
-    "title_en": "Spider-Man: Far From Home"
+    "title_en": "Spider-Man: Far From Home",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=vaw_8DoqXfk",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/vaw_8DoqXfk",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=66q4mux5ZDw",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/66q4mux5ZDw"
   },
   {
     "id": "loki_s1",
@@ -613,7 +721,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=xdBWrkcmMwU",
     "trailer_embed": "https://www.youtube.com/embed/xdBWrkcmMwU",
     "title_pt": "Loki (Temporadas 1 & 2)",
-    "title_en": "Loki"
+    "title_en": "Loki",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=xdBWrkcmMwU",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/xdBWrkcmMwU",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=ETpixAlp3bk",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/ETpixAlp3bk"
   },
   {
     "id": "whatif",
@@ -635,7 +747,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=zq-dKITdTsE",
     "trailer_embed": "https://www.youtube.com/embed/zq-dKITdTsE",
     "title_pt": "What If...? (Temporadas 1 a 3)",
-    "title_en": "What If...?"
+    "title_en": "What If...?",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=zq-dKITdTsE",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/zq-dKITdTsE",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=fWpboSF11ZU",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/fWpboSF11ZU"
   },
   {
     "id": "wandavision",
@@ -657,7 +773,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=NZxfnJt9vKo",
     "trailer_embed": "https://www.youtube.com/embed/NZxfnJt9vKo",
     "title_pt": "WandaVision",
-    "title_en": "WandaVision"
+    "title_en": "WandaVision",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=p__jH6NkowU",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/p__jH6NkowU",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=-YNwtAMOjjI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/-YNwtAMOjjI"
   },
   {
     "id": "shangchi",
@@ -679,7 +799,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=AfHiUtxrmiY",
     "trailer_embed": "https://www.youtube.com/embed/AfHiUtxrmiY",
     "title_pt": "Shang-Chi e a Lenda dos Dez Anéis",
-    "title_en": "Shang-Chi and the Legend of the Ten Rings"
+    "title_en": "Shang-Chi and the Legend of the Ten Rings",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=AfHiUtxrmiY",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/AfHiUtxrmiY",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=wAmkU6FEKUw",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/wAmkU6FEKUw"
   },
   {
     "id": "fatws",
@@ -701,7 +825,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=QJh49Yunotg",
     "trailer_embed": "https://www.youtube.com/embed/QJh49Yunotg",
     "title_pt": "Falcão e o Soldado Invernal",
-    "title_en": "The Falcon and the Winter Soldier"
+    "title_en": "The Falcon and the Winter Soldier",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=ZHaokMTWgdY",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/ZHaokMTWgdY",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=QJh49Yunotg",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/QJh49Yunotg"
   },
   {
     "id": "eternos",
@@ -723,7 +851,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=PJza3ZaFeAU",
     "trailer_embed": "https://www.youtube.com/embed/PJza3ZaFeAU",
     "title_pt": "Eternos",
-    "title_en": "Eternals"
+    "title_en": "Eternals",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=PJza3ZaFeAU",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/PJza3ZaFeAU",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=M2thvvomqM4",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/M2thvvomqM4"
   },
   {
     "id": "sm3",
@@ -745,7 +877,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=bHzGeci_8wc",
     "trailer_embed": "https://www.youtube.com/embed/bHzGeci_8wc",
     "title_pt": "Homem-Aranha: Sem Volta Para Casa",
-    "title_en": "Spider-Man: No Way Home"
+    "title_en": "Spider-Man: No Way Home",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=bHzGeci_8wc",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/bHzGeci_8wc",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=4tJicABKq_w",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/4tJicABKq_w"
   },
   {
     "id": "hawkeye",
@@ -767,7 +903,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=C-Wi9qu--0k",
     "trailer_embed": "https://www.youtube.com/embed/C-Wi9qu--0k",
     "title_pt": "Gavião Arqueiro",
-    "title_en": "Hawkeye"
+    "title_en": "Hawkeye",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=C-Wi9qu--0k",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/C-Wi9qu--0k",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=6tdxk503c7U",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/6tdxk503c7U"
   },
   {
     "id": "moonknight",
@@ -789,7 +929,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=DFa0evfX96s",
     "trailer_embed": "https://www.youtube.com/embed/DFa0evfX96s",
     "title_pt": "Cavaleiro da Lua",
-    "title_en": "Moon Knight"
+    "title_en": "Moon Knight",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=DFa0evfX96s",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/DFa0evfX96s",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=rz2WBg5g7Ek",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/rz2WBg5g7Ek"
   },
   {
     "id": "ds2",
@@ -811,7 +955,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=X23XCFgdh2M",
     "trailer_embed": "https://www.youtube.com/embed/X23XCFgdh2M",
     "title_pt": "Doutor Estranho no Multiverso da Loucura",
-    "title_en": "Doctor Strange in the Multiverse of Madness"
+    "title_en": "Doctor Strange in the Multiverse of Madness",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=X23XCFgdh2M",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/X23XCFgdh2M",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=X23XCFgdh2M",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/X23XCFgdh2M"
   },
   {
     "id": "msmarvel",
@@ -833,7 +981,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=9fhKtle7Ivg",
     "trailer_embed": "https://www.youtube.com/embed/9fhKtle7Ivg",
     "title_pt": "Ms. Marvel",
-    "title_en": "Ms. Marvel"
+    "title_en": "Ms. Marvel",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=tz9ghPTmyN4",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/tz9ghPTmyN4",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=_euwFRjIYwU",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/_euwFRjIYwU"
   },
   {
     "id": "thor4",
@@ -855,7 +1007,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=1c_W_4cNLn0",
     "trailer_embed": "https://www.youtube.com/embed/1c_W_4cNLn0",
     "title_pt": "Thor: Amor e Trovão",
-    "title_en": "Thor: Love and Thunder"
+    "title_en": "Thor: Love and Thunder",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=1c_W_4cNLn0",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/1c_W_4cNLn0",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=waTob1IM4UM",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/waTob1IM4UM"
   },
   {
     "id": "shehulk",
@@ -877,7 +1033,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=yRnApYO_hBI",
     "trailer_embed": "https://www.youtube.com/embed/yRnApYO_hBI",
     "title_pt": "Mulher-Hulk: Defensora de Heróis",
-    "title_en": "She-Hulk: Attorney at Law"
+    "title_en": "She-Hulk: Attorney at Law",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=MrktLFjzYWQ",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/MrktLFjzYWQ",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=rC1nEBQIKFI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/rC1nEBQIKFI"
   },
   {
     "id": "bp2",
@@ -899,7 +1059,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=FR9iLjOubWc",
     "trailer_embed": "https://www.youtube.com/embed/FR9iLjOubWc",
     "title_pt": "Pantera Negra: Wakanda Para Sempre",
-    "title_en": "Black Panther: Wakanda Forever"
+    "title_en": "Black Panther: Wakanda Forever",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=FR9iLjOubWc",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/FR9iLjOubWc",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=qFWD0tBYbKw",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/qFWD0tBYbKw"
   },
   {
     "id": "ant3",
@@ -921,7 +1085,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=6jIz_8tokvg",
     "trailer_embed": "https://www.youtube.com/embed/6jIz_8tokvg",
     "title_pt": "Homem-Formiga e a Vespa: Quantumania",
-    "title_en": "Ant-Man and the Wasp: Quantumania"
+    "title_en": "Ant-Man and the Wasp: Quantumania",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=yWqTMHy_-2I",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/yWqTMHy_-2I",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=Wiqx2kJ8kjk",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/Wiqx2kJ8kjk"
   },
   {
     "id": "gotg3",
@@ -943,7 +1111,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=5UVaA6SGRZA",
     "trailer_embed": "https://www.youtube.com/embed/5UVaA6SGRZA",
     "title_pt": "Guardiões da Galáxia Vol. 3",
-    "title_en": "Guardians of the Galaxy Vol. 3"
+    "title_en": "Guardians of the Galaxy Vol. 3",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=5UVaA6SGRZA",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/5UVaA6SGRZA",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=JPaGymqJyfA",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/JPaGymqJyfA"
   },
   {
     "id": "invasion",
@@ -965,7 +1137,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=yO0VxK6R4iw",
     "trailer_embed": "https://www.youtube.com/embed/yO0VxK6R4iw",
     "title_pt": "Invasão Secreta",
-    "title_en": "Secret Invasion"
+    "title_en": "Secret Invasion",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=yO0VxK6R4iw",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/yO0VxK6R4iw",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=PVWk6DDoDGM",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/PVWk6DDoDGM"
   },
   {
     "id": "marvels",
@@ -987,7 +1163,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=YxL9wTkEgSY",
     "trailer_embed": "https://www.youtube.com/embed/YxL9wTkEgSY",
     "title_pt": "As Marvels",
-    "title_en": "The Marvels"
+    "title_en": "The Marvels",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=YxL9wTkEgSY",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/YxL9wTkEgSY",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=YxL9wTkEgSY",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/YxL9wTkEgSY"
   },
   {
     "id": "echo",
@@ -1009,7 +1189,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=2eQN0mLqXgg",
     "trailer_embed": "https://www.youtube.com/embed/2eQN0mLqXgg",
     "title_pt": "Echo",
-    "title_en": "Echo"
+    "title_en": "Echo",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=2eQN0mLqXgg",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/2eQN0mLqXgg",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=Ub1zkJYuNsI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/Ub1zkJYuNsI"
   },
   {
     "id": "dp3",
@@ -1031,7 +1215,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=dEbe0rS4Z2A",
     "trailer_embed": "https://www.youtube.com/embed/dEbe0rS4Z2A",
     "title_pt": "Deadpool & Wolverine",
-    "title_en": "Deadpool & Wolverine"
+    "title_en": "Deadpool & Wolverine",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=JjnzxHdZtYY",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/JjnzxHdZtYY",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=K6lJSJXSdfI",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/K6lJSJXSdfI"
   },
   {
     "id": "agatha",
@@ -1053,7 +1241,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=F1eIAdn9Cbg",
     "trailer_embed": "https://www.youtube.com/embed/F1eIAdn9Cbg",
     "title_pt": "Agatha Desde Sempre",
-    "title_en": "Agatha All Along"
+    "title_en": "Agatha All Along",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=F1eIAdn9Cbg",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/F1eIAdn9Cbg",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=AZJPFuPvijE",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/AZJPFuPvijE"
   },
   {
     "id": "ca4",
@@ -1075,7 +1267,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=NP2xle2cmf0",
     "trailer_embed": "https://www.youtube.com/embed/NP2xle2cmf0",
     "title_pt": "Capitão América: Admirável Mundo Novo",
-    "title_en": "Captain America: Brave New World"
+    "title_en": "Captain America: Brave New World",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=NP2xle2cmf0",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/NP2xle2cmf0",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=SCqjO_6HWuk",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/SCqjO_6HWuk"
   },
   {
     "id": "thunderbolts",
@@ -1097,7 +1293,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=MaLy0D2FTDc",
     "trailer_embed": "https://www.youtube.com/embed/MaLy0D2FTDc",
     "title_pt": "Thunderbolts*",
-    "title_en": "Thunderbolts*"
+    "title_en": "Thunderbolts*",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=MaLy0D2FTDc",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/MaLy0D2FTDc",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=NB869hDRLgs",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/NB869hDRLgs"
   },
   {
     "id": "daredevil_ba",
@@ -1119,7 +1319,11 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=9KZyUQpihsE",
     "trailer_embed": "https://www.youtube.com/embed/9KZyUQpihsE",
     "title_pt": "Demolidor: Renascido",
-    "title_en": "Daredevil: Born Again"
+    "title_en": "Daredevil: Born Again",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=9KZyUQpihsE",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/9KZyUQpihsE",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=eTW3b8w_yo8",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/eTW3b8w_yo8"
   },
   {
     "id": "f4",
@@ -1141,6 +1345,10 @@ window.__MCU_FALLBACK_DATA__ = [
     "trailer_url": "https://www.youtube.com/watch?v=18QQWa5MEcs",
     "trailer_embed": "https://www.youtube.com/embed/18QQWa5MEcs",
     "title_pt": "Quarteto Fantástico: Primeiros Passos",
-    "title_en": "The Fantastic Four: First Steps"
+    "title_en": "The Fantastic Four: First Steps",
+    "trailer_dublado_url": "https://www.youtube.com/watch?v=CcSIvhDlYWw",
+    "trailer_dublado_embed": "https://www.youtube.com/embed/CcSIvhDlYWw",
+    "trailer_legendado_url": "https://www.youtube.com/watch?v=9ATWNvFDOcU",
+    "trailer_legendado_embed": "https://www.youtube.com/embed/9ATWNvFDOcU"
   }
 ];

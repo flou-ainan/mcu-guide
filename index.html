@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia Marvel Studios MCU - Ordem dos Filmes & Séries</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marvel: {
+              red: '#E23636',
+              darkred: '#8B0000',
+              deep: '#150505',
+              gold: '#F4B41A',
+              card: '#18181b',
+              accent: '#301b1e'
+            }
+          },
+          fontFamily: {
+            marvel: ['Impact', 'Trebuchet MS', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f0f11;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8B0000;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #E23636;
+    }
+    .cinema-gradient {
+      background: linear-gradient(180deg, rgba(226, 54, 54, 0.15) 0%, rgba(10, 10, 12, 1) 100%);
+    }
+  </style>
+</head>
+<body class="bg-[#0b0b0e] text-zinc-100 min-h-screen font-sans selection:bg-marvel-red selection:text-white">
+
+  <!-- Header & Hero -->
+  <header class="relative border-b border-red-900/40 cinema-gradient overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-marvel-red/20 via-transparent to-transparent pointer-events-none"></div>
+    
+    <div class="max-w-6xl mx-auto px-4 py-8 sm:py-12 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="bg-marvel-red text-white font-black text-2xl tracking-tighter px-3 py-0.5 rounded shadow-lg uppercase font-marvel">
+              MARVEL
+            </span>
+            <span class="text-zinc-400 font-bold tracking-widest text-sm uppercase">Studios Timeline</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mt-2 text-white">
+            Ordem de <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400">Maratona do MCU</span>
+          </h1>
+          <p class="text-zinc-400 mt-1 max-w-xl text-sm sm:text-base">
+            Guia cinematográfico definitivo do Universo Marvel com capas oficiais em alta definição, sinopses sem spoiler e trailers verificados.
+          </p>
+        </div>
+
+        <!-- Progress Tracker Card -->
+        <div class="w-full md:w-auto bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl shadow-xl flex items-center gap-5">
+          <div class="relative w-16 h-16 flex items-center justify-center">
+            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+              <path class="text-zinc-800" stroke-width="3.5" stroke="currentColor" fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path id="progress-circle" class="text-marvel-red transition-all duration-500 ease-out" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            </svg>
+            <span id="progress-percent" class="absolute font-bold text-xs">0%</span>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-wider text-zinc-400 font-semibold">Seu Progresso</div>
+            <div class="text-lg font-black text-white"><span id="watched-count">0</span> / <span id="total-count">0</span> Assistidos</div>
+            <div class="flex items-center gap-2 mt-1">
+              <button id="btn-reset" class="text-[11px] text-red-400 hover:text-red-300 underline transition">Reiniciar</button>
+              <span class="text-zinc-600 text-[10px]">•</span>
+              <button onclick="exportData()" class="text-[11px] text-zinc-300 hover:text-white flex items-center gap-1 transition">
+                <i class="fa-solid fa-download text-[10px]"></i> Exportar
+              </button>
+              <span class="text-zinc-600 text-[10px]">•</span>
+              <label class="text-[11px] text-zinc-300 hover:text-white flex items-center gap-1 cursor-pointer transition">
+                <i class="fa-solid fa-upload text-[10px]"></i> Importar
+                <input type="file" id="import-input" accept=".json" class="hidden" onchange="importData(event)">
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Controls Panel -->
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <div class="bg-zinc-900/80 backdrop-blur border border-zinc-800/90 rounded-2xl p-4 sm:p-5 mb-8 shadow-xl">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+        
+        <!-- Mode Switch: Release vs Chrono -->
+        <div class="flex items-center bg-zinc-950 p-1.5 rounded-xl border border-zinc-800 w-full sm:w-auto">
+          <button id="btn-order-release" onclick="setOrder('release')"
+            class="flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 bg-marvel-red text-white shadow-md">
+            <i class="fa-solid fa-film"></i> Ordem de Lançamento
+            <span class="text-[10px] bg-red-950/60 text-yellow-300 font-bold px-1.5 py-0.5 rounded border border-yellow-500/30">Recomendada</span>
+          </button>
+          <button id="btn-order-chrono" onclick="setOrder('chrono')"
+            class="flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all text-zinc-400 hover:text-white flex items-center justify-center gap-2">
+            <i class="fa-solid fa-clock"></i> Cronológica
+          </button>
+        </div>
+
+        <!-- Series Visibility & Search Options -->
+        <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-end">
+          
+          <!-- Search input -->
+          <div class="relative flex-1 sm:flex-initial">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-zinc-500 text-xs"></i>
+            <input type="text" id="search-input" placeholder="Buscar em português ou inglês (ex: Vingadores, Avengers)..."
+              class="w-full sm:w-72 bg-zinc-950 border border-zinc-800 text-xs rounded-xl pl-8 pr-3 py-2 text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-red-600 transition">
+          </div>
+
+          <!-- Series Toggle Button -->
+          <button id="toggle-series-btn" onclick="toggleSeriesVisibility()"
+            class="px-3 py-2 bg-zinc-950 hover:bg-zinc-800 border border-zinc-800 text-xs text-zinc-300 font-medium rounded-xl flex items-center gap-2 transition">
+            <i id="toggle-series-icon" class="fa-solid fa-eye-slash text-yellow-400"></i>
+            <span id="toggle-series-label">Ocultar Séries</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Phase / Saga Filter Chips -->
+      <div class="flex items-center gap-2 overflow-x-auto pt-4 mt-3 border-t border-zinc-800/60 pb-1 text-xs">
+        <span class="text-zinc-500 font-medium uppercase tracking-wider text-[11px] whitespace-nowrap mr-1">Fases:</span>
+        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-800 text-white font-medium hover:bg-zinc-700 transition active" data-phase="all">Todas</button>
+        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="1">Fase 1</button>
+        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="2">Fase 2</button>
+        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="3">Fase 3</button>
+        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="4">Fase 4</button>
+        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="5">Fase 5</button>
+        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="6">Fase 6</button>
+      </div>
+    </div>
+
+    <!-- Info banner for chosen mode -->
+    <div id="order-explanation" class="mb-6 p-4 rounded-xl border border-amber-600/30 bg-amber-950/20 text-xs sm:text-sm text-amber-200/90 flex items-start gap-3">
+      <i class="fa-solid fa-circle-info text-amber-400 mt-0.5 text-base"></i>
+      <div>
+        <strong id="order-title" class="font-bold text-amber-300">Modo: Ordem de Lançamento (Recomendada).</strong>
+        <p id="order-desc" class="text-zinc-300 mt-0.5 leading-relaxed">
+          Preserva todas as surpresas das cenas pós-créditos, além da evolução natural de tom e tecnologia. As séries aparecem em notas compactadas caso prefira maratonar somente os filmes de cinema.
+        </p>
+      </div>
+    </div>
+
+    <!-- Timeline List Container -->
+    <div id="timeline-container" class="space-y-3">
+      <div class="text-center py-12 text-zinc-500">
+        <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-2 text-marvel-red"></i>
+        <p>Carregando catálogo do MCU...</p>
+      </div>
+    </div>
+
+    <!-- Empty search notice -->
+    <div id="no-results" class="hidden text-center py-16">
+      <i class="fa-solid fa-shield-halved text-4xl text-zinc-600 mb-3"></i>
+      <h3 class="text-lg font-bold text-zinc-400">Nenhum título encontrado</h3>
+      <p class="text-xs text-zinc-500">Tente ajustar a busca ou limpar os filtros de fase.</p>
+    </div>
+  </main>
+
+  <!-- Video Trailer Modal -->
+  <div id="video-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl">
+      <div class="flex items-center justify-between p-3.5 border-b border-zinc-800 bg-zinc-900/60">
+        <h4 id="modal-title" class="text-sm font-bold text-white flex items-center gap-2">
+          <i class="fa-brands fa-youtube text-red-500"></i> Trailer Oficial
+        </h4>
+        <button onclick="closeTrailerModal()" class="text-zinc-400 hover:text-white px-2 py-1 rounded text-sm transition">
+          <i class="fa-solid fa-xmark"></i> Fechar
+        </button>
+      </div>
+      <div class="relative aspect-video w-full bg-black">
+        <iframe id="modal-iframe" class="w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Poster Image Modal -->
+  <div id="image-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4" onclick="closeImageModal()">
+    <div class="relative max-w-2xl max-h-[92vh] flex flex-col items-center" onclick="event.stopPropagation()">
+      <div class="absolute -top-10 right-0 flex items-center gap-2">
+        <a id="image-modal-download" href="" target="_blank" class="text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3 py-1 rounded-lg transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Original
+        </a>
+        <button onclick="closeImageModal()" class="text-xs bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-3 py-1 rounded-lg transition flex items-center gap-1">
+          <i class="fa-solid fa-xmark"></i> Fechar (ESC)
+        </button>
+      </div>
+      <img id="image-modal-img" src="" alt="Capa" class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl border border-zinc-700">
+      <p id="image-modal-caption" class="text-center text-xs text-zinc-400 mt-2 font-medium"></p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
+    <p>Guia focado no Universo Cinematográfico Marvel (MCU). Feito para fãs organizarem suas maratonas.</p>
+    <p class="mt-1 text-zinc-600">Marvel Studios é marca registrada da The Walt Disney Company. Metadados e capas via IMDb & YouTube.</p>
+  </footer>
+
+  <!-- Script for MCU Database & Logic -->
+  <script src="data.js"></script>
+  <script>
+    // State Variables
+    let mcuData = [];
+    let currentOrder = 'release'; // 'release' or 'chrono'
+    let hideSeries = false;
+    let selectedPhase = 'all';
+    let searchQuery = '';
+    let watchedIds = new Set(JSON.parse(localStorage.getItem('mcu_watched_items') || '[]'));
+
+    // DOM Elements
+    const container = document.getElementById('timeline-container');
+    const watchedCountEl = document.getElementById('watched-count');
+    const totalCountEl = document.getElementById('total-count');
+    const progressPercentEl = document.getElementById('progress-percent');
+    const progressCircle = document.getElementById('progress-circle');
+    const orderTitle = document.getElementById('order-title');
+    const orderDesc = document.getElementById('order-desc');
+    const btnRelease = document.getElementById('btn-order-release');
+    const btnChrono = document.getElementById('btn-order-chrono');
+    const noResults = document.getElementById('no-results');
+    const videoModal = document.getElementById('video-modal');
+    const modalIframe = document.getElementById('modal-iframe');
+    const modalTitle = document.getElementById('modal-title');
+
+    function saveState() {
+      localStorage.setItem('mcu_watched_items', JSON.stringify([...watchedIds]));
+      updateProgress();
+    }
+
+    function toggleWatched(id, event) {
+      if (event) event.stopPropagation();
+      if (watchedIds.has(id)) {
+        watchedIds.delete(id);
+      } else {
+        watchedIds.add(id);
+      }
+      saveState();
+      renderList();
+    }
+
+    function updateProgress() {
+      const applicableItems = hideSeries ? mcuData.filter(i => i.type === 'movie') : mcuData;
+      const watchedApplicable = applicableItems.filter(i => watchedIds.has(i.id)).length;
+      const total = applicableItems.length;
+      
+      watchedCountEl.textContent = watchedApplicable;
+      totalCountEl.textContent = total;
+      
+      const pct = total === 0 ? 0 : Math.round((watchedApplicable / total) * 100);
+      progressPercentEl.textContent = `${pct}%`;
+      progressCircle.setAttribute('stroke-dasharray', `${pct}, 100`);
+    }
+
+    function setOrder(order) {
+      currentOrder = order;
+      if (order === 'release') {
+        btnRelease.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 bg-marvel-red text-white shadow-md';
+        btnChrono.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all text-zinc-400 hover:text-white flex items-center justify-center gap-2';
+        orderTitle.textContent = 'Modo: Ordem de Lançamento (Melhor experiência narrativa)';
+        orderDesc.innerHTML = 'Ordem em que as obras saíram no cinema. Não há spoilers em cenas pós-créditos e os efeitos visuais evoluem organicamente. Séries estão listadas em formato reduzido caso prefira ignorar.';
+      } else {
+        btnChrono.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 bg-marvel-red text-white shadow-md';
+        btnRelease.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all text-zinc-400 hover:text-white flex items-center justify-center gap-2';
+        orderTitle.textContent = 'Modo: Ordem Cronológica (Tempo dos acontecimentos)';
+        orderDesc.innerHTML = 'Ordenado pela época interna em que cada história acontece (ex: Segunda Guerra em 1940 com Capitão América até o multiverso). <em>Atenção:</em> Cenas pós-créditos de filmes como <em>Viúva Negra</em> contêm spoilers.';
+      }
+      renderList();
+    }
+
+    function toggleSeriesVisibility() {
+      hideSeries = !hideSeries;
+      const label = document.getElementById('toggle-series-label');
+      const icon = document.getElementById('toggle-series-icon');
+      
+      if (hideSeries) {
+        label.textContent = 'Mostrar Séries';
+        icon.className = 'fa-solid fa-eye text-zinc-400';
+      } else {
+        label.textContent = 'Ocultar Séries';
+        icon.className = 'fa-solid fa-eye-slash text-yellow-400';
+      }
+      renderList();
+      updateProgress();
+    }
+
+    function openTrailerModal(embedUrl, title, event) {
+      if (event) event.stopPropagation();
+      if (!embedUrl) return;
+      modalTitle.innerHTML = `<i class="fa-brands fa-youtube text-red-500"></i> ${title} - Trailer Oficial`;
+      modalIframe.src = embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1';
+      videoModal.classList.remove('hidden');
+      videoModal.classList.add('flex');
+    }
+
+    // Image Modal Functions
+    const imageModal = document.getElementById('image-modal');
+    const imageModalImg = document.getElementById('image-modal-img');
+    const imageModalCaption = document.getElementById('image-modal-caption');
+    const imageModalDownload = document.getElementById('image-modal-download');
+
+    function openImageModal(imgUrl, title, event) {
+      if (event) event.stopPropagation();
+      if (!imgUrl) return;
+      imageModalImg.src = imgUrl;
+      imageModalCaption.textContent = title || '';
+      imageModalDownload.href = imgUrl;
+      imageModal.classList.remove('hidden');
+      imageModal.classList.add('flex');
+    }
+
+    function closeImageModal() {
+      imageModal.classList.add('hidden');
+      imageModal.classList.remove('flex');
+      imageModalImg.src = '';
+    }
+
+    // Export & Import watched progress and custom status
+    function exportData() {
+      const payload = {
+        app: "MCU Timeline Guide",
+        exportedAt: new Date().toISOString(),
+        watchedIds: [...watchedIds],
+        totalWatched: watchedIds.size
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `mcu_maratona_backup_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (Array.isArray(imported)) {
+            watchedIds = new Set(imported);
+          } else if (imported.watchedIds && Array.isArray(imported.watchedIds)) {
+            watchedIds = new Set(imported.watchedIds);
+          } else {
+            alert('Formato de arquivo inválido. Selecione um JSON exportado por este aplicativo.');
+            return;
+          }
+          saveState();
+          renderList();
+          alert(`Backup importado com sucesso! ${watchedIds.size} itens marcados como assistidos.`);
+        } catch (err) {
+          alert('Erro ao processar o arquivo JSON selecionado.');
+        }
+      };
+      reader.readAsText(file);
+      // Reset input value so same file can be selected again
+      event.target.value = '';
+    }
+
+    // Close modal on backdrop click or Escape key
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal) closeTrailerModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeTrailerModal();
+        closeImageModal();
+      }
+    });
+
+    function toggleDetails(id) {
+      const details = document.getElementById(`details-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      if (details) {
+        details.classList.toggle('hidden');
+      }
+      if (icon) {
+        icon.classList.toggle('rotate-180');
+      }
+    }
+
+    function renderList() {
+      // 1. Sort items
+      let sorted = [...mcuData];
+      if (currentOrder === 'release') {
+        sorted.sort((a, b) => a.releaseOrder - b.releaseOrder);
+      } else {
+        sorted.sort((a, b) => a.chronoOrder - b.chronoOrder);
+      }
+
+      // 2. Filter with PT / EN & accent-insensitive normalization
+      const normalize = str => (str || '')
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+
+      const filtered = sorted.filter(item => {
+        if (hideSeries && item.type === 'series') return false;
+        if (selectedPhase !== 'all' && item.phase.toString() !== selectedPhase) return false;
+        if (searchQuery.trim() !== '') {
+          const q = normalize(searchQuery.trim());
+          const matchPt = normalize(item.title_pt || item.title).includes(q);
+          const matchEn = normalize(item.title_en || item.original_title).includes(q);
+          const matchChrono = normalize(item.chronoDetail).includes(q);
+          const matchStars = normalize(item.stars).includes(q);
+          return matchPt || matchEn || matchChrono || matchStars;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        noResults.classList.remove('hidden');
+        return;
+      } else {
+        noResults.classList.add('hidden');
+      }
+
+      // 3. Render HTML
+      container.innerHTML = filtered.map((item, index) => {
+        const isWatched = watchedIds.has(item.id);
+        const orderNumber = index + 1;
+        const fallbackPoster = 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400&q=80';
+        const posterUrl = item.cover_url || fallbackPoster;
+        const titlePt = item.title_pt || item.title;
+        const titleEn = item.title_en || item.original_title;
+        const hasDiffEn = titleEn && titleEn.toLowerCase() !== titlePt.toLowerCase();
+
+        if (item.type === 'series') {
+          return `
+            <div class="group relative flex flex-col p-2.5 sm:px-4 rounded-xl border border-zinc-800/50 bg-zinc-950/60 hover:bg-zinc-900/60 transition ${isWatched ? 'opacity-40' : 'opacity-80 hover:opacity-100'}">
+              <div class="flex items-center justify-between cursor-pointer" onclick="toggleDetails('${item.id}')">
+                <div class="flex items-center gap-2.5 sm:gap-3">
+                  <input type="checkbox" ${isWatched ? 'checked' : ''} onclick="toggleWatched('${item.id}', event)"
+                    class="w-4 h-4 rounded text-marvel-red bg-zinc-900 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600">
+                  <span class="text-[10px] font-mono text-zinc-500 w-4 text-right">${orderNumber}.</span>
+                  
+                  <!-- Mini Thumbnail (modo colapsado) -->
+                  ${item.cover_url ? `
+                    <div class="w-7 h-10 shrink-0 rounded overflow-hidden border border-zinc-800 bg-black cursor-zoom-in shadow-sm hover:scale-110 transition duration-200"
+                      title="Clique para ampliar" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
+                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                  ` : ''}
+
+                  <div>
+                    <small class="text-xs text-zinc-400 group-hover:text-zinc-200 transition font-normal flex flex-wrap items-center gap-1.5 sm:gap-2">
+                      <span class="text-[10px] bg-zinc-800 text-yellow-500 px-1.5 py-0.2 rounded uppercase font-semibold">Série</span>
+                      <span class="${isWatched ? 'line-through text-zinc-500' : 'font-medium text-zinc-200'}">${titlePt}</span>
+                      ${hasDiffEn ? `<span class="text-[11px] text-zinc-400 italic">(${titleEn})</span>` : ''}
+                      <span class="text-[10px] text-zinc-500">(${item.year})</span>
+                    </small>
+                    <div class="text-[10px] text-zinc-500 mt-0.5">
+                      ${currentOrder === 'chrono' ? item.chronoDetail : `Lançamento: ${item.year}`} • Fase ${item.phase} (Opcional)
+                    </div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <span class="text-[10px] text-zinc-600 italic hidden sm:inline">Ignorável</span>
+                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-600 text-xs transition-transform duration-300"></i>
+                </div>
+              </div>
+              
+              <!-- Accordion Content -->
+              <div id="details-${item.id}" class="hidden mt-3 pt-3 border-t border-zinc-800/60 text-xs text-zinc-300">
+                <div class="flex flex-col sm:flex-row gap-4 items-start">
+                  ${item.cover_url ? `
+                    <div class="w-20 sm:w-24 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-md cursor-zoom-in group/poster relative"
+                      title="Clique para ver em tela cheia" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
+                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-auto object-cover hover:scale-105 transition duration-300" loading="lazy">
+                      <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/poster:opacity-100 flex items-center justify-center transition text-white text-xs">
+                        <i class="fa-solid fa-maximize"></i>
+                      </div>
+                    </div>
+                  ` : ''}
+                  <div class="flex-1">
+                    <div class="flex flex-wrap items-center gap-2 mb-2 pb-2 border-b border-zinc-800/60 text-xs">
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-300">
+                        <span>🇧🇷</span> <strong>PT:</strong> ${titlePt}
+                      </span>
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-300">
+                        <span>🇺🇸</span> <strong>EN:</strong> ${titleEn}
+                      </span>
+                    </div>
+                    <p class="leading-relaxed text-zinc-300 mb-3">${item.synopsis}</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                      ${item.trailer_embed ? `
+                        <button onclick="openTrailerModal('${item.trailer_embed}', '${titlePt.replace(/'/g, "\\'")}', event)" 
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-semibold transition shadow">
+                          <i class="fa-brands fa-youtube"></i> Ver no Site
+                        </button>
+                      ` : ''}
+                      ${item.trailer_url ? `
+                        <a href="${item.trailer_url}" target="_blank" onclick="event.stopPropagation()"
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg text-xs transition">
+                          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Abrir YouTube
+                        </a>
+                      ` : ''}
+                      ${item.imdb_url ? `
+                        <a href="${item.imdb_url}" target="_blank" onclick="event.stopPropagation()"
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-yellow-600/20 hover:bg-yellow-600/30 text-yellow-400 border border-yellow-600/30 rounded-lg text-xs font-semibold transition">
+                          <i class="fa-brands fa-imdb text-yellow-400"></i> IMDb
+                        </a>
+                      ` : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="group relative flex flex-col p-3 sm:p-4 rounded-xl border ${isWatched ? 'border-zinc-800 bg-zinc-950/70 opacity-60' : 'border-zinc-800/90 bg-gradient-to-r from-zinc-900 to-zinc-900/90 hover:border-red-900/60'} shadow-md transition-all duration-200">
+              <div class="flex items-center justify-between cursor-pointer" onclick="toggleDetails('${item.id}')">
+                <div class="flex items-center gap-3 sm:gap-4">
+                  <input type="checkbox" ${isWatched ? 'checked' : ''} onclick="toggleWatched('${item.id}', event)"
+                    class="w-5 h-5 rounded text-marvel-red bg-zinc-950 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600">
+                  
+                  <span class="text-xs sm:text-sm font-black font-mono text-zinc-500 w-5 text-right">${orderNumber}.</span>
+                  
+                  <!-- Mini Thumbnail (modo colapsado) -->
+                  ${item.cover_url ? `
+                    <div class="w-9 h-12 sm:w-10 sm:h-14 shrink-0 rounded-md overflow-hidden border border-zinc-800 bg-black cursor-zoom-in shadow-md hover:scale-105 transition duration-200"
+                      title="Clique para ampliar" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
+                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                  ` : ''}
+
+                  <div>
+                    <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                      <div class="flex items-center gap-2">
+                        <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-red-400 transition ${isWatched ? 'line-through text-zinc-400' : ''}">
+                          ${titlePt}
+                        </h3>
+                        <span class="text-[11px] font-semibold text-zinc-400 bg-zinc-800/90 px-2 py-0.5 rounded">
+                          ${item.year}
+                        </span>
+                      </div>
+                      ${hasDiffEn ? `
+                        <span class="text-xs text-zinc-400 font-normal italic">
+                          (${titleEn})
+                        </span>
+                      ` : ''}
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-zinc-400">
+                      <span class="text-yellow-500 font-medium text-[11px]">Fase ${item.phase}</span>
+                      <span class="text-zinc-600">•</span>
+                      <span class="text-zinc-400 text-[11px]">
+                        ${currentOrder === 'chrono' ? `<i class="fa-solid fa-hourglass-half text-[10px] mr-1 text-amber-500/80"></i>${item.chronoDetail}` : 'Filme de Cinema'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                  <span class="hidden sm:inline-flex px-2.5 py-1 text-[11px] font-semibold rounded-md uppercase tracking-wider bg-red-950/40 text-red-300 border border-red-900/50">
+                    MCU Canon
+                  </span>
+                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                </div>
+              </div>
+              
+              <!-- Accordion Content with Poster & Trailer -->
+              <div id="details-${item.id}" class="hidden mt-3 pt-3 border-t border-zinc-800 text-sm text-zinc-300">
+                <div class="flex flex-col sm:flex-row gap-4 items-start">
+                  ${item.cover_url ? `
+                    <div class="w-24 sm:w-28 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-xl bg-black cursor-zoom-in group/poster relative"
+                      title="Clique para ver em tela cheia" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
+                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-auto object-cover hover:scale-105 transition duration-300" loading="lazy">
+                      <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/poster:opacity-100 flex items-center justify-center transition text-white text-xs">
+                        <i class="fa-solid fa-maximize"></i>
+                      </div>
+                    </div>
+                  ` : ''}
+                  
+                  <div class="flex-1 flex flex-col justify-between">
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2 mb-2 pb-2 border-b border-zinc-800/60 text-xs">
+                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-300">
+                          <span>🇧🇷</span> <strong>Português:</strong> ${titlePt}
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-300">
+                          <span>🇺🇸</span> <strong>Inglês:</strong> ${titleEn}
+                        </span>
+                      </div>
+                      <p class="leading-relaxed text-zinc-300 mb-3">${item.synopsis}</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2.5 mt-2">
+                      ${item.trailer_embed ? `
+                        <button onclick="openTrailerModal('${item.trailer_embed}', '${titlePt.replace(/'/g, "\\'")}', event)" 
+                          class="inline-flex items-center gap-2 px-3.5 py-1.5 bg-marvel-red hover:bg-red-600 text-white text-xs font-bold rounded-lg shadow-lg shadow-red-950/40 transition">
+                          <i class="fa-brands fa-youtube text-sm"></i> Assistir Trailer
+                        </button>
+                      ` : ''}
+
+                      ${item.trailer_url ? `
+                        <a href="${item.trailer_url}" target="_blank" onclick="event.stopPropagation()"
+                          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium rounded-lg transition">
+                          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> YouTube
+                        </a>
+                      ` : ''}
+
+                      ${item.imdb_url ? `
+                        <a href="${item.imdb_url}" target="_blank" onclick="event.stopPropagation()"
+                          class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 text-xs font-semibold rounded-lg transition">
+                          <i class="fa-brands fa-imdb text-yellow-400"></i> Ficha IMDb
+                        </a>
+                      ` : ''}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      }).join('');
+    }
+
+    // Phase Filter Chips Listeners
+    document.querySelectorAll('.phase-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.phase-filter-btn').forEach(b => {
+          b.classList.remove('bg-zinc-800', 'text-white', 'active');
+          b.classList.add('bg-zinc-950', 'text-zinc-400');
+        });
+        btn.classList.remove('bg-zinc-950', 'text-zinc-400');
+        btn.classList.add('bg-zinc-800', 'text-white', 'active');
+        selectedPhase = btn.dataset.phase;
+        renderList();
+      });
+    });
+
+    // Search Input Listener
+    document.getElementById('search-input').addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderList();
+    });
+
+    // Reset Progress
+    document.getElementById('btn-reset').addEventListener('click', () => {
+      if (confirm('Deseja desmarcar todos os itens assistidos?')) {
+        watchedIds.clear();
+        saveState();
+        renderList();
+      }
+    });
+
+    // Load data from mcu_data.json
+    async function loadMCUData() {
+      try {
+        const response = await fetch('mcu_data.json');
+        if (!response.ok) throw new Error('Network error');
+        mcuData = await response.json();
+      } catch (err) {
+        console.warn('Falha ao carregar mcu_data.json via fetch (provavelmente arquivo local sem servidor). Carregando fallback embutido...', err);
+        // Fallback: carregar dados embutidos se o fetch falhar
+        if (window.__MCU_FALLBACK_DATA__) {
+          mcuData = window.__MCU_FALLBACK_DATA__;
+        }
+      }
+      updateProgress();
+      renderList();
+    }
+
+    // Initial Load
+    window.onload = function () {
+      loadMCUData();
+    };
+  </script>
+</body>
+</html>

@@ -120,6 +120,12 @@
               class="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 px-2.5 py-1 rounded-lg transition ml-2">
               <i class="fa-brands fa-github text-sm"></i> GitHub
             </a>
+            <!-- Supabase Cloud Sync / Auth Button -->
+            <button id="auth-btn" onclick="openAuthModal()"
+              class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg border transition ml-2 bg-zinc-900/80 hover:bg-zinc-800 border-zinc-800 text-zinc-300 hover:text-white">
+              <i class="fa-solid fa-cloud text-xs text-sky-400"></i>
+              <span id="auth-btn-label">Sincronizar</span>
+            </button>
           </div>
           <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mt-2 text-white">
             Ordem de <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400">Maratona do MCU</span>
@@ -282,6 +288,98 @@
     </div>
   </div>
 
+  <!-- Auth / Cloud Sync Modal -->
+  <div id="auth-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4 cursor-pointer" onclick="closeAuthModal()">
+    <div class="relative w-full max-w-md bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl p-6 cursor-default" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between pb-4 border-b border-zinc-800">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-cloud text-sky-400"></i> <span id="auth-modal-title">Sincronização na Nuvem</span>
+        </h3>
+        <button onclick="closeAuthModal()" class="text-zinc-400 hover:text-white transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Logged In State View -->
+      <div id="auth-view-logged-in" class="hidden py-4 space-y-4">
+        <div class="p-3.5 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-marvel-red/20 border border-red-500/30 flex items-center justify-center text-marvel-red font-bold text-sm" id="user-avatar-initials">
+            U
+          </div>
+          <div class="overflow-hidden">
+            <div class="text-xs text-zinc-400">Conectado como:</div>
+            <div class="text-sm font-semibold text-white truncate" id="user-display-email">email@exemplo.com</div>
+          </div>
+        </div>
+
+        <p class="text-xs text-zinc-400 leading-relaxed">
+          Seu progresso é salvo na nuvem automaticamente a cada filme que você marca!
+        </p>
+
+        <div class="pt-2 flex items-center justify-between gap-3">
+          <button onclick="manualSyncFromCloud()" class="flex-1 py-2 px-3 bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold rounded-lg text-white transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-arrows-rotate text-sky-400"></i> Atualizar da Nuvem
+          </button>
+          <button onclick="handleSignOut()" class="py-2 px-3 bg-red-950/40 hover:bg-red-900/60 border border-red-800/40 text-xs font-semibold rounded-lg text-red-300 transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair
+          </button>
+        </div>
+      </div>
+
+      <!-- Logged Out (Auth Forms) View -->
+      <div id="auth-view-logged-out" class="py-4 space-y-4">
+        <p class="text-xs text-zinc-400">
+          Entre com seu email ou Google para sincronizar seu progresso em todos os seus celulares, tablets e PCs.
+        </p>
+
+        <!-- Google OAuth Button -->
+        <button onclick="handleGoogleSignIn()" class="w-full py-2.5 px-4 bg-white hover:bg-zinc-100 text-zinc-900 font-bold text-xs rounded-xl transition flex items-center justify-center gap-2 shadow">
+          <svg class="w-4 h-4" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          Continuar com o Google
+        </button>
+
+        <div class="flex items-center my-3">
+          <div class="flex-1 border-t border-zinc-800"></div>
+          <span class="px-2 text-[10px] text-zinc-500 uppercase font-semibold">ou por email</span>
+          <div class="flex-1 border-t border-zinc-800"></div>
+        </div>
+
+        <!-- Email & Password Form -->
+        <form onsubmit="handleEmailAuth(event)" class="space-y-3">
+          <div>
+            <label class="block text-[11px] font-semibold text-zinc-300 mb-1">Email</label>
+            <input type="email" id="auth-email" required placeholder="seu@email.com"
+              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-red-600 transition">
+          </div>
+          <div>
+            <label class="block text-[11px] font-semibold text-zinc-300 mb-1">Senha</label>
+            <input type="password" id="auth-password" required minlength="6" placeholder="Mínimo 6 caracteres"
+              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-red-600 transition">
+          </div>
+
+          <div id="auth-error-msg" class="hidden text-xs text-red-400 bg-red-950/40 border border-red-900/50 p-2 rounded-lg"></div>
+          <div id="auth-success-msg" class="hidden text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-900/50 p-2 rounded-lg"></div>
+
+          <div class="flex gap-2 pt-1">
+            <button type="submit" name="action" value="login"
+              class="flex-1 py-2 bg-marvel-red hover:bg-red-600 text-white font-bold text-xs rounded-lg transition shadow">
+              Entrar
+            </button>
+            <button type="submit" name="action" value="signup"
+              class="py-2 px-3 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-xs rounded-lg transition">
+              Criar Conta
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="mt-20 border-t border-zinc-800 py-8 text-center text-xs text-zinc-400">
     <div class="max-w-xl mx-auto px-4 space-y-2">
@@ -299,7 +397,8 @@
     </div>
   </footer>
 
-  <!-- Script for MCU Database & Logic -->
+  <!-- Supabase JS Client & MCU Database Logic -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="data.js"></script>
   <script>
     // State Variables
@@ -325,9 +424,34 @@
     const modalIframe = document.getElementById('modal-iframe');
     const modalTitle = document.getElementById('modal-title');
 
-    function saveState() {
+    // Supabase Configuration & Client
+    const SUPABASE_URL = 'https://fcwseeibamfdtmmvjjyh.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjd3NlZWliYW1mZHRtbXZqanloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQzMjI1MzQsImV4cCI6MjEwOTg5ODUzNH0.0SABjOqg6CqQ1k54b2ulc71HY_vz5FQWievIlrnvS4c';
+    let supabaseClient = null;
+    let currentUser = null;
+
+    if (window.supabase) {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    // Save state locally and seamlessly push to Supabase Cloud if logged in
+    async function saveState() {
       localStorage.setItem('mcu_watched_items', JSON.stringify([...watchedIds]));
       updateProgress();
+
+      if (supabaseClient && currentUser) {
+        try {
+          await supabaseClient
+            .from('mcu_progress')
+            .upsert({
+              user_id: currentUser.id,
+              watched_ids: [...watchedIds],
+              updated_at: new Date().toISOString()
+            });
+        } catch (e) {
+          console.warn('Erro ao sincronizar na nuvem Supabase:', e);
+        }
+      }
     }
 
     function toggleWatched(id, event) {
@@ -518,8 +642,199 @@
       if (e.key === 'Escape') {
         closeTrailerModal();
         closeImageModal();
+        closeAuthModal();
       }
     });
+
+    // Auth Modal & Supabase Functions
+    const authModal = document.getElementById('auth-modal');
+    const authBtnLabel = document.getElementById('auth-btn-label');
+    const authViewLoggedIn = document.getElementById('auth-view-logged-in');
+    const authViewLoggedOut = document.getElementById('auth-view-logged-out');
+    const userDisplayEmail = document.getElementById('user-display-email');
+    const userAvatarInitials = document.getElementById('user-avatar-initials');
+    const authErrorMsg = document.getElementById('auth-error-msg');
+    const authSuccessMsg = document.getElementById('auth-success-msg');
+
+    function openAuthModal() {
+      authErrorMsg.classList.add('hidden');
+      authSuccessMsg.classList.add('hidden');
+      updateAuthUIState();
+      authModal.classList.remove('hidden');
+      authModal.classList.add('flex');
+    }
+
+    function closeAuthModal() {
+      authModal.classList.add('hidden');
+      authModal.classList.remove('flex');
+    }
+
+    function updateAuthUIState() {
+      if (currentUser) {
+        authBtnLabel.textContent = currentUser.email.split('@')[0];
+        document.getElementById('auth-btn').className = 'inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg border transition ml-2 bg-emerald-950/40 hover:bg-emerald-900/60 border-emerald-800/50 text-emerald-300';
+        authViewLoggedIn.classList.remove('hidden');
+        authViewLoggedOut.classList.add('hidden');
+        userDisplayEmail.textContent = currentUser.email;
+        userAvatarInitials.textContent = (currentUser.email[0] || 'U').toUpperCase();
+      } else {
+        authBtnLabel.textContent = 'Sincronizar';
+        document.getElementById('auth-btn').className = 'inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-lg border transition ml-2 bg-zinc-900/80 hover:bg-zinc-800 border-zinc-800 text-zinc-300 hover:text-white';
+        authViewLoggedIn.classList.add('hidden');
+        authViewLoggedOut.classList.remove('hidden');
+      }
+    }
+
+    async function handleGoogleSignIn() {
+      if (!supabaseClient) return;
+      try {
+        const { error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: window.location.origin + window.location.pathname
+          }
+        });
+        if (error) throw error;
+      } catch (err) {
+        showAuthError(err.message || 'Erro ao conectar com Google');
+      }
+    }
+
+    async function handleEmailAuth(event) {
+      event.preventDefault();
+      if (!supabaseClient) return;
+
+      const submitter = event.submitter;
+      const action = submitter ? submitter.value : 'login';
+      const email = document.getElementById('auth-email').value.trim();
+      const password = document.getElementById('auth-password').value;
+
+      authErrorMsg.classList.add('hidden');
+      authSuccessMsg.classList.add('hidden');
+
+      try {
+        if (action === 'signup') {
+          const { data, error } = await supabaseClient.auth.signUp({
+            email,
+            password
+          });
+          if (error) throw error;
+
+          if (data.user && !data.session) {
+            showAuthSuccess('Conta criada! Verifique seu email para confirmar o cadastro.');
+          } else if (data.user) {
+            currentUser = data.user;
+            showAuthSuccess('Conta criada com sucesso e conectada!');
+            await syncAfterLogin();
+            setTimeout(closeAuthModal, 1500);
+          }
+        } else {
+          const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+          if (error) throw error;
+          currentUser = data.user;
+          showAuthSuccess('Conectado com sucesso!');
+          await syncAfterLogin();
+          setTimeout(closeAuthModal, 1000);
+        }
+      } catch (err) {
+        showAuthError(err.message || 'Falha na autenticação. Verifique suas credenciais.');
+      }
+    }
+
+    async function handleSignOut() {
+      if (!supabaseClient) return;
+      await supabaseClient.auth.signOut();
+      currentUser = null;
+      updateAuthUIState();
+      closeAuthModal();
+      alert('Você saiu da sua conta. O progresso continuará sendo salvo localmente.');
+    }
+
+    async function syncAfterLogin() {
+      if (!supabaseClient || !currentUser) return;
+      updateAuthUIState();
+
+      try {
+        // Busca progresso existente no Supabase
+        const { data, error } = await supabaseClient
+          .from('mcu_progress')
+          .select('watched_ids')
+          .eq('user_id', currentUser.id)
+          .maybeSingle();
+
+        if (error) {
+          console.warn('Erro ao carregar dados remotos:', error);
+          return;
+        }
+
+        if (data && Array.isArray(data.watched_ids)) {
+          // Faz merge dos dados da nuvem com o local
+          const remoteSet = new Set(data.watched_ids);
+          watchedIds.forEach(id => remoteSet.add(id));
+          watchedIds = remoteSet;
+          
+          // Salva o merge local e na nuvem
+          localStorage.setItem('mcu_watched_items', JSON.stringify([...watchedIds]));
+          await supabaseClient
+            .from('mcu_progress')
+            .upsert({
+              user_id: currentUser.id,
+              watched_ids: [...watchedIds],
+              updated_at: new Date().toISOString()
+            });
+
+          updateProgress();
+          renderList();
+        } else if (watchedIds.size > 0) {
+          // Se a nuvem estava vazia mas o usuário já tinha dados locais, sobe os dados locais pra nuvem
+          await supabaseClient
+            .from('mcu_progress')
+            .upsert({
+              user_id: currentUser.id,
+              watched_ids: [...watchedIds],
+              updated_at: new Date().toISOString()
+            });
+        }
+      } catch (err) {
+        console.warn('Erro durante sincronização pós-login:', err);
+      }
+    }
+
+    async function manualSyncFromCloud() {
+      if (!supabaseClient || !currentUser) return;
+      try {
+        const { data, error } = await supabaseClient
+          .from('mcu_progress')
+          .select('watched_ids')
+          .eq('user_id', currentUser.id)
+          .maybeSingle();
+
+        if (error) throw error;
+        if (data && Array.isArray(data.watched_ids)) {
+          watchedIds = new Set(data.watched_ids);
+          saveState();
+          renderList();
+          alert(`Sincronização concluída! ${watchedIds.size} itens sincronizados.`);
+        } else {
+          alert('Nenhum dado encontrado na nuvem para este usuário.');
+        }
+      } catch (err) {
+        alert('Erro ao sincronizar da nuvem: ' + (err.message || 'Erro desconhecido'));
+      }
+    }
+
+    function showAuthError(msg) {
+      authErrorMsg.textContent = msg;
+      authErrorMsg.classList.remove('hidden');
+    }
+
+    function showAuthSuccess(msg) {
+      authSuccessMsg.textContent = msg;
+      authSuccessMsg.classList.remove('hidden');
+    }
 
     function toggleDetails(id) {
       const details = document.getElementById(`details-${id}`);
@@ -821,9 +1136,31 @@
       renderList();
     }
 
-    // Initial Load
-    window.onload = function () {
+    // Initial Load & Auth Session Check
+    window.onload = async function () {
       loadMCUData();
+
+      if (supabaseClient) {
+        // Checa se há usuário logado na sessão atual
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session && session.user) {
+          currentUser = session.user;
+          updateAuthUIState();
+          await syncAfterLogin();
+        }
+
+        // Listener reativo caso o estado de auth mude (ex: retorno de OAuth Google)
+        supabaseClient.auth.onAuthStateChange(async (event, session) => {
+          if (session && session.user) {
+            currentUser = session.user;
+            updateAuthUIState();
+            await syncAfterLogin();
+          } else {
+            currentUser = null;
+            updateAuthUIState();
+          }
+        });
+      }
     };
   </script>
 </body>

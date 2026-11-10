@@ -60,6 +60,8 @@
       }
     }
   </script>
+  <!-- Marked.js for safe Markdown rendering in comments -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Custom Scrollbar */
@@ -380,6 +382,111 @@
     </div>
   </div>
 
+  <!-- Edge Case 2: Login Sync Conflict Resolution Modal -->
+  <div id="sync-conflict-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl p-6" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-3 pb-3 border-b border-zinc-800">
+        <div class="w-10 h-10 rounded-xl bg-amber-950/60 border border-amber-600/40 flex items-center justify-center text-amber-400 text-lg">
+          <i class="fa-solid fa-code-compare"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">Sincronização de Progresso</h3>
+          <p class="text-xs text-zinc-400">Identificamos diferenças entre este aparelho e sua conta na nuvem.</p>
+        </div>
+      </div>
+
+      <div class="my-4 p-3.5 bg-zinc-900 border border-zinc-800/80 rounded-xl text-xs space-y-2">
+        <div class="flex justify-between items-center text-zinc-300">
+          <span><i class="fa-solid fa-mobile-screen-button text-zinc-400 mr-1.5"></i> Neste aparelho (local):</span>
+          <span class="font-bold text-white"><span id="conflict-local-count">0</span> filmes marcados</span>
+        </div>
+        <div class="flex justify-between items-center text-zinc-300">
+          <span><i class="fa-solid fa-cloud text-sky-400 mr-1.5"></i> Na sua conta (nuvem):</span>
+          <span class="font-bold text-white"><span id="conflict-cloud-count">0</span> filmes marcados</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-zinc-300 font-medium mb-3">Escolha como deseja prosseguir:</p>
+
+      <div class="space-y-2.5">
+        <!-- Opção 1: Unir Ambos -->
+        <button onclick="resolveSyncConflict('merge')"
+          class="w-full text-left p-3 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-emerald-600/60 transition group">
+          <div class="flex items-center justify-between font-bold text-xs text-emerald-400 group-hover:text-emerald-300">
+            <span><i class="fa-solid fa-code-merge mr-1.5"></i> Unir Ambos (Recomendado)</span>
+            <span class="text-[10px] uppercase px-1.5 py-0.5 bg-emerald-950/80 border border-emerald-800/60 rounded text-emerald-300">Sem perdas</span>
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">Junta os filmes marcados neste aparelho com os da sua conta.</p>
+        </button>
+
+        <!-- Opção 2: Substituir pela Nuvem -->
+        <button onclick="resolveSyncConflict('keep_cloud')"
+          class="w-full text-left p-3 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-sky-600/60 transition group">
+          <div class="font-bold text-xs text-sky-400 group-hover:text-sky-300">
+            <i class="fa-solid fa-cloud-arrow-down mr-1.5"></i> Substituir pela Nuvem
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">Descarta o progresso deste aparelho e baixa o que está salvo na conta.</p>
+        </button>
+
+        <!-- Opção 3: Substituir Nuvem pelo Local -->
+        <button onclick="resolveSyncConflict('keep_local')"
+          class="w-full text-left p-3 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-amber-600/60 transition group">
+          <div class="font-bold text-xs text-amber-400 group-hover:text-amber-300">
+            <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i> Substituir Nuvem pelo Local
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1">Substitui os dados da sua conta pelos filmes marcados neste aparelho.</p>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edge Case 3: Import Backup Conflict Modal -->
+  <div id="import-conflict-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="relative w-full max-w-lg bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl p-6" onclick="event.stopPropagation()">
+      <div class="flex items-center gap-3 pb-3 border-b border-zinc-800">
+        <div class="w-10 h-10 rounded-xl bg-sky-950/60 border border-sky-600/40 flex items-center justify-center text-sky-400 text-lg">
+          <i class="fa-solid fa-file-import"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white">Importar Backup de Progresso</h3>
+          <p class="text-xs text-zinc-400" id="import-modal-subtitle">Escolha como deseja aplicar os dados importados.</p>
+        </div>
+      </div>
+
+      <div class="my-4 p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-xs">
+        <span class="text-zinc-400">Arquivo contém:</span>
+        <strong class="text-white ml-1 font-bold"><span id="import-file-count">0</span> filmes assistidos</strong>
+      </div>
+
+      <p class="text-xs text-zinc-300 font-medium mb-3">Como deseja aplicar?</p>
+
+      <div class="space-y-2.5">
+        <!-- Opção 1: Somar / Mesclar -->
+        <button onclick="confirmImportChoice('merge')"
+          class="w-full text-left p-3 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-emerald-600/60 transition group">
+          <div class="font-bold text-xs text-emerald-400 group-hover:text-emerald-300" id="import-btn-merge-title">
+            <i class="fa-solid fa-plus-circle mr-1.5"></i> Somar ao progresso atual
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1" id="import-btn-merge-desc">Mantém o que você já assistiu e adiciona os filmes do arquivo.</p>
+        </button>
+
+        <!-- Opção 2: Substituir -->
+        <button onclick="confirmImportChoice('replace')"
+          class="w-full text-left p-3 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-red-600/60 transition group">
+          <div class="font-bold text-xs text-red-400 group-hover:text-red-300" id="import-btn-replace-title">
+            <i class="fa-solid fa-arrows-rotate mr-1.5"></i> Substituir progresso
+          </div>
+          <p class="text-[11px] text-zinc-400 mt-1" id="import-btn-replace-desc">Apaga o progresso atual e deixa exatamente igual ao arquivo de backup.</p>
+        </button>
+
+        <button onclick="closeImportConflictModal()"
+          class="w-full py-2 text-center text-xs text-zinc-400 hover:text-white transition mt-2">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="mt-20 border-t border-zinc-800 py-8 text-center text-xs text-zinc-400">
     <div class="max-w-xl mx-auto px-4 space-y-2">
@@ -590,7 +697,9 @@
       imageModalImg.src = '';
     }
 
-    // Export & Import watched progress and custom status
+    // Export & Import watched progress with Edge Case 3 Conflict Resolution
+    let pendingImportWatchedIds = null;
+
     function exportData() {
       const payload = {
         app: "MCU Timeline Guide",
@@ -614,24 +723,77 @@
       reader.onload = function(e) {
         try {
           const imported = JSON.parse(e.target.result);
+          let rawList = [];
           if (Array.isArray(imported)) {
-            watchedIds = new Set(imported);
+            rawList = imported;
           } else if (imported.watchedIds && Array.isArray(imported.watchedIds)) {
-            watchedIds = new Set(imported.watchedIds);
+            rawList = imported.watchedIds;
           } else {
             alert('Formato de arquivo inválido. Selecione um JSON exportado por este aplicativo.');
             return;
           }
-          saveState();
-          renderList();
-          alert(`Backup importado com sucesso! ${watchedIds.size} itens marcados como assistidos.`);
+
+          pendingImportWatchedIds = rawList;
+          openImportConflictModal(rawList.length);
         } catch (err) {
           alert('Erro ao processar o arquivo JSON selecionado.');
         }
       };
       reader.readAsText(file);
-      // Reset input value so same file can be selected again
       event.target.value = '';
+    }
+
+    function openImportConflictModal(count) {
+      const modal = document.getElementById('import-conflict-modal');
+      const countEl = document.getElementById('import-file-count');
+      const subtitle = document.getElementById('import-modal-subtitle');
+      const mergeTitle = document.getElementById('import-btn-merge-title');
+      const mergeDesc = document.getElementById('import-btn-merge-desc');
+      const replaceTitle = document.getElementById('import-btn-replace-title');
+      const replaceDesc = document.getElementById('import-btn-replace-desc');
+
+      countEl.textContent = count;
+
+      if (currentUser) {
+        subtitle.textContent = `Você está logado como ${currentUser.email}. Escolha como aplicar na sua conta:`;
+        mergeTitle.innerHTML = `<i class="fa-solid fa-code-merge mr-1.5"></i> Mesclar com minha conta na nuvem`;
+        mergeDesc.textContent = `Mantém seus filmes na nuvem e adiciona os filmes do arquivo importado.`;
+        replaceTitle.innerHTML = `<i class="fa-solid fa-arrows-rotate mr-1.5"></i> Substituir tudo na nuvem`;
+        replaceDesc.textContent = `Sobrescreve a sua conta na nuvem com exatamente os filmes do arquivo.`;
+      } else {
+        subtitle.textContent = `Você está no modo anônimo local. Escolha como aplicar neste navegador:`;
+        mergeTitle.innerHTML = `<i class="fa-solid fa-plus-circle mr-1.5"></i> Somar ao progresso atual`;
+        mergeDesc.textContent = `Mantém o que você já assistiu e adiciona os filmes do arquivo.`;
+        replaceTitle.innerHTML = `<i class="fa-solid fa-arrows-rotate mr-1.5"></i> Substituir progresso local`;
+        replaceDesc.textContent = `Apaga o progresso atual e deixa apenas os filmes do arquivo.`;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeImportConflictModal() {
+      const modal = document.getElementById('import-conflict-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      pendingImportWatchedIds = null;
+    }
+
+    async function confirmImportChoice(choice) {
+      if (!pendingImportWatchedIds) return;
+
+      if (choice === 'merge') {
+        pendingImportWatchedIds.forEach(id => watchedIds.add(id));
+      } else {
+        watchedIds = new Set(pendingImportWatchedIds);
+      }
+
+      await saveState();
+      renderList();
+      closeImportConflictModal();
+
+      const actionText = choice === 'merge' ? 'mesclado com sucesso' : 'substituído com sucesso';
+      alert(`Progresso importado e ${actionText}! (${watchedIds.size} filmes marcados no total).`);
     }
 
     // Close modal on backdrop click or Escape key
@@ -643,6 +805,8 @@
         closeTrailerModal();
         closeImageModal();
         closeAuthModal();
+        closeSyncConflictModal();
+        closeImportConflictModal();
       }
     });
 
@@ -753,12 +917,14 @@
       alert('Você saiu da sua conta. O progresso continuará sendo salvo localmente.');
     }
 
+    // Edge Case 2: Login Sync Conflict State & Handlers
+    let pendingCloudWatchedIds = null;
+
     async function syncAfterLogin() {
       if (!supabaseClient || !currentUser) return;
       updateAuthUIState();
 
       try {
-        // Busca progresso existente no Supabase
         const { data, error } = await supabaseClient
           .from('mcu_progress')
           .select('watched_ids')
@@ -770,37 +936,88 @@
           return;
         }
 
-        if (data && Array.isArray(data.watched_ids)) {
-          // Faz merge dos dados da nuvem com o local
-          const remoteSet = new Set(data.watched_ids);
-          watchedIds.forEach(id => remoteSet.add(id));
-          watchedIds = remoteSet;
-          
-          // Salva o merge local e na nuvem
-          localStorage.setItem('mcu_watched_items', JSON.stringify([...watchedIds]));
+        const cloudList = (data && Array.isArray(data.watched_ids)) ? data.watched_ids : [];
+        const localList = [...watchedIds];
+
+        // Se a nuvem estiver vazia e houver dados locais, salva direto na nuvem
+        if (cloudList.length === 0 && localList.length > 0) {
           await supabaseClient
             .from('mcu_progress')
             .upsert({
               user_id: currentUser.id,
-              watched_ids: [...watchedIds],
+              watched_ids: localList,
               updated_at: new Date().toISOString()
             });
+          return;
+        }
 
+        // Se local estiver vazio e houver dados na nuvem, carrega direto da nuvem
+        if (localList.length === 0 && cloudList.length > 0) {
+          watchedIds = new Set(cloudList);
+          localStorage.setItem('mcu_watched_items', JSON.stringify(cloudList));
           updateProgress();
           renderList();
-        } else if (watchedIds.size > 0) {
-          // Se a nuvem estava vazia mas o usuário já tinha dados locais, sobe os dados locais pra nuvem
-          await supabaseClient
-            .from('mcu_progress')
-            .upsert({
-              user_id: currentUser.id,
-              watched_ids: [...watchedIds],
-              updated_at: new Date().toISOString()
-            });
+          return;
+        }
+
+        // Se ambos têm dados: checa se são idênticos
+        const setCloud = new Set(cloudList);
+        const setLocal = new Set(localList);
+        const isIdentical = setCloud.size === setLocal.size && [...setLocal].every(x => setCloud.has(x));
+
+        if (!isIdentical && cloudList.length > 0 && localList.length > 0) {
+          // Há divergência: abre o modal com as 3 opções para o usuário escolher!
+          pendingCloudWatchedIds = cloudList;
+          openSyncConflictModal(localList.length, cloudList.length);
         }
       } catch (err) {
         console.warn('Erro durante sincronização pós-login:', err);
       }
+    }
+
+    function openSyncConflictModal(localCount, cloudCount) {
+      document.getElementById('conflict-local-count').textContent = localCount;
+      document.getElementById('conflict-cloud-count').textContent = cloudCount;
+      const modal = document.getElementById('sync-conflict-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeSyncConflictModal() {
+      const modal = document.getElementById('sync-conflict-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      pendingCloudWatchedIds = null;
+    }
+
+    async function resolveSyncConflict(choice) {
+      if (!currentUser || !supabaseClient || !pendingCloudWatchedIds) return;
+
+      if (choice === 'merge') {
+        // Unir Ambos (Sem perdas)
+        pendingCloudWatchedIds.forEach(id => watchedIds.add(id));
+      } else if (choice === 'keep_cloud') {
+        // Substituir pela Nuvem (descarta local)
+        watchedIds = new Set(pendingCloudWatchedIds);
+      } else if (choice === 'keep_local') {
+        // Substituir Nuvem pelo Local (mantém local e sobe para nuvem)
+        // watchedIds permanece o que estava localmente
+      }
+
+      // Salva local e na nuvem
+      localStorage.setItem('mcu_watched_items', JSON.stringify([...watchedIds]));
+      await supabaseClient
+        .from('mcu_progress')
+        .upsert({
+          user_id: currentUser.id,
+          watched_ids: [...watchedIds],
+          updated_at: new Date().toISOString()
+        });
+
+      updateProgress();
+      renderList();
+      closeSyncConflictModal();
+      alert(`Sincronização concluída com sucesso! (${watchedIds.size} filmes marcados).`);
     }
 
     async function manualSyncFromCloud() {
@@ -836,14 +1053,515 @@
       authSuccessMsg.classList.remove('hidden');
     }
 
-    function toggleDetails(id) {
-      const details = document.getElementById(`details-${id}`);
-      const icon = document.getElementById(`icon-${id}`);
-      if (details) {
-        details.classList.toggle('hidden');
+    // ==========================================
+    // DISCRETE COMMENTS & REACTIONS SYSTEM
+    // ==========================================
+    const commentsCache = {}; // { movieId: [comments] }
+    const reactionsCache = {}; // { commentId: { like: N, dislike: N, hulk: N, laugh: N, userReaction: 'like' } }
+    const commentsLimit = {}; // { movieId: limit } (for pagination "Ver mais")
+    const activeReplyState = {}; // { movieId: { commentId, replyToName } }
+
+    async function toggleCommentsSection(movieId, event) {
+      if (event) event.stopPropagation();
+      const section = document.getElementById(`comments-section-${movieId}`);
+      if (!section) return;
+
+      const isHidden = section.classList.contains('hidden');
+      if (isHidden) {
+        section.classList.remove('hidden');
+        if (!commentsLimit[movieId]) commentsLimit[movieId] = 5;
+        await loadComments(movieId);
+      } else {
+        section.classList.add('hidden');
       }
-      if (icon) {
-        icon.classList.toggle('rotate-180');
+    }
+
+    async function loadComments(movieId) {
+      const section = document.getElementById(`comments-section-${movieId}`);
+      if (!section) return;
+
+      if (!commentsLimit[movieId]) commentsLimit[movieId] = 5;
+
+      section.innerHTML = `
+        <div class="py-4 text-center text-xs text-zinc-500 flex items-center justify-center gap-2">
+          <i class="fa-solid fa-circle-notch fa-spin text-marvel-red"></i> Carregando comentários...
+        </div>
+      `;
+
+      if (!supabaseClient) {
+        section.innerHTML = `<p class="text-xs text-red-400 py-2">Serviço de comentários indisponível.</p>`;
+        return;
+      }
+
+      try {
+        // Busca todos os comentários do filme
+        const { data: comments, error } = await supabaseClient
+          .from('mcu_comments')
+          .select('*')
+          .eq('movie_id', movieId)
+          .order('created_at', { ascending: true });
+
+        if (error) throw error;
+
+        commentsCache[movieId] = comments || [];
+
+        // Atualiza contador no botão de comentários
+        const countBadge = document.getElementById(`comment-btn-count-${movieId}`);
+        if (countBadge) {
+          if (comments.length > 0) {
+            countBadge.textContent = comments.length;
+            countBadge.classList.remove('hidden');
+          } else {
+            countBadge.classList.add('hidden');
+          }
+        }
+
+        // Se houver comentários, busca as reações
+        if (comments.length > 0) {
+          const commentIds = comments.map(c => c.id);
+          const { data: reactions, error: rError } = await supabaseClient
+            .from('mcu_comment_reactions')
+            .select('*')
+            .in('comment_id', commentIds);
+
+          if (!rError && reactions) {
+            // Agrupa reações por comentário
+            commentIds.forEach(cid => {
+              reactionsCache[cid] = { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
+            });
+            reactions.forEach(r => {
+              if (reactionsCache[r.comment_id]) {
+                reactionsCache[r.comment_id][r.reaction] = (reactionsCache[r.comment_id][r.reaction] || 0) + 1;
+                if (currentUser && r.user_id === currentUser.id) {
+                  reactionsCache[r.comment_id].userReaction = r.reaction;
+                }
+              }
+            });
+          }
+        }
+
+        renderCommentsUI(movieId);
+      } catch (err) {
+        console.error('Erro ao buscar comentários:', err);
+        section.innerHTML = `<p class="text-xs text-red-400 py-2">Não foi possível carregar os comentários.</p>`;
+      }
+    }
+
+    function renderCommentsUI(movieId) {
+      const section = document.getElementById(`comments-section-${movieId}`);
+      if (!section) return;
+
+      const all = commentsCache[movieId] || [];
+      // Separa comentários raiz e respostas
+      const rootComments = all.filter(c => !c.parent_id);
+      const repliesMap = {};
+      all.filter(c => c.parent_id).forEach(c => {
+        if (!repliesMap[c.parent_id]) repliesMap[c.parent_id] = [];
+        repliesMap[c.parent_id].push(c);
+      });
+
+      const currentDisplayLimit = commentsLimit[movieId] || 5;
+      const displayedRoots = rootComments.slice(0, currentDisplayLimit);
+      const hasMore = rootComments.length > currentDisplayLimit;
+
+      const replyState = activeReplyState[movieId];
+
+      let html = `
+        <div class="space-y-4">
+          <!-- Header do Painel de Comentários -->
+          <div class="flex items-center justify-between pb-2 border-b border-zinc-800/80">
+            <h5 class="text-xs font-bold text-zinc-300 flex items-center gap-1.5">
+              <i class="fa-regular fa-comments text-marvel-red"></i> 
+              Comentários da Comunidade (${all.length})
+            </h5>
+            <button onclick="toggleCommentsSection('${movieId}')" class="text-[11px] text-zinc-500 hover:text-zinc-300 transition flex items-center gap-1">
+              <i class="fa-solid fa-chevron-up text-[10px]"></i> Recolher
+            </button>
+          </div>
+
+          <!-- Formulário de Comentário / Resposta -->
+          ${currentUser ? `
+            <div class="bg-zinc-950 p-3 rounded-xl border border-zinc-800/90 space-y-2">
+              ${replyState ? `
+                <div class="flex items-center justify-between text-[11px] bg-red-950/30 border border-red-900/40 px-2.5 py-1 rounded-lg text-zinc-300">
+                  <span>Respondendo a <strong class="text-white">@${escapeHtml(replyState.replyToName)}</strong></span>
+                  <button onclick="cancelReply('${movieId}')" class="text-red-400 hover:text-white transition">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              ` : ''}
+
+              <div class="relative">
+                <textarea id="comment-input-${movieId}" rows="2" maxlength="2000"
+                  placeholder="${replyState ? 'Escreva sua resposta (aceita Markdown: **negrito**, *itálico*, links)...' : 'Participe da conversa (aceita Markdown: **negrito**, *itálico*, links)...'}"
+                  oninput="updateCharCount('${movieId}')"
+                  class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-red-600 transition resize-none"></textarea>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px] text-zinc-500">
+                <span id="char-count-${movieId}">0 / 2000</span>
+                <div class="flex items-center gap-2">
+                  <button onclick="submitComment('${movieId}')" id="btn-submit-comment-${movieId}"
+                    class="px-3 py-1.5 bg-marvel-red hover:bg-red-600 text-white font-bold rounded-lg transition shadow flex items-center gap-1.5 text-xs">
+                    <i class="fa-solid fa-paper-plane text-[10px]"></i> ${replyState ? 'Responder' : 'Comentar'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ` : `
+            <div class="bg-zinc-950/80 border border-dashed border-zinc-800 p-3 rounded-xl text-center text-xs text-zinc-400">
+              <span>Faça login para comentar e reagir às publicações:</span>
+              <button onclick="openAuthModal()" class="text-marvel-red hover:text-red-400 font-bold ml-1.5 underline">
+                Entrar com Google ou Email
+              </button>
+            </div>
+          `}
+
+          <!-- Lista de Comentários -->
+          <div class="space-y-3 pt-1">
+            ${displayedRoots.length === 0 ? `
+              <p class="text-xs text-zinc-500 text-center py-4 italic">Nenhum comentário ainda. Seja o primeiro a comentar sobre este filme!</p>
+            ` : displayedRoots.map(c => renderCommentCard(c, repliesMap[c.id] || [], movieId)).join('')}
+          </div>
+
+          <!-- Paginação: Ver mais comentários -->
+          ${hasMore ? `
+            <div class="text-center pt-2">
+              <button onclick="loadMoreComments('${movieId}')"
+                class="px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white rounded-lg text-xs font-semibold transition">
+                <i class="fa-solid fa-angle-down mr-1"></i> Ver mais comentários (${rootComments.length - currentDisplayLimit} restantes)
+              </button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      section.innerHTML = html;
+    }
+
+    function renderCommentCard(comment, replies, movieId) {
+      const userName = escapeHtml(comment.user_name || comment.user_email.split('@')[0]);
+      const dateStr = formatCommentDate(comment.created_at);
+      const contentHtml = parseMarkdownSafe(comment.content);
+      const isAuthor = currentUser && currentUser.id === comment.user_id;
+      const reactions = reactionsCache[comment.id] || { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
+
+      return `
+        <div class="p-3 bg-zinc-950/70 border border-zinc-800/80 rounded-xl space-y-2">
+          <!-- Topo do Comentário -->
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-[10px] text-zinc-300">
+                ${(userName[0] || 'U').toUpperCase()}
+              </div>
+              <strong class="font-semibold text-zinc-200">${userName}</strong>
+              <span class="text-[10px] text-zinc-500">• ${dateStr}</span>
+            </div>
+
+            ${isAuthor ? `
+              <button onclick="deleteComment('${comment.id}', '${movieId}')" class="text-zinc-600 hover:text-red-400 text-xs transition" title="Excluir meu comentário">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            ` : ''}
+          </div>
+
+          <!-- Conteúdo Markdown -->
+          <div class="text-xs text-zinc-300 leading-relaxed pl-8 break-words prose prose-invert prose-xs max-w-none">
+            ${contentHtml}
+          </div>
+
+          <!-- Barra de Ações: Reações e Botão Responder -->
+          <div class="flex items-center justify-between pl-8 pt-1 text-xs">
+            <div class="flex items-center gap-2">
+              <!-- Like -->
+              <button onclick="handleReaction('${comment.id}', 'like', '${movieId}')" 
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'like' ? 'bg-sky-950 border-sky-600 text-sky-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-white'}">
+                👍 <span class="text-[10px] font-bold">${reactions.like || ''}</span>
+              </button>
+
+              <!-- Dislike -->
+              <button onclick="handleReaction('${comment.id}', 'dislike', '${movieId}')" 
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'dislike' ? 'bg-red-950 border-red-600 text-red-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-white'}">
+                👎 <span class="text-[10px] font-bold">${reactions.dislike || ''}</span>
+              </button>
+
+              <!-- Soco do Hulk (Verde) -->
+              <button onclick="handleReaction('${comment.id}', 'hulk', '${movieId}')" 
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'hulk' ? 'bg-emerald-950 border-emerald-500 text-emerald-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-emerald-400'}"
+                title="Soco do Hulk!">
+                👊 <span class="text-[10px] font-bold ${reactions.hulk ? 'text-emerald-400' : ''}">${reactions.hulk || ''}</span>
+              </button>
+
+              <!-- Risada -->
+              <button onclick="handleReaction('${comment.id}', 'laugh', '${movieId}')" 
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'laugh' ? 'bg-amber-950 border-amber-500 text-amber-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-amber-400'}"
+                title="Engraçado">
+                😂 <span class="text-[10px] font-bold">${reactions.laugh || ''}</span>
+              </button>
+            </div>
+
+            <!-- Botão de Responder (1 camada) -->
+            ${currentUser ? `
+              <button onclick="startReply('${movieId}', '${comment.id}', '${userName}')" 
+                class="text-[11px] text-zinc-400 hover:text-white flex items-center gap-1 transition">
+                <i class="fa-solid fa-reply text-[10px]"></i> Responder
+              </button>
+            ` : ''}
+          </div>
+
+          <!-- Respostas Embutidas (1 camada) -->
+          ${replies.length > 0 ? `
+            <div class="mt-2.5 pt-2 border-t border-zinc-800/50 space-y-2 pl-6 sm:pl-8">
+              ${replies.map(r => renderReplyCard(r, comment.id, movieId)).join('')}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    function renderReplyCard(reply, parentCommentId, movieId) {
+      const userName = escapeHtml(reply.user_name || reply.user_email.split('@')[0]);
+      const dateStr = formatCommentDate(reply.created_at);
+      const contentHtml = parseMarkdownSafe(reply.content);
+      const isAuthor = currentUser && currentUser.id === reply.user_id;
+      const reactions = reactionsCache[reply.id] || { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
+
+      return `
+        <div class="p-2.5 bg-zinc-900/60 border border-zinc-800/60 rounded-lg space-y-1.5">
+          <div class="flex items-center justify-between text-xs">
+            <div class="flex items-center gap-1.5">
+              <div class="w-5 h-5 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-[9px] text-zinc-300">
+                ${(userName[0] || 'U').toUpperCase()}
+              </div>
+              <strong class="font-semibold text-zinc-200 text-xs">${userName}</strong>
+              ${reply.reply_to_name ? `
+                <span class="text-[10px] text-red-400 bg-red-950/40 px-1 rounded">@${escapeHtml(reply.reply_to_name)}</span>
+              ` : ''}
+              <span class="text-[10px] text-zinc-500">• ${dateStr}</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              ${currentUser ? `
+                <button onclick="startReply('${movieId}', '${parentCommentId}', '${userName}')" 
+                  class="text-[10px] text-zinc-500 hover:text-zinc-300 transition" title="Responder a este usuário">
+                  <i class="fa-solid fa-reply"></i>
+                </button>
+              ` : ''}
+              ${isAuthor ? `
+                <button onclick="deleteComment('${reply.id}', '${movieId}')" class="text-zinc-600 hover:text-red-400 text-xs transition" title="Excluir">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              ` : ''}
+            </div>
+          </div>
+
+          <div class="text-xs text-zinc-300 leading-relaxed pl-6 break-words prose prose-invert prose-xs max-w-none">
+            ${contentHtml}
+          </div>
+
+          <!-- Reações da resposta -->
+          <div class="flex items-center gap-1.5 pl-6 pt-0.5">
+            <button onclick="handleReaction('${reply.id}', 'like', '${movieId}')" 
+              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'like' ? 'text-sky-400 font-bold' : 'text-zinc-500 hover:text-white'}">
+              👍 <span class="text-[9px]">${reactions.like || ''}</span>
+            </button>
+            <button onclick="handleReaction('${reply.id}', 'dislike', '${movieId}')" 
+              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'dislike' ? 'text-red-400 font-bold' : 'text-zinc-500 hover:text-white'}">
+              👎 <span class="text-[9px]">${reactions.dislike || ''}</span>
+            </button>
+            <button onclick="handleReaction('${reply.id}', 'hulk', '${movieId}')" 
+              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'hulk' ? 'text-emerald-400 font-bold' : 'text-zinc-500 hover:text-emerald-400'}">
+              👊 <span class="text-[9px]">${reactions.hulk || ''}</span>
+            </button>
+            <button onclick="handleReaction('${reply.id}', 'laugh', '${movieId}')" 
+              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'laugh' ? 'text-amber-400 font-bold' : 'text-zinc-500 hover:text-amber-400'}">
+              😂 <span class="text-[9px]">${reactions.laugh || ''}</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function startReply(movieId, parentCommentId, replyToName) {
+      activeReplyState[movieId] = { commentId: parentCommentId, replyToName: replyToName };
+      renderCommentsUI(movieId);
+      const input = document.getElementById(`comment-input-${movieId}`);
+      if (input) {
+        input.focus();
+        input.value = `@${replyToName} `;
+        updateCharCount(movieId);
+      }
+    }
+
+    function cancelReply(movieId) {
+      delete activeReplyState[movieId];
+      renderCommentsUI(movieId);
+    }
+
+    function updateCharCount(movieId) {
+      const input = document.getElementById(`comment-input-${movieId}`);
+      const counter = document.getElementById(`char-count-${movieId}`);
+      if (input && counter) {
+        const len = input.value.length;
+        counter.textContent = `${len} / 2000`;
+        if (len > 1900) counter.className = 'text-red-400 font-bold';
+        else counter.className = 'text-zinc-500';
+      }
+    }
+
+    async function submitComment(movieId) {
+      if (!supabaseClient || !currentUser) {
+        openAuthModal();
+        return;
+      }
+
+      const input = document.getElementById(`comment-input-${movieId}`);
+      const btn = document.getElementById(`btn-submit-comment-${movieId}`);
+      if (!input) return;
+
+      const content = input.value.trim();
+      if (!content) return;
+      if (content.length > 2000) {
+        alert('O comentário excede o limite de 2000 caracteres.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Enviando...`;
+
+      const replyState = activeReplyState[movieId];
+      let parentId = null;
+      let replyToName = null;
+
+      if (replyState) {
+        parentId = replyState.commentId;
+        replyToName = replyState.replyToName;
+      }
+
+      const userName = (currentUser.user_metadata && currentUser.user_metadata.full_name) 
+        ? currentUser.user_metadata.full_name 
+        : currentUser.email.split('@')[0];
+
+      try {
+        const { error } = await supabaseClient
+          .from('mcu_comments')
+          .insert({
+            movie_id: movieId,
+            user_id: currentUser.id,
+            user_name: userName,
+            user_email: currentUser.email,
+            parent_id: parentId,
+            reply_to_name: replyToName,
+            content: content
+          });
+
+        if (error) {
+          if (error.message && error.message.includes('Limite atingido')) {
+            alert('Você atingiu o limite de 200 comentários no total da sua conta.');
+          } else {
+            throw error;
+          }
+          return;
+        }
+
+        // Limpa estado e recarrega
+        delete activeReplyState[movieId];
+        await loadComments(movieId);
+      } catch (err) {
+        alert('Erro ao enviar comentário: ' + (err.message || 'Erro inesperado'));
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    async function deleteComment(commentId, movieId) {
+      if (!confirm('Deseja excluir seu comentário permanentemente?')) return;
+      try {
+        const { error } = await supabaseClient
+          .from('mcu_comments')
+          .delete()
+          .eq('id', commentId);
+
+        if (error) throw error;
+        await loadComments(movieId);
+      } catch (err) {
+        alert('Erro ao excluir: ' + (err.message || 'Erro inesperado'));
+      }
+    }
+
+    async function handleReaction(commentId, reactionType, movieId) {
+      if (!currentUser || !supabaseClient) {
+        openAuthModal();
+        return;
+      }
+
+      const current = (reactionsCache[commentId] && reactionsCache[commentId].userReaction === reactionType);
+
+      try {
+        if (current) {
+          // Remove a reação se já tiver clicado nela
+          await supabaseClient
+            .from('mcu_comment_reactions')
+            .delete()
+            .match({ comment_id: commentId, user_id: currentUser.id });
+        } else {
+          // Insere ou atualiza reação
+          await supabaseClient
+            .from('mcu_comment_reactions')
+            .upsert({
+              comment_id: commentId,
+              user_id: currentUser.id,
+              reaction: reactionType
+            });
+        }
+        await loadComments(movieId);
+      } catch (err) {
+        console.warn('Erro ao registrar reação:', err);
+      }
+    }
+
+    function loadMoreComments(movieId) {
+      commentsLimit[movieId] = (commentsLimit[movieId] || 5) + 5;
+      renderCommentsUI(movieId);
+    }
+
+    function parseMarkdownSafe(content) {
+      if (!content) return '';
+      if (window.marked && window.marked.parse) {
+        try {
+          return window.marked.parse(content, { breaks: true });
+        } catch (e) {
+          return escapeHtml(content);
+        }
+      }
+      return escapeHtml(content);
+    }
+
+    function escapeHtml(str) {
+      return (str || '')
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatCommentDate(dateStr) {
+      if (!dateStr) return '';
+      try {
+        const d = new Date(dateStr);
+        const now = new Date();
+        const diffMs = now - d;
+        const diffMin = Math.floor(diffMs / 60000);
+        if (diffMin < 1) return 'agora';
+        if (diffMin < 60) return `há ${diffMin}m`;
+        const diffHours = Math.floor(diffMin / 60);
+        if (diffHours < 24) return `há ${diffHours}h`;
+        const diffDays = Math.floor(diffHours / 24);
+        if (diffDays < 7) return `há ${diffDays}d`;
+        return d.toLocaleDateString('pt-BR');
+      } catch (e) {
+        return '';
       }
     }
 
@@ -969,10 +1687,17 @@
                       ${item.imdb_url ? `
                         <a href="${item.imdb_url}" target="_blank" onclick="event.stopPropagation()"
                           class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-yellow-600/20 hover:bg-yellow-600/30 text-yellow-400 border border-yellow-600/30 rounded-lg text-xs font-semibold transition">
-                          <i class="fa-brands fa-imdb text-yellow-400"></i> IMDb
-                        </a>
-                      ` : ''}
+                      <button onclick="toggleCommentsSection('${item.id}', event)" 
+                        id="btn-comment-trigger-${item.id}"
+                        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs transition"
+                        title="Comentários e discussões">
+                        <i class="fa-regular fa-comment text-sm"></i>
+                        <span id="comment-btn-count-${item.id}" class="text-[11px] font-medium hidden">0</span>
+                      </button>
                     </div>
+
+                    <!-- Discrete Comments Drawer Container -->
+                    <div id="comments-section-${item.id}" class="hidden mt-4 pt-3 border-t border-zinc-800/80"></div>
                   </div>
                 </div>
               </div>
@@ -1080,7 +1805,20 @@
                           <i class="fa-brands fa-imdb text-yellow-400"></i> Ficha IMDb
                         </a>
                       ` : ''}
+
+                      <!-- Discrete Instagram-like comment trigger button -->
+                      <button onclick="toggleCommentsSection('${item.id}', event)" 
+                        id="btn-comment-trigger-${item.id}"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs font-medium transition ml-auto sm:ml-0"
+                        title="Comentários e discussões">
+                        <i class="fa-regular fa-comment text-sm"></i>
+                        <span class="text-xs">Comentários</span>
+                        <span id="comment-btn-count-${item.id}" class="text-[10px] bg-zinc-800 px-1.5 py-0.2 rounded font-bold text-zinc-300 hidden">0</span>
+                      </button>
                     </div>
+
+                    <!-- Discrete Comments Drawer Container -->
+                    <div id="comments-section-${item.id}" class="hidden mt-4 pt-4 border-t border-zinc-800/80"></div>
                   </div>
                 </div>
               </div>

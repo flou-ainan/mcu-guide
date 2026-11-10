@@ -1,83 +1,51 @@
-# 🛡️ Guia Marvel Studios MCU - Timeline & Scraper
+# 🛡️ Guia Marvel Studios MCU - Ordem de Maratona
 
-Guia cinematográfico interativo do Universo Cinematográfico Marvel (MCU) com suporte à **Ordem de Lançamento** e **Ordem Cronológica**, filtros por Fase, checklist de progresso salvo localmente, capas oficiais em alta resolução, sinopses sem spoiler em português e trailers oficiais integrados.
-
-Pronto para deploy direto no **GitHub Pages**!
+> 🎬 **Acesse online:** [https://flou-ainan.github.io/mcu-guide/](https://flou-ainan.github.io/mcu-guide/)
 
 ---
 
-## 📁 Estrutura dos Arquivos
+## 💡 Sobre o Projeto
 
-| Arquivo | Descrição |
-|---|---|
-| `scraper.py` | Script Python autônomo que realiza o scraping de capas oficiais (IMDb) e trailers oficiais (YouTube), consolidando tudo com sinopses sem spoiler em PT-BR. |
-| `mcu_data.json` | Dataset JSON completo com **52 produções** (filmes e séries da Fase 1 à Fase 5/6), capas em alta definição, links de trailer e metadados. |
-| `data.js` | Exportação JavaScript dos dados para permitir execução 100% offline (mesmo abrindo direto via dois cliques no navegador, sem erro de CORS). |
-| `index.html` | Aplicação web interativa estilizada com visual oficial Marvel Studios, Tailwind CSS, FontAwesome e player de trailer em pop-up. |
+Criei este projeto originalmente para mim e minha família podermos assistir aos filmes e séries do **Universo Cinematográfico Marvel (MCU)** na ordem correta e de forma prática. 
+
+Como sempre tínhamos dificuldade em saber a sequência ideal, diferenciar ordem de lançamento de ordem cronológica e lembrar onde tínhamos parado, desenvolvi este guia com checklist interativo.
+
+Decidi disponibilizar o projeto publicamente para ajudar outras pessoas e famílias que também têm essa mesma intenção e sentem dificuldade em encontrar a ordem exata e acompanhar seu progresso de maratona.
 
 ---
 
-## 🚀 Como Executar o Scraper Localmente
+## ✨ Funcionalidades
 
-Se quiser atualizar os dados ou rodar o scraper novamente:
+- 🍿 **Ordem de Lançamento vs. Cronológica:** Alternância imediata entre a ordem em que os filmes saíram no cinema (recomendada para evitar spoilers) e a linha do tempo histórica interna do universo Marvel.
+- 🖼️ **Capas Oficiais:** Miniaturas dos pôsteres na listagem e opção de clicar para abrir a capa em alta resolução em tela cheia.
+- 📺 **Séries Opcionais e Compactas:** As séries aparecem em texto discreto e podem ser ocultadas com um clique para quem quer focar apenas nos filmes.
+- 🎬 **Trailers Oficiais Integrados:** Assista ao trailer dublado/legendado em um pop-up direto na página ou abra no YouTube.
+- 📖 **Sinopses Sem Spoiler:** Resumos em português cuidadosamente selecionados para contar apenas a premissa, sem estragar surpresas.
+- 🔍 **Busca Bilíngue e Inteligente:** Pesquise por títulos em português ou em inglês (ex: *Vingadores* ou *Avengers*, *Homem de Ferro* ou *Iron Man*), sem se preocupar com acentos.
+- 💾 **Checklist & Backup:** Salva automaticamente seu progresso no navegador e possui botões para **Exportar** e **Importar** suas marcações em arquivo `.json`.
+
+---
+
+## 🛠️ Como rodar localmente
+
+Se quiser clonar e rodar na sua máquina:
 
 ```bash
-# Execução normal (utiliza cache inteligente para ser rápido)
-python3 scraper.py
+# Clone o repositório
+git clone https://github.com/flou-ainan/mcu-guide.git
 
-# Para forçar nova busca completa na web
-python3 scraper.py --force
+# Acesse a pasta
+cd mcu-guide
+
+# Inicie um servidor local
+python3 -m http.server 8080
 ```
 
-O script atualizará automaticamente o `mcu_data.json` e o `data.js`.
+Abra no navegador em `http://localhost:8080/index.html`.
 
 ---
 
-## 💻 Testando o Site Localmente
+## 👨‍💻 Autor
 
-Você tem duas opções simples:
-
-### Opção 1: Abrir direto
-Dê um duplo clique no arquivo `index.html` ou abra pelo navegador:
-```bash
-google-chrome index.html
-```
-
-### Opção 2: Servidor local HTTP
-```bash
-python3 -m http.server 8000
-```
-Acesse em seu navegador: [http://localhost:8000](http://localhost:8000)
-
----
-
-## 🌐 Como Subir no GitHub Pages
-
-1. Crie um repositório no seu GitHub (exemplo: `mcu-guide`).
-2. No terminal deste projeto, faça o commit e envie os arquivos:
-   ```bash
-   git add .
-   git commit -m "feat: site MCU com scraper de capas, trailers e sinopses sem spoiler"
-   git branch -M main
-   git remote add origin https://github.com/SEU_USUARIO/mcu-guide.git
-   git push -u origin main
-   ```
-3. No GitHub:
-   - Acesse **Settings** > **Pages**
-   - Em **Build and deployment** > **Source**, selecione **Deploy from a branch**
-   - Escolha a branch **main** e a pasta **/ (root)**
-   - Clique em **Save**
-4. Em poucos segundos, seu site estará no ar na URL:  
-   `https://SEU_USUARIO.github.io/mcu-guide/`
-
----
-
-## ✨ Funcionalidades do Site
-
-- 🎬 **Ordem de Lançamento vs Cronológica**: Alternância em 1 clique com explicações sobre spoilers e evolução técnica.
-- 📺 **Séries em Visual Compacto**: Séries formatadas de forma sutil com `<small>`, além de botão rápido **"Ocultar Séries"**.
-- 🖼️ **Capas Oficiais**: Miniaturas em alta definição nos detalhes expansíveis de cada obra.
-- 🍿 **Trailers Oficiais**: Botão para assistir em pop-up/modal direto na página ou abrir no YouTube.
-- 📖 **Sinopses Sem Spoiler**: Textos em português cuidadosamente elaborados para apresentar apenas a premissa.
-- 🔍 **Busca em Tempo Real & Filtro de Fases**: Filtre da Fase 1 à Fase 6 ou busque por nome de personagens e títulos.
-- 💾 **Checklist & Progresso Persistente**: Marcação de filmes/séries assistidos com contador percentual salvo no `localStorage`.
+Desenvolvido por **[flou-ainan](https://github.com/flou-ainan)**.  
+Se o projeto te ajudou a maratonar com a família ou amigos, sinta-se à vontade para deixar uma ⭐ no repositório!

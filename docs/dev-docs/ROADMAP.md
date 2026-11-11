@@ -2,21 +2,19 @@
 
 **The one list of what is left.** Keep this list updated as tasks are planned and executed.
 
-**Last updated:** 2026-11-11 (step 02: Gravatar → Google avatar fallback & GitHub Pages publish).
+**Last updated:** 2026-11-11 (step 06: watched status filter, profile customization, mobile order toggle polish & GitHub Pages deploy).
 
-## Now: post-deploy configuration
+## Now: external configuration
 
 | Item | Plan | Notes |
 |---|---|---|
-| **Google OAuth Branding URLs** | — | Paste live `https://flou-ainan.github.io/mcu-guide/privacy.html` & `terms.html` URLs in Google Auth Platform Branding and submit verification if required. |
+| **Supabase Auth URL Configuration** | — | Set `Site URL` to `https://flou-ainan.github.io/mcu-guide/` and add both production and `http://localhost:8080/**` to `Redirect URLs` in Supabase Dashboard so production Google OAuth returns to GitHub Pages. |
 
 ## Next: ideas & improvements
 
 | Idea | Notes |
 |---|---|
-| Profile avatar & username customization | Allow users to set a custom display name instead of parsing email/OAuth names. |
-| Filter by watched status | Add a quick toggle button to show only "Unwatched" or "Watched" movies. |
-| Chronological vs Release order toggle polish | Further visual refinements if needed. |
+| *No open items yet* | Add new feature ideas here as needed. |
 
 ## Done (recent)
 
@@ -34,6 +32,26 @@
   - Switched Gravatar lookup to `d=404` with automatic fallback to Google OAuth profile photo (`user_metadata.avatar_url` / `picture`), then initials/cloud icon across navbar, auth modal, comments, and replies.
   - Persisted `avatar_url` on `public.mcu_comments` inserts so other viewers see the commenter's Google photo when Gravatar is absent.
   - Published updates to `origin/main` (GitHub Pages).
+- **Step 03 (2026-11-11, Plan 03 — local):**
+  - Replaced `MCU Canon` / `Ignorável` with top-right floating badges `Canônico MCU` and `Não Canônico` visible on both mobile and desktop.
+  - Scoped watched opacity fade solely to collapsed card/episode summary rows so expanded synopses, episode lists, and comments remain at full contrast (`opacity: 1`).
+  - Added collapsed series card progress bar + `%` (visible only when `watchedEps > 0` and collapsed; hides when expanded while keeping progress bar + `%` inside `Episódios` on mobile & desktop).
+  - Updated navbar GitHub text to `Conheça o projeto` on wide screens (`hidden md:inline`) and unified series/movie/episode `Comentários` buttons via `renderCommentsTriggerButton`.
+- **Step 04 (2026-11-11, Plan 04 — local):**
+  - Fixed comment Markdown rendering: replaced dead Tailwind `prose` classes with dedicated `.comment-markdown` CSS rules, pinned `marked@15` + `DOMPurify@3`, normalized heading sizes (`#..###` -> `h4..h6`), constrained comment images (`max-height: 220px`, `object-fit: contain`, delegated zoom modal), and hardened links/XSS.
+  - Added **Escrever / Preview** toggle selector (`setCommentEditorMode`) in the comment composer.
+  - Added `RESPOSTAS (${replies.length})` label above nested comment replies and renamed `Não Canônico` back to `Ignorável`.
+- **Step 05 (2026-11-11, Plan 05):**
+  - Normalized scheme-less Markdown link/image domains (`normalizeSafeExternalUrl`), added broken-image fallback link pill, and added quick Markdown toolbar (`B`, `I`, `H`, `Link`, `Img`, `</>`).
+  - Added full `DD/MM/YYYY às HH:mm` timestamps, inline author comment/reply editing, and clickable `edited` badge opening `#edit-history-modal`.
+  - Applied PageSpeed/UX upgrades: YouTube-style skeleton shimmer cards, immediate `DOMContentLoaded` render from `data.js`, `preconnect`, non-blocking FontAwesome, deferred Markdown/DOMPurify scripts, `content-visibility: auto`, and IMDb resized posters (`_V1_SX40_` blur-up -> `_V1_SX120_` mini-thumbs -> `_V1_SX320_` detail -> full `_V1_.jpg` zoom).
+  - Changed collapsed mini-thumbnails to expand the card instead of opening zoom modal.
+  - Added `post_credits` counts and start timestamps across all 37 movies with expandable post-credits badge panels.
+- **Step 06 (2026-11-11, Plan 06):**
+  - Verified live Supabase `edited_at`/`edit_history` migration (`HTTP 200`).
+  - Added watched status filter (`Todos`, `Não assistidos`, `Assistidos`) next to phase chips.
+  - Added profile customization form inside logged-in Auth Modal (`display_name` & `custom_avatar_url` persisted via `supabase.auth.updateUser` and propagated to navbar & `public.mcu_comments`).
+  - Polished Chronological vs Release order toggle responsiveness for `360px` mobile screens (zero horizontal overflow) and published Steps 03–06 to `origin/main` (GitHub Pages).
 
 ## Plans at a glance
 
@@ -41,3 +59,7 @@
 |---|---|
 | [plan_01_episodes_gravatar_reactions_legal.md](planning/plan_01_episodes_gravatar_reactions_legal.md) | done |
 | [plan_02_google_avatar_fallback_and_deploy.md](planning/plan_02_google_avatar_fallback_and_deploy.md) | done |
+| [plan_03_card_badges_fade_progress_ux.md](planning/plan_03_card_badges_fade_progress_ux.md) | done |
+| [plan_04_markdown_preview_replies_ignorable.md](planning/plan_04_markdown_preview_replies_ignorable.md) | done |
+| [plan_05_markdown_links_edit_pagespeed_postcredits.md](planning/plan_05_markdown_links_edit_pagespeed_postcredits.md) | done |
+| [plan_06_watched_filter_and_profile_customization.md](planning/plan_06_watched_filter_and_profile_customization.md) | done |

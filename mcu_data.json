@@ -25,7 +25,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/-006iHDHK34",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=4IFeP-tdvGY",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/4IFeP-tdvGY"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/4IFeP-tdvGY",
+    "post_credits": {
+      "count": 1,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:03:00"
+        }
+      ]
+    }
   },
   {
     "id": "cm",
@@ -53,7 +63,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/EOqelPmvskY",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=FV7AxLbHcrE",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/FV7AxLbHcrE"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/FV7AxLbHcrE",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:00:20"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:03:45"
+        }
+      ]
+    }
   },
   {
     "id": "im1",
@@ -81,7 +105,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/j_Ez4QVs_1g",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=yP6Hy-FBaw0",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/yP6Hy-FBaw0"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/yP6Hy-FBaw0",
+    "post_credits": {
+      "count": 1,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:59:40"
+        }
+      ]
+    }
   },
   {
     "id": "im2",
@@ -109,7 +143,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/msxQMX9Nczk",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=hsT-xTBj7is",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/hsT-xTBj7is"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/hsT-xTBj7is",
+    "post_credits": {
+      "count": 1,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:57:30"
+        }
+      ]
+    }
   },
   {
     "id": "hulk",
@@ -137,7 +181,12 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/vZWg0TBJSD4",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=vZWg0TBJSD4",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/vZWg0TBJSD4"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/vZWg0TBJSD4",
+    "post_credits": {
+      "count": 0,
+      "note": "Não possui cena após os créditos (a cena com Tony Stark ocorre antes da rolagem dos créditos, por volta de 01:47:00).",
+      "scenes": []
+    }
   },
   {
     "id": "thor1",
@@ -165,7 +214,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/RPNQ9Iz8hag",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=TyJIwpnqdsc",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/TyJIwpnqdsc"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/TyJIwpnqdsc",
+    "post_credits": {
+      "count": 1,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:50:30"
+        }
+      ]
+    }
   },
   {
     "id": "av1",
@@ -193,7 +252,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/KeNEGtsCWEk",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=6Y6zOSn8ff4",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/6Y6zOSn8ff4"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/6Y6zOSn8ff4",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:16:35"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:22:05"
+        }
+      ]
+    }
   },
   {
     "id": "im3",
@@ -221,7 +294,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/igfXmU1r_mc",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=s7MHXDEdjS0",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/s7MHXDEdjS0"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/s7MHXDEdjS0",
+    "post_credits": {
+      "count": 1,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:10:00"
+        }
+      ]
+    }
   },
   {
     "id": "aos_s1",
@@ -439,7 +522,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/Cl-Xkm-6Psw",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=5sUfuOj7zOw",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/5sUfuOj7zOw"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/5sUfuOj7zOw",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:52:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:55:00"
+        }
+      ]
+    }
   },
   {
     "id": "ca2",
@@ -467,7 +564,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/Fl89Ym_fQJc",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=tbayiPxkUMM",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/tbayiPxkUMM"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/tbayiPxkUMM",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:06:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:10:00"
+        }
+      ]
+    }
   },
   {
     "id": "aos_s1_end",
@@ -585,7 +696,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/TIKTVMb7750",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=8VN_l57QWyQ",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/8VN_l57QWyQ"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/8VN_l57QWyQ",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:56:45"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:00:10"
+        }
+      ]
+    }
   },
   {
     "id": "gotg2",
@@ -613,7 +738,33 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/6FVulnc4poc",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=4-i8nTNSQFI",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/4-i8nTNSQFI"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/4-i8nTNSQFI",
+    "post_credits": {
+      "count": 5,
+      "note": "São 5 vinhetas rápidas distribuídas ao longo dos créditos.",
+      "scenes": [
+        {
+          "type": "Meio dos créditos (Kraglin)",
+          "timestamp": "~02:17:00"
+        },
+        {
+          "type": "Créditos (Saqueadores)",
+          "timestamp": "~02:20:00"
+        },
+        {
+          "type": "Créditos (Adam)",
+          "timestamp": "~02:23:00"
+        },
+        {
+          "type": "Créditos (Groot adolescente)",
+          "timestamp": "~02:26:00"
+        },
+        {
+          "type": "Fim dos créditos (Stan Lee e Vigias)",
+          "timestamp": "~02:28:00"
+        }
+      ]
+    }
   },
   {
     "id": "daredevil_s1",
@@ -801,7 +952,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/lGO6FcnZ0ek",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=lGO6FcnZ0ek",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/lGO6FcnZ0ek"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/lGO6FcnZ0ek",
+    "post_credits": {
+      "count": 1,
+      "note": "Apenas 1 cena no meio dos créditos (não há cena ao final).",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:15:20"
+        }
+      ]
+    }
   },
   {
     "id": "ant1",
@@ -829,7 +990,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/jbbJ5WoLc1I",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=wITUolzfkwI",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/wITUolzfkwI"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/wITUolzfkwI",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:52:10"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:55:35"
+        }
+      ]
+    }
   },
   {
     "id": "ca3",
@@ -857,7 +1032,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/eLAFMkLnf3M",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=FRLYZn5PGuA",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/FRLYZn5PGuA"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/FRLYZn5PGuA",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:22:40"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:26:30"
+        }
+      ]
+    }
   },
   {
     "id": "bw",
@@ -885,7 +1074,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/uNAxHLp7wv8",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=dwzJ-oi7BbI",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/dwzJ-oi7BbI"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/dwzJ-oi7BbI",
+    "post_credits": {
+      "count": 1,
+      "note": "Apenas 1 cena pós-créditos.",
+      "scenes": [
+        {
+          "type": "Meio/Fim dos créditos",
+          "timestamp": "~02:08:00"
+        }
+      ]
+    }
   },
   {
     "id": "bp",
@@ -913,7 +1112,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/H6A6GvryOG8",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=wL4a4MafSjQ",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/wL4a4MafSjQ"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/wL4a4MafSjQ",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:07:35"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:11:15"
+        }
+      ]
+    }
   },
   {
     "id": "sm1",
@@ -941,7 +1154,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/2x-2iYxgMFU",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=LBRrh_97QZI",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/LBRrh_97QZI"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/LBRrh_97QZI",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:04:10"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:11:45"
+        }
+      ]
+    }
   },
   {
     "id": "ds1",
@@ -969,7 +1196,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/oaLko5zhjgY",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=YUfWrIcX4zw",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/YUfWrIcX4zw"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/YUfWrIcX4zw",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:50:15"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:53:40"
+        }
+      ]
+    }
   },
   {
     "id": "thor3",
@@ -997,7 +1238,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/8zJkPuHtZhU",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=UvNnqWLruXA",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/UvNnqWLruXA"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/UvNnqWLruXA",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:03:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:09:00"
+        }
+      ]
+    }
   },
   {
     "id": "ant2",
@@ -1025,7 +1280,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/6jIz_8tokvg",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=g1BbrEGkRuc",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/g1BbrEGkRuc"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/g1BbrEGkRuc",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:51:20"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:56:50"
+        }
+      ]
+    }
   },
   {
     "id": "av3",
@@ -1053,7 +1322,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/HTzdzyUVpoI",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=6ZfuNTqbHE8",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/6ZfuNTqbHE8"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/6ZfuNTqbHE8",
+    "post_credits": {
+      "count": 1,
+      "note": "Apenas 1 cena no meio dos créditos (sem cena ao final).",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:24:20"
+        }
+      ]
+    }
   },
   {
     "id": "av4",
@@ -1081,7 +1360,12 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/LMOqLeoP2yw",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=PgrmbRID0eY",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/PgrmbRID0eY"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/PgrmbRID0eY",
+    "post_credits": {
+      "count": 0,
+      "note": "Sem cena visual pós-créditos (apenas o áudio de Tony Stark forjando a armadura ao fim dos créditos, ~02:58:00).",
+      "scenes": []
+    }
   },
   {
     "id": "sm2",
@@ -1109,7 +1393,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/vaw_8DoqXfk",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=66q4mux5ZDw",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/66q4mux5ZDw"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/66q4mux5ZDw",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:02:20"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:06:50"
+        }
+      ]
+    }
   },
   {
     "id": "loki_s1",
@@ -1697,7 +1995,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/AfHiUtxrmiY",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=wAmkU6FEKUw",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/wAmkU6FEKUw"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/wAmkU6FEKUw",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:02:30"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:09:30"
+        }
+      ]
+    }
   },
   {
     "id": "fatws",
@@ -1815,7 +2127,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/PJza3ZaFeAU",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=M2thvvomqM4",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/M2thvvomqM4"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/M2thvvomqM4",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:23:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:31:30"
+        }
+      ]
+    }
   },
   {
     "id": "sm3",
@@ -1843,7 +2169,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/bHzGeci_8wc",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=4tJicABKq_w",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/4tJicABKq_w"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/4tJicABKq_w",
+    "post_credits": {
+      "count": 2,
+      "note": "Na edição estendida (More Fun Stuff Version), os timestamps avançam ~10 min.",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:16:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:25:00"
+        }
+      ]
+    }
   },
   {
     "id": "hawkeye",
@@ -2051,7 +2391,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/X23XCFgdh2M",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=X23XCFgdh2M",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/X23XCFgdh2M"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/X23XCFgdh2M",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:57:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:04:00"
+        }
+      ]
+    }
   },
   {
     "id": "msmarvel",
@@ -2169,7 +2523,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/1c_W_4cNLn0",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=waTob1IM4UM",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/waTob1IM4UM"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/waTob1IM4UM",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:50:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:56:00"
+        }
+      ]
+    }
   },
   {
     "id": "shehulk",
@@ -2317,7 +2685,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/FR9iLjOubWc",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=qFWD0tBYbKw",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/qFWD0tBYbKw"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/qFWD0tBYbKw",
+    "post_credits": {
+      "count": 1,
+      "note": "Apenas 1 cena no meio dos créditos (encerra com o cartão 'Black Panther will return').",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:31:00"
+        }
+      ]
+    }
   },
   {
     "id": "ant3",
@@ -2345,7 +2723,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/yWqTMHy_-2I",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=Wiqx2kJ8kjk",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/Wiqx2kJ8kjk"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/Wiqx2kJ8kjk",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:55:30"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:02:30"
+        }
+      ]
+    }
   },
   {
     "id": "gotg3",
@@ -2373,7 +2765,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/5UVaA6SGRZA",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=JPaGymqJyfA",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/JPaGymqJyfA"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/JPaGymqJyfA",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:19:30"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:26:30"
+        }
+      ]
+    }
   },
   {
     "id": "invasion",
@@ -2491,7 +2897,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/YxL9wTkEgSY",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=YxL9wTkEgSY",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/YxL9wTkEgSY"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/YxL9wTkEgSY",
+    "post_credits": {
+      "count": 1,
+      "note": "Apenas 1 cena visual no meio dos créditos (e breve gag sonora de Flerken ao fim).",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:35:00"
+        }
+      ]
+    }
   },
   {
     "id": "echo",
@@ -2599,7 +3015,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/JjnzxHdZtYY",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=K6lJSJXSdfI",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/K6lJSJXSdfI"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/K6lJSJXSdfI",
+    "post_credits": {
+      "count": 1,
+      "note": "Montagem de bastidores durante os créditos + 1 cena final.",
+      "scenes": [
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:06:00"
+        }
+      ]
+    }
   },
   {
     "id": "agatha",
@@ -2747,7 +3173,17 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/NP2xle2cmf0",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=SCqjO_6HWuk",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/SCqjO_6HWuk"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/SCqjO_6HWuk",
+    "post_credits": {
+      "count": 1,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~01:56:00"
+        }
+      ]
+    }
   },
   {
     "id": "thunderbolts",
@@ -2775,7 +3211,21 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/MaLy0D2FTDc",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=NB869hDRLgs",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/NB869hDRLgs"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/NB869hDRLgs",
+    "post_credits": {
+      "count": 2,
+      "note": "A cena final dura cerca de 2m54s.",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~02:02:00"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:03:45"
+        }
+      ]
+    }
   },
   {
     "id": "daredevil_ba",
@@ -3003,6 +3453,20 @@
     "trailer_dublado_embed": "https://www.youtube.com/embed/CcSIvhDlYWw",
     "trailer_legendado_id": "",
     "trailer_legendado_url": "https://www.youtube.com/watch?v=9ATWNvFDOcU",
-    "trailer_legendado_embed": "https://www.youtube.com/embed/9ATWNvFDOcU"
+    "trailer_legendado_embed": "https://www.youtube.com/embed/9ATWNvFDOcU",
+    "post_credits": {
+      "count": 2,
+      "note": "",
+      "scenes": [
+        {
+          "type": "Meio dos créditos",
+          "timestamp": "~01:56:30"
+        },
+        {
+          "type": "Fim dos créditos",
+          "timestamp": "~02:03:00"
+        }
+      ]
+    }
   }
 ]

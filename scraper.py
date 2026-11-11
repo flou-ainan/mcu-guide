@@ -1069,6 +1069,8 @@ def run_scraper(output_file="mcu_data.json", force_refresh=False):
         }
         if item["type"] == "series":
             record["episodes"] = episodes
+        elif cached.get("post_credits"):
+            record["post_credits"] = cached["post_credits"]
         scraped_records.append(record)
 
     with open(output_file, 'w', encoding='utf-8') as f:

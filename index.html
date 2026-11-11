@@ -36,6 +36,15 @@
   <meta name="twitter:title" content="Guia de Maratona MCU - Marvel Studios">
   <meta name="twitter:description" content="Ordem cronológica, lançamento, trailers dublados/legendados e checklist interativo de progresso do Universo Cinematográfico Marvel.">
   <meta name="twitter:image" content="https://flou-ainan.github.io/mcu-guide/og-image-1200x630.jpg">
+  <!-- Performance: Preconnect & DNS Prefetch -->
+  <link rel="preconnect" href="https://m.media-amazon.com" crossorigin>
+  <link rel="dns-prefetch" href="https://m.media-amazon.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://fcwseeibamfdtmmvjjyh.supabase.co" crossorigin>
+  <link rel="preload" as="image" href="hero-banner.webp" type="image/webp" fetchpriority="high">
+
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -60,9 +69,12 @@
       }
     }
   </script>
-  <!-- Marked.js for safe Markdown rendering in comments -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Marked.js + DOMPurify for safe Markdown rendering in comments (deferred for PageSpeed) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@15/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <!-- Non-blocking FontAwesome CSS for faster First Contentful Paint -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   <style>
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
@@ -88,6 +100,142 @@
       transform: scaleY(0.95);
       display: inline-block;
     }
+    /* Scoped Markdown styling for comments & previews */
+    .comment-markdown {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .comment-markdown > :first-child { margin-top: 0; }
+    .comment-markdown > :last-child { margin-bottom: 0; }
+    .comment-markdown p { margin: 0.4em 0; line-height: 1.55; }
+    .comment-markdown h4 {
+      font-size: 0.92rem;
+      line-height: 1.35;
+      font-weight: 700;
+      color: #f4f4f5;
+      margin: 0.6em 0 0.3em;
+      padding-bottom: 0.15em;
+      border-bottom: 1px solid rgba(63, 63, 70, 0.55);
+    }
+    .comment-markdown h5 {
+      font-size: 0.84rem;
+      line-height: 1.35;
+      font-weight: 700;
+      color: #e4e4e7;
+      margin: 0.5em 0 0.25em;
+    }
+    .comment-markdown h6 {
+      font-size: 0.78rem;
+      line-height: 1.35;
+      font-weight: 600;
+      color: #d4d4d8;
+      margin: 0.45em 0 0.2em;
+    }
+    .comment-markdown strong, .comment-markdown b { font-weight: 700; color: #fafafa; }
+    .comment-markdown em, .comment-markdown i { font-style: italic; color: #e4e4e7; }
+    .comment-markdown del, .comment-markdown s { text-decoration: line-through; color: #71717a; }
+    .comment-markdown a {
+      color: #38bdf8;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      word-break: break-word;
+    }
+    .comment-markdown a:hover { color: #7dd3fc; }
+    .comment-markdown ul { list-style-type: disc; padding-left: 1.35em; margin: 0.4em 0; }
+    .comment-markdown ol { list-style-type: decimal; padding-left: 1.35em; margin: 0.4em 0; }
+    .comment-markdown li { margin: 0.15em 0; }
+    .comment-markdown li > input[type="checkbox"] {
+      margin-right: 0.35em;
+      accent-color: #E23636;
+      vertical-align: middle;
+    }
+    .comment-markdown blockquote {
+      border-left: 3px solid #E23636;
+      padding: 0.25em 0.75em;
+      margin: 0.45em 0;
+      color: #a1a1aa;
+      background: rgba(24, 24, 27, 0.75);
+      border-radius: 0 0.375rem 0.375rem 0;
+    }
+    .comment-markdown code {
+      background: #18181b;
+      border: 1px solid #27272a;
+      color: #fbbf24;
+      padding: 0.1em 0.35em;
+      border-radius: 0.25rem;
+      font-size: 0.9em;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      word-break: break-word;
+    }
+    .comment-markdown pre {
+      background: #09090b;
+      border: 1px solid #27272a;
+      border-radius: 0.5rem;
+      padding: 0.65em 0.8em;
+      margin: 0.45em 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    .comment-markdown pre code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: #e4e4e7;
+      font-size: 0.85em;
+      white-space: pre;
+      word-break: normal;
+    }
+    .comment-markdown hr {
+      border: none;
+      border-top: 1px solid #27272a;
+      margin: 0.6em 0;
+    }
+    .comment-markdown img {
+      display: block;
+      max-width: 100%;
+      max-height: 220px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 0.5rem;
+      border: 1px solid #27272a;
+      background: #000;
+      margin: 0.5em 0;
+      cursor: zoom-in;
+    }
+    .comment-markdown table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.45em 0;
+      font-size: 0.9em;
+      display: block;
+      overflow-x: auto;
+    }
+    .comment-markdown th, .comment-markdown td {
+      border: 1px solid #27272a;
+      padding: 0.3em 0.55em;
+      text-align: left;
+    }
+    .comment-markdown th {
+      background: #18181b;
+      color: #f4f4f5;
+      font-weight: 600;
+    }
+    /* PageSpeed: skip layout/paint on off-screen timeline cards */
+    .mcu-timeline-card {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 92px;
+    }
+    /* YouTube-style Shimmer Skeleton Loading */
+    @keyframes mcuShimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .skeleton-shimmer {
+      background: linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%);
+      background-size: 200% 100%;
+      animation: mcuShimmer 1.4s ease-in-out infinite;
+    }
   </style>
 </head>
 <body class="bg-[#0b0b0e] text-zinc-100 min-h-screen font-sans selection:bg-marvel-red selection:text-white">
@@ -104,15 +252,16 @@
 
       <div class="flex items-center gap-3">
         <a href="https://github.com/flou-ainan/mcu-guide" target="_blank"
+          title="Conheça o projeto no GitHub" aria-label="Conheça o projeto no GitHub"
           class="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition">
-          <i class="fa-brands fa-github text-sm"></i> <span class="hidden sm:inline">GitHub</span>
+          <i class="fa-brands fa-github text-sm"></i> <span class="hidden md:inline">Conheça o projeto</span>
         </a>
         <!-- Prominent Top-Right Login Button -->
         <button id="auth-btn" onclick="openAuthModal()"
           class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-lg border transition bg-zinc-900 hover:bg-zinc-800 border-sky-500/50 hover:border-sky-400 text-sky-400 hover:text-white shadow">
           <i id="auth-btn-cloud" class="fa-solid fa-cloud text-xs text-sky-400"></i>
           <img id="auth-btn-avatar" src="" alt="Avatar" class="w-5 h-5 rounded-full object-cover border border-emerald-400/60 hidden">
-          <span id="auth-btn-label">Login</span>
+          <span id="auth-btn-label" class="max-w-[110px] sm:max-w-[160px] truncate">Login</span>
         </button>
       </div>
     </div>
@@ -127,7 +276,8 @@
       <div class="relative w-full overflow-hidden sm:rounded-2xl border-y sm:border border-red-950/40 shadow-2xl bg-black">
         <picture>
           <source srcset="hero-banner.webp" type="image/webp">
-          <img src="hero-banner.jpg" alt="Guia de Maratona MCU - Marvel Studios" 
+          <img src="hero-banner.jpg" alt="Guia de Maratona MCU - Marvel Studios"
+            width="2048" height="718" fetchpriority="high" decoding="async"
             class="w-full h-auto object-cover max-h-[260px] sm:max-h-[420px] block"
             loading="eager">
         </picture>
@@ -188,15 +338,15 @@
       <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
         
         <!-- Mode Switch: Release vs Chrono -->
-        <div class="flex items-center bg-zinc-950 p-1.5 rounded-xl border border-zinc-800 w-full sm:w-auto">
+        <div class="flex flex-wrap sm:flex-nowrap items-center bg-zinc-950 p-1 rounded-xl border border-zinc-800 w-full sm:w-auto gap-1">
           <button id="btn-order-release" onclick="setOrder('release')"
-            class="flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 bg-marvel-red text-white shadow-md">
-            <i class="fa-solid fa-film"></i> Ordem de Lançamento
-            <span class="text-[10px] bg-red-950/60 text-yellow-300 font-bold px-1.5 py-0.5 rounded border border-yellow-500/30">Recomendada</span>
+            class="flex-1 sm:flex-none px-2.5 sm:px-4 py-2 text-[11px] sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 bg-marvel-red text-white shadow-md whitespace-nowrap">
+            <i class="fa-solid fa-film"></i> <span><span class="hidden sm:inline">Ordem de </span>Lançamento</span>
+            <span class="text-[9px] sm:text-[10px] bg-red-950/60 text-yellow-300 font-bold px-1.5 py-0.5 rounded border border-yellow-500/30">Recomendada</span>
           </button>
           <button id="btn-order-chrono" onclick="setOrder('chrono')"
-            class="flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all text-zinc-400 hover:text-white flex items-center justify-center gap-2">
-            <i class="fa-solid fa-clock"></i> Cronológica
+            class="flex-1 sm:flex-none px-2.5 sm:px-4 py-2 text-[11px] sm:text-sm font-semibold rounded-lg transition-all text-zinc-400 hover:text-white flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap">
+            <i class="fa-solid fa-clock"></i> <span>Cronológica</span>
           </button>
         </div>
 
@@ -219,16 +369,24 @@
         </div>
       </div>
 
-      <!-- Phase / Saga Filter Chips -->
-      <div class="flex items-center gap-2 overflow-x-auto pt-4 mt-3 border-t border-zinc-800/60 pb-1 text-xs">
-        <span class="text-zinc-500 font-medium uppercase tracking-wider text-[11px] whitespace-nowrap mr-1">Fases:</span>
-        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-800 text-white font-medium hover:bg-zinc-700 transition active" data-phase="all">Todas</button>
-        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="1">Fase 1</button>
-        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="2">Fase 2</button>
-        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="3">Fase 3</button>
-        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="4">Fase 4</button>
-        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="5">Fase 5</button>
-        <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition" data-phase="6">Fase 6</button>
+      <!-- Phase / Saga Filter Chips + Watched Status Filter -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 mt-3 border-t border-zinc-800/60 text-xs">
+        <div class="flex items-center gap-2 overflow-x-auto pb-1">
+          <span class="text-zinc-500 font-medium uppercase tracking-wider text-[11px] whitespace-nowrap mr-1">Fases:</span>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-800 text-white font-medium hover:bg-zinc-700 transition active whitespace-nowrap" data-phase="all">Todas</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition whitespace-nowrap" data-phase="1">Fase 1</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition whitespace-nowrap" data-phase="2">Fase 2</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition whitespace-nowrap" data-phase="3">Fase 3</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition whitespace-nowrap" data-phase="4">Fase 4</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition whitespace-nowrap" data-phase="5">Fase 5</button>
+          <button class="phase-filter-btn px-3 py-1.5 rounded-lg bg-zinc-950 text-zinc-400 font-medium hover:bg-zinc-800 transition whitespace-nowrap" data-phase="6">Fase 6</button>
+        </div>
+
+        <div class="inline-flex items-center self-start sm:self-auto bg-zinc-950 p-1 rounded-xl border border-zinc-800 shrink-0" role="group" aria-label="Filtrar por status de visualização">
+          <button type="button" onclick="setWatchedStatusFilter('all')" class="status-filter-btn px-2.5 py-1 rounded-lg font-medium bg-zinc-800 text-white transition" data-status="all">Todos</button>
+          <button type="button" onclick="setWatchedStatusFilter('unwatched')" class="status-filter-btn px-2.5 py-1 rounded-lg font-medium text-zinc-400 hover:text-white transition" data-status="unwatched">Não assistidos</button>
+          <button type="button" onclick="setWatchedStatusFilter('watched')" class="status-filter-btn px-2.5 py-1 rounded-lg font-medium text-zinc-400 hover:text-white transition" data-status="watched">Assistidos</button>
+        </div>
       </div>
     </div>
 
@@ -244,10 +402,56 @@
     </div>
 
     <!-- Timeline List Container -->
-    <div id="timeline-container" class="space-y-3">
-      <div class="text-center py-12 text-zinc-500">
-        <i class="fa-solid fa-circle-notch fa-spin text-3xl mb-2 text-marvel-red"></i>
-        <p>Carregando catálogo do MCU...</p>
+    <div id="timeline-container" class="space-y-4">
+      <div aria-hidden="true" class="space-y-4">
+        <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70">
+          <div class="w-4 h-4 rounded skeleton-shimmer shrink-0"></div>
+          <div class="w-9 h-12 sm:w-10 sm:h-14 rounded-md skeleton-shimmer shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-4 w-3/5 sm:w-2/5 rounded skeleton-shimmer"></div>
+            <div class="h-3 w-2/5 sm:w-1/4 rounded skeleton-shimmer"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70">
+          <div class="w-4 h-4 rounded skeleton-shimmer shrink-0"></div>
+          <div class="w-9 h-12 sm:w-10 sm:h-14 rounded-md skeleton-shimmer shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-4 w-2/3 sm:w-1/2 rounded skeleton-shimmer"></div>
+            <div class="h-3 w-1/3 sm:w-1/5 rounded skeleton-shimmer"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70">
+          <div class="w-4 h-4 rounded skeleton-shimmer shrink-0"></div>
+          <div class="w-9 h-12 sm:w-10 sm:h-14 rounded-md skeleton-shimmer shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-4 w-1/2 sm:w-1/3 rounded skeleton-shimmer"></div>
+            <div class="h-3 w-2/5 sm:w-1/4 rounded skeleton-shimmer"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70">
+          <div class="w-4 h-4 rounded skeleton-shimmer shrink-0"></div>
+          <div class="w-9 h-12 sm:w-10 sm:h-14 rounded-md skeleton-shimmer shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-4 w-3/4 sm:w-2/5 rounded skeleton-shimmer"></div>
+            <div class="h-3 w-1/2 sm:w-1/3 rounded skeleton-shimmer"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70">
+          <div class="w-4 h-4 rounded skeleton-shimmer shrink-0"></div>
+          <div class="w-9 h-12 sm:w-10 sm:h-14 rounded-md skeleton-shimmer shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-4 w-3/5 sm:w-1/2 rounded skeleton-shimmer"></div>
+            <div class="h-3 w-1/3 sm:w-1/4 rounded skeleton-shimmer"></div>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70">
+          <div class="w-4 h-4 rounded skeleton-shimmer shrink-0"></div>
+          <div class="w-9 h-12 sm:w-10 sm:h-14 rounded-md skeleton-shimmer shrink-0"></div>
+          <div class="flex-1 space-y-2">
+            <div class="h-4 w-1/2 sm:w-2/5 rounded skeleton-shimmer"></div>
+            <div class="h-3 w-2/5 sm:w-1/5 rounded skeleton-shimmer"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -318,21 +522,57 @@
       <!-- Logged In State View -->
       <div id="auth-view-logged-in" class="hidden py-4 space-y-4">
         <div class="p-3.5 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-marvel-red/20 border border-red-500/30 flex items-center justify-center text-marvel-red font-bold text-sm overflow-hidden shrink-0">
+          <div class="w-11 h-11 rounded-full bg-marvel-red/20 border border-red-500/30 flex items-center justify-center text-marvel-red font-bold text-sm overflow-hidden shrink-0">
             <img id="user-avatar-img" src="" alt="Avatar" class="w-full h-full object-cover hidden">
             <span id="user-avatar-initials">U</span>
           </div>
           <div class="overflow-hidden">
             <div class="text-xs text-zinc-400">Conectado como:</div>
-            <div class="text-sm font-semibold text-white truncate" id="user-display-email">email@exemplo.com</div>
+            <div class="text-sm font-bold text-white truncate" id="user-display-name">Usuário</div>
+            <div class="text-[11px] text-zinc-400 truncate" id="user-display-email">email@exemplo.com</div>
           </div>
         </div>
 
+        <!-- Profile Customization Form -->
+        <form onsubmit="saveUserProfile(event)" class="p-3.5 bg-zinc-900/60 border border-zinc-800 rounded-xl space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
+              <i class="fa-solid fa-user-pen text-amber-400"></i> Personalizar Perfil
+            </h4>
+            <span class="text-[10px] text-zinc-500">Visível nos comentários</span>
+          </div>
+
+          <div>
+            <label for="profile-display-name" class="block text-[11px] font-semibold text-zinc-300 mb-1">Nome de exibição</label>
+            <input type="text" id="profile-display-name" maxlength="40" placeholder="Ex: Tony Stark BR (vazio usa padrão)"
+              class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-amber-500 transition">
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label for="profile-avatar-url" class="text-[11px] font-semibold text-zinc-300">URL da foto de avatar (opcional)</label>
+              <button type="button" onclick="clearCustomAvatarField()" class="text-[10px] text-sky-400 hover:text-sky-300 transition">
+                Usar Gravatar/Google
+              </button>
+            </div>
+            <input type="url" id="profile-avatar-url" maxlength="500" placeholder="https://... (deixe vazio para Gravatar/Google)"
+              oninput="previewProfileAvatar()"
+              class="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-amber-500 transition">
+          </div>
+
+          <div id="profile-feedback" class="hidden text-[11px] px-2.5 py-1.5 rounded-lg"></div>
+
+          <button type="submit" id="btn-save-profile"
+            class="w-full py-2 px-3 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar Perfil
+          </button>
+        </form>
+
         <p class="text-xs text-zinc-400 leading-relaxed">
-          Seu progresso é salvo na nuvem automaticamente a cada filme que você marca!
+          Seu progresso é salvo na nuvem automaticamente a cada título marcado!
         </p>
 
-        <div class="pt-2 flex items-center justify-between gap-3">
+        <div class="pt-1 flex items-center justify-between gap-3">
           <button onclick="manualSyncFromCloud()" class="flex-1 py-2 px-3 bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold rounded-lg text-white transition flex items-center justify-center gap-1.5">
             <i class="fa-solid fa-arrows-rotate text-sky-400"></i> Atualizar da Nuvem
           </button>
@@ -501,6 +741,28 @@
     </div>
   </div>
 
+  <!-- Modal: Histórico de Edições do Comentário -->
+  <div id="edit-history-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4" onclick="closeEditHistoryModal(event)">
+    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-fade-in" onclick="event.stopPropagation()">
+      <div class="p-4 border-b border-zinc-800/80 flex items-center justify-between">
+        <h3 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-clock-rotate-left text-amber-400"></i>
+          Histórico de Edições
+        </h3>
+        <button type="button" onclick="closeEditHistoryModal()" class="text-zinc-400 hover:text-white p-1 transition" aria-label="Fechar histórico">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+      <div id="edit-history-meta" class="px-4 pt-3 text-[11px] text-zinc-400"></div>
+      <div id="edit-history-list" class="p-4 space-y-3 max-h-[65vh] overflow-y-auto"></div>
+      <div class="px-4 py-3 border-t border-zinc-800/80 bg-zinc-900/50 flex justify-end">
+        <button type="button" onclick="closeEditHistoryModal()" class="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-lg text-xs font-semibold transition">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="mt-20 border-t border-zinc-800 py-8 text-center text-xs text-zinc-400">
     <div class="max-w-xl mx-auto px-4 space-y-2">
@@ -524,13 +786,14 @@
 
   <!-- Supabase JS Client & MCU Database Logic -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="data.js?v=20261111"></script>
+  <script src="data.js?v=20261111b"></script>
   <script>
     // State Variables
     let mcuData = [];
     let currentOrder = 'release'; // 'release' or 'chrono'
     let hideSeries = false;
     let selectedPhase = 'all';
+    let selectedStatus = 'all'; // 'all' | 'unwatched' | 'watched'
     let searchQuery = '';
     let watchedIds = new Set(JSON.parse(localStorage.getItem('mcu_watched_items') || '[]'));
 
@@ -671,17 +934,29 @@
 
     function setOrder(order) {
       currentOrder = order;
+      const baseBtn = 'flex-1 sm:flex-none px-2.5 sm:px-4 py-2 text-[11px] sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap';
+      const activeCls = `${baseBtn} bg-marvel-red text-white shadow-md`;
+      const inactiveCls = `${baseBtn} text-zinc-400 hover:text-white`;
       if (order === 'release') {
-        btnRelease.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 bg-marvel-red text-white shadow-md';
-        btnChrono.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all text-zinc-400 hover:text-white flex items-center justify-center gap-2';
+        btnRelease.className = activeCls;
+        btnChrono.className = inactiveCls;
         orderTitle.textContent = 'Modo: Ordem de Lançamento (Melhor experiência narrativa)';
         orderDesc.innerHTML = 'Ordem em que as obras saíram no cinema. Não há spoilers em cenas pós-créditos e os efeitos visuais evoluem organicamente. Séries estão listadas em formato reduzido caso prefira ignorar.';
       } else {
-        btnChrono.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all flex items-center justify-center gap-2 bg-marvel-red text-white shadow-md';
-        btnRelease.className = 'flex-1 sm:flex-none px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all text-zinc-400 hover:text-white flex items-center justify-center gap-2';
+        btnChrono.className = activeCls;
+        btnRelease.className = inactiveCls;
         orderTitle.textContent = 'Modo: Ordem Cronológica (Tempo dos acontecimentos)';
         orderDesc.innerHTML = 'Ordenado pela época interna em que cada história acontece (ex: Segunda Guerra em 1940 com Capitão América até o multiverso). <em>Atenção:</em> Cenas pós-créditos de filmes como <em>Viúva Negra</em> contêm spoilers.';
       }
+      renderList();
+    }
+
+    function setWatchedStatusFilter(status) {
+      selectedStatus = status || 'all';
+      document.querySelectorAll('.status-filter-btn').forEach(btn => {
+        const isActive = btn.dataset.status === selectedStatus;
+        btn.className = `status-filter-btn px-2.5 py-1 rounded-lg font-medium transition ${isActive ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-white'}`;
+      });
       renderList();
     }
 
@@ -765,14 +1040,40 @@
     const imageModalCaption = document.getElementById('image-modal-caption');
     const imageModalDownload = document.getElementById('image-modal-download');
 
+    function getSizedPosterUrl(url, widthPx) {
+      if (!url || typeof url !== 'string') return url || '';
+      if (widthPx === 'full') {
+        return url.replace(/\._V1_(?:SX|UX|SY|UY|CR)[^.]*\.(jpg|jpeg|png|webp)$/i, '._V1_.$1');
+      }
+      if (/m\.media-amazon\.com\/images\/.*?\._V1_\.(jpg|jpeg|png|webp)$/i.test(url)) {
+        return url.replace(/\._V1_\.(jpg|jpeg|png|webp)$/i, `._V1_SX${widthPx}_.$1`);
+      }
+      return url;
+    }
+
     function openImageModal(imgUrl, title, event) {
       if (event) event.stopPropagation();
       if (!imgUrl) return;
-      imageModalImg.src = imgUrl;
+      const fullUrl = getSizedPosterUrl(imgUrl, 'full');
+      imageModalImg.src = fullUrl;
       imageModalCaption.textContent = title || '';
-      imageModalDownload.href = imgUrl;
+      imageModalDownload.href = fullUrl;
       imageModal.classList.remove('hidden');
       imageModal.classList.add('flex');
+    }
+
+    function togglePostCreditsPanel(movieId, event) {
+      if (event) event.stopPropagation();
+      const panel = document.getElementById(`post-credits-${movieId}`);
+      const btn = document.getElementById(`post-credits-btn-${movieId}`);
+      if (!panel) return;
+      const isOpening = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden', !isOpening);
+      if (btn) {
+        btn.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+        const chevron = btn.querySelector('.post-credits-chevron');
+        if (chevron) chevron.classList.toggle('rotate-180', isOpening);
+      }
     }
 
     function closeImageModal() {
@@ -892,6 +1193,7 @@
         closeAuthModal();
         closeSyncConflictModal();
         closeImportConflictModal();
+        closeEditHistoryModal();
       }
     });
 
@@ -976,6 +1278,39 @@
       return meta.avatar_url || meta.picture || '';
     }
 
+    function getCustomAvatarUrl(user) {
+      const meta = user && user.user_metadata ? user.user_metadata : null;
+      if (!meta || !meta.custom_avatar_url) return '';
+      return normalizeSafeExternalUrl(meta.custom_avatar_url, false) || '';
+    }
+
+    function getDisplayName(user) {
+      if (!user) return 'Usuário';
+      const meta = user.user_metadata || {};
+      const customName = typeof meta.display_name === 'string' ? meta.display_name.trim() : '';
+      if (customName) return customName;
+      const fullName = typeof meta.full_name === 'string' ? meta.full_name.trim() : '';
+      if (fullName) return fullName;
+      return user.email ? user.email.split('@')[0] : 'Usuário';
+    }
+
+    function getPreferredAvatarConfig(user, customOverride = '') {
+      const email = user && user.email ? user.email : '';
+      const gravatarUrl = email ? getGravatarUrl(email, 64, '404') : '';
+      const googleAvatarUrl = getGoogleAvatarUrl(user);
+      const customUrl = (customOverride ? normalizeSafeExternalUrl(customOverride, false) : '') || getCustomAvatarUrl(user);
+      if (customUrl) {
+        return {
+          initialSrc: customUrl,
+          fallbackUrl: gravatarUrl || googleAvatarUrl || ''
+        };
+      }
+      return {
+        initialSrc: gravatarUrl || googleAvatarUrl || '',
+        fallbackUrl: gravatarUrl ? googleAvatarUrl : ''
+      };
+    }
+
     function handleAvatarError(imgEl, fallbackUrl, fallbackElId) {
       if (!imgEl) return;
       if (fallbackUrl && imgEl.dataset.fallbackUsed !== '1' && imgEl.src !== fallbackUrl) {
@@ -989,17 +1324,19 @@
       if (fallbackEl) fallbackEl.classList.remove('hidden');
     }
 
-    function renderAvatarHTML(email, displayName, sizeClass = 'w-6 h-6', textClass = 'text-[10px]', fallbackAvatarUrl = '') {
+    function renderAvatarHTML(email, displayName, sizeClass = 'w-6 h-6', textClass = 'text-[10px]', fallbackAvatarUrl = '', overrideAvatarUrl = '') {
       const initial = escapeHtml(((displayName || email || 'U')[0] || 'U').toUpperCase());
       const safeFallbackUrl = (typeof fallbackAvatarUrl === 'string' && /^https?:\/\//i.test(fallbackAvatarUrl)) ? fallbackAvatarUrl : '';
+      const safeOverrideUrl = (typeof overrideAvatarUrl === 'string' && /^https?:\/\//i.test(overrideAvatarUrl)) ? overrideAvatarUrl : '';
       const gravatarUrl = getGravatarUrl(email, 64, '404');
-      const initialSrc = gravatarUrl || safeFallbackUrl;
+      const initialSrc = safeOverrideUrl || gravatarUrl || safeFallbackUrl;
+      const onErrorFallback = safeOverrideUrl ? (gravatarUrl || safeFallbackUrl) : (gravatarUrl ? safeFallbackUrl : '');
       if (!initialSrc) {
         return `<div class="${sizeClass} rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold ${textClass} text-zinc-300 shrink-0">${initial}</div>`;
       }
       return `
         <div class="${sizeClass} rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold ${textClass} text-zinc-300 overflow-hidden shrink-0">
-          <img src="${escapeHtml(initialSrc)}" alt="${escapeHtml(displayName)}" data-fallback="${escapeHtml(gravatarUrl ? safeFallbackUrl : '')}" class="w-full h-full object-cover" loading="lazy" referrerpolicy="no-referrer"
+          <img src="${escapeHtml(initialSrc)}" alt="${escapeHtml(displayName)}" data-fallback="${escapeHtml(onErrorFallback)}" class="w-full h-full object-cover" loading="lazy" referrerpolicy="no-referrer"
             onerror="handleAvatarError(this, this.dataset.fallback, null)">
           <span class="hidden">${initial}</span>
         </div>
@@ -1013,15 +1350,20 @@
     const authBtnAvatar = document.getElementById('auth-btn-avatar');
     const authViewLoggedIn = document.getElementById('auth-view-logged-in');
     const authViewLoggedOut = document.getElementById('auth-view-logged-out');
+    const userDisplayNameEl = document.getElementById('user-display-name');
     const userDisplayEmail = document.getElementById('user-display-email');
     const userAvatarInitials = document.getElementById('user-avatar-initials');
     const userAvatarImg = document.getElementById('user-avatar-img');
+    const profileDisplayNameInput = document.getElementById('profile-display-name');
+    const profileAvatarUrlInput = document.getElementById('profile-avatar-url');
+    const profileFeedbackEl = document.getElementById('profile-feedback');
     const authErrorMsg = document.getElementById('auth-error-msg');
     const authSuccessMsg = document.getElementById('auth-success-msg');
 
     function openAuthModal() {
       authErrorMsg.classList.add('hidden');
       authSuccessMsg.classList.add('hidden');
+      if (profileFeedbackEl) profileFeedbackEl.classList.add('hidden');
       updateAuthUIState();
       authModal.classList.remove('hidden');
       authModal.classList.add('flex');
@@ -1032,19 +1374,132 @@
       authModal.classList.remove('flex');
     }
 
+    function applyModalAvatarPreview(initialAvatarUrl, fallbackUrl, initialChar) {
+      userAvatarInitials.textContent = initialChar;
+      if (initialAvatarUrl) {
+        userAvatarImg.dataset.fallbackUsed = '';
+        userAvatarImg.referrerPolicy = 'no-referrer';
+        userAvatarImg.onerror = () => handleAvatarError(userAvatarImg, fallbackUrl, 'user-avatar-initials');
+        userAvatarImg.src = initialAvatarUrl;
+        userAvatarImg.classList.remove('hidden');
+        userAvatarInitials.classList.add('hidden');
+      } else {
+        userAvatarImg.onerror = null;
+        userAvatarImg.classList.add('hidden');
+        userAvatarInitials.classList.remove('hidden');
+      }
+    }
+
+    function previewProfileAvatar() {
+      if (!currentUser || !profileAvatarUrlInput) return;
+      const typedUrl = profileAvatarUrlInput.value.trim();
+      const normalized = typedUrl ? (normalizeSafeExternalUrl(typedUrl, false) || '') : '';
+      const displayName = (profileDisplayNameInput && profileDisplayNameInput.value.trim()) || getDisplayName(currentUser);
+      const initialChar = (displayName[0] || currentUser.email[0] || 'U').toUpperCase();
+      const cfg = typedUrl
+        ? getPreferredAvatarConfig(currentUser, normalized)
+        : {
+            initialSrc: getGravatarUrl(currentUser.email, 64, '404') || getGoogleAvatarUrl(currentUser) || '',
+            fallbackUrl: getGravatarUrl(currentUser.email, 64, '404') ? getGoogleAvatarUrl(currentUser) : ''
+          };
+      applyModalAvatarPreview(cfg.initialSrc, cfg.fallbackUrl, initialChar);
+    }
+
+    function clearCustomAvatarField() {
+      if (!profileAvatarUrlInput) return;
+      profileAvatarUrlInput.value = '';
+      previewProfileAvatar();
+    }
+
+    function showProfileFeedback(msg, isError = false) {
+      if (!profileFeedbackEl) return;
+      profileFeedbackEl.textContent = msg;
+      profileFeedbackEl.className = `text-[11px] px-2.5 py-1.5 rounded-lg border ${isError ? 'bg-red-950/50 border-red-800/60 text-red-300' : 'bg-emerald-950/50 border-emerald-800/60 text-emerald-300'}`;
+      profileFeedbackEl.classList.remove('hidden');
+    }
+
+    async function saveUserProfile(event) {
+      event.preventDefault();
+      if (!supabaseClient || !currentUser) return;
+
+      const rawDisplayName = profileDisplayNameInput ? profileDisplayNameInput.value.trim() : '';
+      const rawAvatarInput = profileAvatarUrlInput ? profileAvatarUrlInput.value.trim() : '';
+      let cleanAvatarUrl = '';
+
+      if (rawAvatarInput) {
+        cleanAvatarUrl = normalizeSafeExternalUrl(rawAvatarInput, false) || '';
+        if (!cleanAvatarUrl) {
+          showProfileFeedback('Informe uma URL de imagem válida (ex: https://...).', true);
+          return;
+        }
+      }
+
+      const btn = document.getElementById('btn-save-profile');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Salvando...';
+      }
+
+      try {
+        const { data, error } = await supabaseClient.auth.updateUser({
+          data: {
+            display_name: rawDisplayName || null,
+            custom_avatar_url: cleanAvatarUrl || null
+          }
+        });
+        if (error) throw error;
+        if (data && data.user) currentUser = data.user;
+
+        const effectiveName = getDisplayName(currentUser);
+        const effectiveAvatar = getCustomAvatarUrl(currentUser) || getGoogleAvatarUrl(currentUser) || null;
+
+        // Propagate updated display name/avatar to user's existing comments cleanly
+        try {
+          await supabaseClient
+            .from('mcu_comments')
+            .update({ user_name: effectiveName, avatar_url: effectiveAvatar })
+            .eq('user_id', currentUser.id);
+        } catch (syncErr) {
+          console.warn('Aviso ao atualizar comentários antigos do perfil:', syncErr);
+        }
+
+        Object.keys(commentsCache).forEach(mid => {
+          commentsCache[mid] = (commentsCache[mid] || []).map(c =>
+            c.user_id === currentUser.id ? { ...c, user_name: effectiveName, avatar_url: effectiveAvatar } : c
+          );
+        });
+
+        updateAuthUIState();
+        showProfileFeedback('Perfil atualizado com sucesso!');
+      } catch (err) {
+        showProfileFeedback(err.message || 'Erro ao salvar perfil.', true);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Perfil';
+        }
+      }
+    }
+
     function updateAuthUIState() {
       if (currentUser) {
-        const gravatarUrl = getGravatarUrl(currentUser.email, 64, '404');
-        const googleAvatarUrl = getGoogleAvatarUrl(currentUser);
-        const initialAvatarUrl = gravatarUrl || googleAvatarUrl;
-        const fallbackUrl = gravatarUrl ? googleAvatarUrl : '';
+        const displayName = getDisplayName(currentUser);
+        const initialChar = ((displayName[0] || currentUser.email[0] || 'U')).toUpperCase();
+        const { initialSrc: initialAvatarUrl, fallbackUrl } = getPreferredAvatarConfig(currentUser);
 
-        authBtnLabel.textContent = currentUser.email.split('@')[0];
+        authBtnLabel.textContent = displayName;
         document.getElementById('auth-btn').className = 'inline-flex items-center gap-2 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl border transition ml-1 bg-emerald-950/50 hover:bg-emerald-900/60 border-emerald-500/50 text-emerald-300 shadow-lg shadow-emerald-950/20';
         authViewLoggedIn.classList.remove('hidden');
         authViewLoggedOut.classList.add('hidden');
+        if (userDisplayNameEl) userDisplayNameEl.textContent = displayName;
         userDisplayEmail.textContent = currentUser.email;
-        userAvatarInitials.textContent = (currentUser.email[0] || 'U').toUpperCase();
+
+        if (profileDisplayNameInput && document.activeElement !== profileDisplayNameInput) {
+          profileDisplayNameInput.value = (currentUser.user_metadata && currentUser.user_metadata.display_name) || '';
+        }
+        if (profileAvatarUrlInput && document.activeElement !== profileAvatarUrlInput) {
+          profileAvatarUrlInput.value = getCustomAvatarUrl(currentUser);
+        }
 
         if (initialAvatarUrl) {
           authBtnCloud.classList.add('hidden');
@@ -1053,19 +1508,12 @@
           authBtnAvatar.onerror = () => handleAvatarError(authBtnAvatar, fallbackUrl, 'auth-btn-cloud');
           authBtnAvatar.src = initialAvatarUrl;
           authBtnAvatar.classList.remove('hidden');
-
-          userAvatarImg.dataset.fallbackUsed = '';
-          userAvatarImg.referrerPolicy = 'no-referrer';
-          userAvatarImg.onerror = () => handleAvatarError(userAvatarImg, fallbackUrl, 'user-avatar-initials');
-          userAvatarImg.src = initialAvatarUrl;
-          userAvatarImg.classList.remove('hidden');
-          userAvatarInitials.classList.add('hidden');
         } else {
           authBtnCloud.classList.remove('hidden');
           authBtnAvatar.classList.add('hidden');
-          userAvatarImg.classList.add('hidden');
-          userAvatarInitials.classList.remove('hidden');
         }
+
+        applyModalAvatarPreview(initialAvatarUrl, fallbackUrl, initialChar);
       } else {
         authBtnLabel.textContent = 'Login';
         document.getElementById('auth-btn').className = 'inline-flex items-center gap-2 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl border transition ml-1 bg-zinc-900/90 hover:bg-zinc-850 border-sky-500/40 hover:border-sky-400 text-sky-400 hover:text-white shadow-lg shadow-sky-950/20';
@@ -1298,6 +1746,7 @@
     const reactionsCache = {}; // { commentId: { like: N, dislike: N, hulk: N, laugh: N, userReaction: 'like' } }
     const commentsLimit = {}; // { movieId: limit } (for pagination "Ver mais")
     const activeReplyState = {}; // { movieId: { commentId, replyToName } }
+    const editingCommentIdByMovie = {}; // { movieId: commentId }
 
     async function toggleCommentsSection(movieId, event) {
       if (event) event.stopPropagation();
@@ -1418,6 +1867,30 @@
       }).join('');
     }
 
+    function renderMarkdownToolbarHTML(textareaId, movieId, editCommentId = '') {
+      const editArg = editCommentId ? `'${editCommentId}'` : `''`;
+      return `
+        <div class="flex flex-wrap items-center gap-1" role="toolbar" aria-label="Ferramentas de formatação Markdown">
+          <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'bold', '${movieId}', ${editArg})"
+            class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-bold text-zinc-300 hover:text-white transition" title="Negrito (**texto**)">B</button>
+          <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'italic', '${movieId}', ${editArg})"
+            class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] italic text-zinc-300 hover:text-white transition" title="Itálico (*texto*)">I</button>
+          <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'heading', '${movieId}', ${editArg})"
+            class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-semibold text-zinc-300 hover:text-white transition" title="Título (# Título)">H</button>
+          <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'link', '${movieId}', ${editArg})"
+            class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] text-sky-400 hover:text-sky-300 transition flex items-center gap-1" title="Inserir link">
+            <i class="fa-solid fa-link text-[9px]"></i> Link
+          </button>
+          <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'image', '${movieId}', ${editArg})"
+            class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1" title="Inserir imagem via URL">
+            <i class="fa-regular fa-image text-[9px]"></i> Img
+          </button>
+          <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'code', '${movieId}', ${editArg})"
+            class="px-1.5 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[10px] font-mono text-zinc-300 hover:text-white transition" title="Código inline">&lt;/&gt;</button>
+        </div>
+      `;
+    }
+
     function renderCommentsUI(movieId) {
       const section = document.getElementById(`comments-section-${movieId}`);
       if (!section) return;
@@ -1462,11 +1935,27 @@
                 </div>
               ` : ''}
 
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="inline-flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5 text-[11px]">
+                  <button type="button" id="tab-write-${movieId}" onclick="setCommentEditorMode('${movieId}', 'write')"
+                    class="px-2.5 py-1 rounded-md font-semibold bg-zinc-800 text-white transition flex items-center gap-1">
+                    <i class="fa-solid fa-pen text-[9px]"></i> Escrever
+                  </button>
+                  <button type="button" id="tab-preview-${movieId}" onclick="setCommentEditorMode('${movieId}', 'preview')"
+                    class="px-2.5 py-1 rounded-md font-semibold text-zinc-400 hover:text-zinc-200 transition flex items-center gap-1">
+                    <i class="fa-regular fa-eye text-[10px]"></i> Preview
+                  </button>
+                </div>
+                ${renderMarkdownToolbarHTML(`comment-input-${movieId}`, movieId)}
+              </div>
+
               <div class="relative">
-                <textarea id="comment-input-${movieId}" rows="2" maxlength="2000"
-                  placeholder="${replyState ? 'Escreva sua resposta (aceita Markdown: **negrito**, *itálico*, links)...' : 'Participe da conversa (aceita Markdown: **negrito**, *itálico*, links)...'}"
+                <textarea id="comment-input-${movieId}" rows="3" maxlength="2000"
+                  placeholder="${replyState ? 'Escreva sua resposta (aceita Markdown: **negrito**, [link](url), ![img](url))...' : 'Participe da conversa (aceita Markdown: **negrito**, [link](url), ![img](url))...'}"
                   oninput="updateCharCount('${movieId}')"
-                  class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-red-600 transition resize-none"></textarea>
+                  class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-red-600 transition resize-y"></textarea>
+                <div id="comment-preview-${movieId}"
+                  class="hidden min-h-[76px] max-h-60 overflow-y-auto bg-zinc-900/90 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-300 leading-relaxed comment-markdown"></div>
               </div>
 
               <div class="flex items-center justify-between text-[11px] text-zinc-500">
@@ -1510,36 +1999,105 @@
       section.innerHTML = html;
     }
 
+    function renderEditedBadgeHTML(comment, movieId) {
+      const hasEdits = Boolean(comment.edited_at) || (Array.isArray(comment.edit_history) && comment.edit_history.length > 0);
+      if (!hasEdits) return '';
+      return `
+        <button type="button" onclick="openEditHistoryModal('${movieId}', '${comment.id}', event)"
+          class="text-[10px] text-amber-400/90 hover:text-amber-300 bg-amber-950/30 border border-amber-800/40 px-1.5 py-0.2 rounded underline decoration-dotted underline-offset-2 transition"
+          title="Ver histórico de edições">edited</button>
+      `;
+    }
+
+    function renderInlineEditBoxHTML(comment, movieId, indentClass) {
+      const initialContent = escapeHtml(comment.content || '');
+      const len = (comment.content || '').length;
+      return `
+        <div class="${indentClass} space-y-2 bg-zinc-950/90 border border-zinc-700/80 rounded-lg p-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="inline-flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5 text-[11px]">
+              <button type="button" id="edit-tab-write-${comment.id}" onclick="setInlineEditMode('${comment.id}', 'write')"
+                class="px-2 py-0.5 rounded-md font-semibold bg-zinc-800 text-white transition flex items-center gap-1">
+                <i class="fa-solid fa-pen text-[9px]"></i> Escrever
+              </button>
+              <button type="button" id="edit-tab-preview-${comment.id}" onclick="setInlineEditMode('${comment.id}', 'preview')"
+                class="px-2 py-0.5 rounded-md font-semibold text-zinc-400 hover:text-zinc-200 transition flex items-center gap-1">
+                <i class="fa-regular fa-eye text-[9px]"></i> Preview
+              </button>
+            </div>
+            ${renderMarkdownToolbarHTML(`edit-input-${comment.id}`, movieId, comment.id)}
+          </div>
+          <textarea id="edit-input-${comment.id}" rows="3" maxlength="2000"
+            oninput="updateEditCharCount('${comment.id}')"
+            class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2 text-xs text-zinc-200 focus:outline-none focus:border-amber-500 transition resize-y">${initialContent}</textarea>
+          <div id="edit-preview-${comment.id}"
+            class="hidden min-h-[68px] max-h-56 overflow-y-auto bg-zinc-900/90 border border-zinc-800 rounded-lg p-2 text-xs text-zinc-300 leading-relaxed comment-markdown"></div>
+          <div class="flex items-center justify-between text-[11px] text-zinc-500">
+            <span id="edit-char-count-${comment.id}">${len} / 2000</span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="cancelCommentEdit('${movieId}')"
+                class="px-2.5 py-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-md text-[11px] font-medium transition">
+                Cancelar
+              </button>
+              <button type="button" id="btn-save-edit-${comment.id}" onclick="saveCommentEdit('${movieId}', '${comment.id}')"
+                class="px-2.5 py-1 bg-amber-600 hover:bg-amber-500 text-white rounded-md text-[11px] font-bold transition flex items-center gap-1">
+                <i class="fa-solid fa-check text-[10px]"></i> Salvar
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getCommentAvatarProps(entry, isAuthor) {
+      const storedUrl = entry.avatar_url || '';
+      const isStoredCustom = storedUrl && !/googleusercontent\.com/i.test(storedUrl);
+      const overrideUrl = isAuthor ? getCustomAvatarUrl(currentUser) : (isStoredCustom ? storedUrl : '');
+      const fallbackUrl = isAuthor
+        ? (getGoogleAvatarUrl(currentUser) || storedUrl)
+        : storedUrl;
+      return { overrideUrl, fallbackUrl };
+    }
+
     function renderCommentCard(comment, replies, movieId) {
-      const rawName = comment.user_name || (comment.user_email ? comment.user_email.split('@')[0] : 'Usuário');
+      const isAuthor = currentUser && currentUser.id === comment.user_id;
+      const rawName = (isAuthor ? getDisplayName(currentUser) : comment.user_name) || (comment.user_email ? comment.user_email.split('@')[0] : 'Usuário');
       const userName = escapeHtml(rawName);
       const dateStr = formatCommentDate(comment.created_at);
       const contentHtml = parseMarkdownSafe(comment.content);
-      const isAuthor = currentUser && currentUser.id === comment.user_id;
-      const fallbackAvatarUrl = comment.avatar_url || (isAuthor ? getGoogleAvatarUrl(currentUser) : '');
+      const isEditing = editingCommentIdByMovie[movieId] === comment.id;
+      const { overrideUrl, fallbackUrl } = getCommentAvatarProps(comment, isAuthor);
       const reactions = reactionsCache[comment.id] || { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
 
       return `
         <div class="p-3 bg-zinc-950/70 border border-zinc-800/80 rounded-xl space-y-2">
           <!-- Topo do Comentário -->
-          <div class="flex items-center justify-between text-xs">
-            <div class="flex items-center gap-2">
-              ${renderAvatarHTML(comment.user_email, rawName, 'w-6 h-6', 'text-[10px]', fallbackAvatarUrl)}
+          <div class="flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2 flex-wrap min-w-0">
+              ${renderAvatarHTML(comment.user_email, rawName, 'w-6 h-6', 'text-[10px]', fallbackUrl, overrideUrl)}
               <strong class="font-semibold text-zinc-200">${userName}</strong>
-              <span class="text-[10px] text-zinc-500">• ${dateStr}</span>
+              <span class="text-[10px] text-zinc-400">• ${dateStr}</span>
+              ${renderEditedBadgeHTML(comment, movieId)}
             </div>
 
             ${isAuthor ? `
-              <button onclick="deleteComment('${comment.id}', '${movieId}')" class="text-zinc-600 hover:text-red-400 text-xs transition" title="Excluir meu comentário">
-                <i class="fa-regular fa-trash-can"></i>
-              </button>
+              <div class="flex items-center gap-2 shrink-0">
+                <button type="button" onclick="startEditComment('${movieId}', '${comment.id}')" class="text-zinc-500 hover:text-amber-400 text-xs transition" title="Editar meu comentário">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button type="button" onclick="deleteComment('${comment.id}', '${movieId}')" class="text-zinc-600 hover:text-red-400 text-xs transition" title="Excluir meu comentário">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              </div>
             ` : ''}
           </div>
 
-          <!-- Conteúdo Markdown -->
-          <div class="text-xs text-zinc-300 leading-relaxed pl-8 break-words prose prose-invert prose-xs max-w-none">
-            ${contentHtml}
-          </div>
+          <!-- Conteúdo Markdown ou Editor Inline -->
+          ${isEditing ? renderInlineEditBoxHTML(comment, movieId, 'pl-0 sm:pl-8') : `
+            <div class="text-xs text-zinc-300 leading-relaxed pl-8 comment-markdown">
+              ${contentHtml}
+            </div>
+          `}
 
           <!-- Barra de Ações: Reações e Botão Responder -->
           <div class="flex items-center justify-between pl-8 pt-1 text-xs">
@@ -1558,7 +2116,11 @@
 
           <!-- Respostas Embutidas (1 camada) -->
           ${replies.length > 0 ? `
-            <div class="mt-2.5 pt-2 border-t border-zinc-800/50 space-y-2 pl-6 sm:pl-8">
+            <div class="mt-2.5 pt-2.5 border-t border-zinc-800/50 space-y-2 pl-4 sm:pl-8">
+              <div class="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                <i class="fa-solid fa-turn-up rotate-90 text-[9px] text-red-400/80"></i>
+                <span>Respostas (${replies.length})</span>
+              </div>
               ${replies.map(r => renderReplyCard(r, comment.id, movieId)).join('')}
             </div>
           ` : ''}
@@ -1567,27 +2129,29 @@
     }
 
     function renderReplyCard(reply, parentCommentId, movieId) {
-      const rawName = reply.user_name || (reply.user_email ? reply.user_email.split('@')[0] : 'Usuário');
+      const isAuthor = currentUser && currentUser.id === reply.user_id;
+      const rawName = (isAuthor ? getDisplayName(currentUser) : reply.user_name) || (reply.user_email ? reply.user_email.split('@')[0] : 'Usuário');
       const userName = escapeHtml(rawName);
       const dateStr = formatCommentDate(reply.created_at);
       const contentHtml = parseMarkdownSafe(reply.content);
-      const isAuthor = currentUser && currentUser.id === reply.user_id;
-      const fallbackAvatarUrl = reply.avatar_url || (isAuthor ? getGoogleAvatarUrl(currentUser) : '');
+      const isEditing = editingCommentIdByMovie[movieId] === reply.id;
+      const { overrideUrl, fallbackUrl } = getCommentAvatarProps(reply, isAuthor);
       const reactions = reactionsCache[reply.id] || { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
 
       return `
         <div class="p-2.5 bg-zinc-900/60 border border-zinc-800/60 rounded-lg space-y-1.5">
-          <div class="flex items-center justify-between text-xs">
-            <div class="flex items-center gap-1.5">
-              ${renderAvatarHTML(reply.user_email, rawName, 'w-5 h-5', 'text-[9px]', fallbackAvatarUrl)}
+          <div class="flex items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-1.5 flex-wrap min-w-0">
+              ${renderAvatarHTML(reply.user_email, rawName, 'w-5 h-5', 'text-[9px]', fallbackUrl, overrideUrl)}
               <strong class="font-semibold text-zinc-200 text-xs">${userName}</strong>
               ${reply.reply_to_name ? `
                 <span class="text-[10px] text-red-400 bg-red-950/40 px-1 rounded">@${escapeHtml(reply.reply_to_name)}</span>
               ` : ''}
-              <span class="text-[10px] text-zinc-500">• ${dateStr}</span>
+              <span class="text-[10px] text-zinc-400">• ${dateStr}</span>
+              ${renderEditedBadgeHTML(reply, movieId)}
             </div>
 
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 shrink-0">
               ${currentUser ? `
                 <button onclick="startReply('${movieId}', '${parentCommentId}', '${userName}')" 
                   class="text-[10px] text-zinc-500 hover:text-zinc-300 transition" title="Responder a este usuário">
@@ -1595,16 +2159,21 @@
                 </button>
               ` : ''}
               ${isAuthor ? `
-                <button onclick="deleteComment('${reply.id}', '${movieId}')" class="text-zinc-600 hover:text-red-400 text-xs transition" title="Excluir">
+                <button type="button" onclick="startEditComment('${movieId}', '${reply.id}')" class="text-zinc-500 hover:text-amber-400 text-xs transition" title="Editar">
+                  <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button type="button" onclick="deleteComment('${reply.id}', '${movieId}')" class="text-zinc-600 hover:text-red-400 text-xs transition" title="Excluir">
                   <i class="fa-regular fa-trash-can"></i>
                 </button>
               ` : ''}
             </div>
           </div>
 
-          <div class="text-xs text-zinc-300 leading-relaxed pl-6 break-words prose prose-invert prose-xs max-w-none">
-            ${contentHtml}
-          </div>
+          ${isEditing ? renderInlineEditBoxHTML(reply, movieId, 'pl-0 sm:pl-6') : `
+            <div class="text-xs text-zinc-300 leading-relaxed pl-6 comment-markdown">
+              ${contentHtml}
+            </div>
+          `}
 
           <!-- Reações da resposta -->
           <div id="reactions-bar-${reply.id}" class="flex items-center gap-1.5 pl-6 pt-0.5">
@@ -1670,9 +2239,8 @@
         replyToName = replyState.replyToName;
       }
 
-      const userName = (currentUser.user_metadata && currentUser.user_metadata.full_name) 
-        ? currentUser.user_metadata.full_name 
-        : currentUser.email.split('@')[0];
+      const userName = getDisplayName(currentUser);
+      const userAvatar = getCustomAvatarUrl(currentUser) || getGoogleAvatarUrl(currentUser) || null;
 
       try {
         const { error } = await supabaseClient
@@ -1682,7 +2250,7 @@
             user_id: currentUser.id,
             user_name: userName,
             user_email: currentUser.email,
-            avatar_url: getGoogleAvatarUrl(currentUser) || null,
+            avatar_url: userAvatar,
             parent_id: parentId,
             reply_to_name: replyToName,
             content: content
@@ -1784,17 +2352,380 @@
       renderCommentsUI(movieId);
     }
 
+    function insertCommentMarkdown(textareaId, kind, movieId, editCommentId = '') {
+      if (editCommentId) setInlineEditMode(editCommentId, 'write');
+      else setCommentEditorMode(movieId, 'write');
+
+      const textarea = document.getElementById(textareaId);
+      if (!textarea) return;
+
+      const start = textarea.selectionStart ?? textarea.value.length;
+      const end = textarea.selectionEnd ?? textarea.value.length;
+      const selected = textarea.value.slice(start, end);
+      let insertText = '';
+      let cursorOffset = null;
+
+      if (kind === 'bold') {
+        const inner = selected || 'texto em negrito';
+        insertText = `**${inner}**`;
+        cursorOffset = selected ? insertText.length : 2;
+      } else if (kind === 'italic') {
+        const inner = selected || 'texto em itálico';
+        insertText = `*${inner}*`;
+        cursorOffset = selected ? insertText.length : 1;
+      } else if (kind === 'heading') {
+        const inner = selected || 'Título';
+        insertText = `${start > 0 && textarea.value[start - 1] !== '\n' ? '\n' : ''}# ${inner}`;
+        cursorOffset = insertText.length;
+      } else if (kind === 'link') {
+        const label = selected || 'texto do link';
+        insertText = `[${label}](https://exemplo.com)`;
+        cursorOffset = insertText.length - 1;
+      } else if (kind === 'image') {
+        const alt = selected || 'descrição da imagem';
+        insertText = `![${alt}](https://exemplo.com/imagem.jpg)`;
+        cursorOffset = insertText.length - 1;
+      } else if (kind === 'code') {
+        const inner = selected || 'código';
+        insertText = `\`${inner}\``;
+        cursorOffset = selected ? insertText.length : 1;
+      }
+
+      const nextVal = textarea.value.slice(0, start) + insertText + textarea.value.slice(end);
+      textarea.value = nextVal.slice(0, 2000);
+      textarea.focus();
+      const newPos = Math.min(start + (cursorOffset ?? insertText.length), textarea.value.length);
+      textarea.setSelectionRange(newPos, newPos);
+
+      if (editCommentId) updateEditCharCount(editCommentId);
+      else updateCharCount(movieId);
+    }
+
+    function setCommentEditorMode(movieId, mode) {
+      const input = document.getElementById(`comment-input-${movieId}`);
+      const preview = document.getElementById(`comment-preview-${movieId}`);
+      const tabWrite = document.getElementById(`tab-write-${movieId}`);
+      const tabPreview = document.getElementById(`tab-preview-${movieId}`);
+      if (!input || !preview || !tabWrite || !tabPreview) return;
+
+      const isPreview = mode === 'preview';
+      input.classList.toggle('hidden', isPreview);
+      preview.classList.toggle('hidden', !isPreview);
+
+      tabWrite.className = `px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 ${!isPreview ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`;
+      tabPreview.className = `px-2.5 py-1 rounded-md font-semibold transition flex items-center gap-1 ${isPreview ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`;
+
+      if (isPreview) {
+        const text = input.value.trim();
+        preview.innerHTML = text
+          ? parseMarkdownSafe(input.value)
+          : '<span class="text-zinc-500 italic">Nada para visualizar ainda. Escreva algo com Markdown para ver o preview!</span>';
+      } else {
+        input.focus();
+      }
+    }
+
+    function updateEditCharCount(commentId) {
+      const input = document.getElementById(`edit-input-${commentId}`);
+      const counter = document.getElementById(`edit-char-count-${commentId}`);
+      if (input && counter) {
+        const len = input.value.length;
+        counter.textContent = `${len} / 2000`;
+        counter.className = len > 1900 ? 'text-red-400 font-bold' : 'text-zinc-500';
+      }
+    }
+
+    function setInlineEditMode(commentId, mode) {
+      const input = document.getElementById(`edit-input-${commentId}`);
+      const preview = document.getElementById(`edit-preview-${commentId}`);
+      const tabWrite = document.getElementById(`edit-tab-write-${commentId}`);
+      const tabPreview = document.getElementById(`edit-tab-preview-${commentId}`);
+      if (!input || !preview || !tabWrite || !tabPreview) return;
+
+      const isPreview = mode === 'preview';
+      input.classList.toggle('hidden', isPreview);
+      preview.classList.toggle('hidden', !isPreview);
+
+      tabWrite.className = `px-2 py-0.5 rounded-md font-semibold transition flex items-center gap-1 ${!isPreview ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`;
+      tabPreview.className = `px-2 py-0.5 rounded-md font-semibold transition flex items-center gap-1 ${isPreview ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`;
+
+      if (isPreview) {
+        const text = input.value.trim();
+        preview.innerHTML = text
+          ? parseMarkdownSafe(input.value)
+          : '<span class="text-zinc-500 italic">Nada para visualizar ainda.</span>';
+      } else {
+        input.focus();
+      }
+    }
+
+    function startEditComment(movieId, commentId) {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+      editingCommentIdByMovie[movieId] = commentId;
+      renderCommentsUI(movieId);
+      const input = document.getElementById(`edit-input-${commentId}`);
+      if (input) {
+        input.focus();
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
+    }
+
+    function cancelCommentEdit(movieId) {
+      delete editingCommentIdByMovie[movieId];
+      renderCommentsUI(movieId);
+    }
+
+    async function saveCommentEdit(movieId, commentId) {
+      if (!supabaseClient || !currentUser) {
+        openAuthModal();
+        return;
+      }
+      const list = commentsCache[movieId] || [];
+      const comment = list.find(c => c.id === commentId);
+      const input = document.getElementById(`edit-input-${commentId}`);
+      const btn = document.getElementById(`btn-save-edit-${commentId}`);
+      if (!comment || !input) return;
+
+      const newContent = input.value.trim();
+      if (!newContent) {
+        alert('O comentário não pode ficar vazio.');
+        return;
+      }
+      if (newContent.length > 2000) {
+        alert('O comentário excede o limite de 2000 caracteres.');
+        return;
+      }
+      if (newContent === (comment.content || '').trim()) {
+        cancelCommentEdit(movieId);
+        return;
+      }
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin text-[10px]"></i> Salvando...`;
+      }
+
+      const nowIso = new Date().toISOString();
+      const prevHistory = Array.isArray(comment.edit_history) ? [...comment.edit_history] : [];
+      const nextHistory = [
+        ...prevHistory,
+        {
+          content: comment.content,
+          original_at: comment.edited_at || comment.created_at || nowIso,
+          replaced_at: nowIso
+        }
+      ];
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('mcu_comments')
+          .update({
+            content: newContent,
+            edited_at: nowIso,
+            edit_history: nextHistory
+          })
+          .eq('id', commentId)
+          .eq('user_id', currentUser.id)
+          .select('id');
+
+        if (error) {
+          const msg = (error.message || '').toLowerCase();
+          if (msg.includes('edited_at') || msg.includes('edit_history') || error.code === 'PGRST204') {
+            alert('Para salvar edições e histórico, execute o SQL de atualização da tabela public.mcu_comments no Supabase (colunas edited_at e edit_history + política UPDATE).');
+            return;
+          }
+          throw error;
+        }
+        if (!data || data.length === 0) {
+          alert('Não foi possível atualizar o comentário. Verifique se a política RLS de UPDATE está configurada em public.mcu_comments.');
+          return;
+        }
+
+        delete editingCommentIdByMovie[movieId];
+        await loadComments(movieId);
+      } catch (err) {
+        alert('Erro ao salvar edição: ' + (err.message || 'Erro inesperado'));
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function openEditHistoryModal(movieId, commentId, event) {
+      if (event) event.stopPropagation();
+      const modal = document.getElementById('edit-history-modal');
+      const metaEl = document.getElementById('edit-history-meta');
+      const listEl = document.getElementById('edit-history-list');
+      if (!modal || !metaEl || !listEl) return;
+
+      const comment = (commentsCache[movieId] || []).find(c => c.id === commentId);
+      if (!comment) return;
+
+      const rawName = comment.user_name || (comment.user_email ? comment.user_email.split('@')[0] : 'Usuário');
+      const history = Array.isArray(comment.edit_history) ? comment.edit_history : [];
+      const editCount = history.length || (comment.edited_at ? 1 : 0);
+
+      metaEl.innerHTML = `Autor: <strong class="text-zinc-200">${escapeHtml(rawName)}</strong> • Criado em <span class="text-zinc-300">${formatCommentDate(comment.created_at)}</span> • ${editCount} ${editCount === 1 ? 'edição' : 'edições'}`;
+
+      const versions = [
+        {
+          label: 'Versão atual',
+          badgeClass: 'bg-emerald-950/60 text-emerald-300 border-emerald-800/70',
+          timestamp: comment.edited_at || comment.created_at,
+          content: comment.content
+        },
+        ...[...history].reverse().map((entry, idx) => {
+          const isOldest = idx === history.length - 1;
+          return {
+            label: isOldest ? 'Versão original' : `Versão #${history.length - idx}`,
+            badgeClass: 'bg-zinc-900 text-zinc-400 border-zinc-700/80',
+            timestamp: entry.original_at || entry.edited_at || comment.created_at,
+            replacedAt: entry.replaced_at || entry.edited_at || null,
+            content: entry.content || ''
+          };
+        })
+      ];
+
+      listEl.innerHTML = versions.map(v => `
+        <div class="p-3 rounded-xl bg-zinc-900/70 border border-zinc-800 space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <span class="px-2 py-0.5 rounded-full border font-semibold ${v.badgeClass}">${v.label}</span>
+            <span class="text-zinc-400">${formatCommentDate(v.timestamp)}${v.replacedAt ? ` • editado em ${formatCommentDate(v.replacedAt)}` : ''}</span>
+          </div>
+          <div class="text-xs text-zinc-300 leading-relaxed comment-markdown">
+            ${parseMarkdownSafe(v.content)}
+          </div>
+        </div>
+      `).join('');
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeEditHistoryModal(event) {
+      if (event && event.target && event.target.id !== 'edit-history-modal') return;
+      const modal = document.getElementById('edit-history-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    let commentMarkdownRenderer = null;
+
+    function normalizeSafeExternalUrl(url, allowMailto = false) {
+      if (typeof url !== 'string') return null;
+      const trimmed = url.trim();
+      if (!trimmed) return null;
+      if (/^https?:\/\//i.test(trimmed)) return trimmed;
+      if (allowMailto && /^mailto:/i.test(trimmed)) return trimmed;
+      if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(trimmed)) return null;
+      if (/^\/\//.test(trimmed)) return null;
+      if (/^(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:[/:?#][^\s]*)?$/i.test(trimmed)) {
+        return `https://${trimmed}`;
+      }
+      return null;
+    }
+
+    function isSafeExternalUrl(url, allowMailto = false) {
+      return Boolean(normalizeSafeExternalUrl(url, allowMailto));
+    }
+
+    function getCommentMarkdownRenderer() {
+      if (commentMarkdownRenderer || !window.marked || !window.marked.Renderer) return commentMarkdownRenderer;
+      const renderer = new window.marked.Renderer();
+      renderer.heading = function({ tokens, depth }) {
+        const safeLevel = Math.min(Math.max((depth || 1) + 3, 4), 6);
+        const text = this.parser.parseInline(tokens);
+        return `<h${safeLevel}>${text}</h${safeLevel}>\n`;
+      };
+      renderer.html = function({ raw, text }) {
+        return escapeHtml(raw !== undefined ? raw : (text || ''));
+      };
+      renderer.link = function({ href, title, tokens }) {
+        const text = this.parser.parseInline(tokens);
+        const safeUrl = normalizeSafeExternalUrl(href, true);
+        if (!safeUrl) return text;
+        const safeHref = escapeHtml(safeUrl);
+        const titleAttr = title ? ` title="${escapeHtml(title)}"` : '';
+        return `<a href="${safeHref}"${titleAttr} target="_blank" rel="noopener noreferrer nofollow">${text}</a>`;
+      };
+      renderer.image = function({ href, title, text }) {
+        const safeUrl = normalizeSafeExternalUrl(href, false);
+        if (!safeUrl) return escapeHtml(text || '');
+        const safeSrc = escapeHtml(safeUrl);
+        const safeAlt = escapeHtml(text || 'Imagem do comentário');
+        const titleAttr = title ? ` title="${escapeHtml(title)}"` : '';
+        return `<img src="${safeSrc}" alt="${safeAlt}"${titleAttr} loading="lazy" referrerpolicy="no-referrer">`;
+      };
+      commentMarkdownRenderer = renderer;
+      return commentMarkdownRenderer;
+    }
+
     function parseMarkdownSafe(content) {
       if (!content) return '';
+      let rawHtml = '';
       if (window.marked && window.marked.parse) {
         try {
-          return window.marked.parse(content, { breaks: true });
+          const renderer = getCommentMarkdownRenderer();
+          rawHtml = window.marked.parse(content, {
+            gfm: true,
+            breaks: true,
+            renderer: renderer || undefined
+          });
         } catch (e) {
-          return escapeHtml(content);
+          return `<p>${escapeHtml(content).replace(/\n/g, '<br>')}</p>`;
         }
+      } else {
+        return `<p>${escapeHtml(content).replace(/\n/g, '<br>')}</p>`;
       }
-      return escapeHtml(content);
+
+      if (window.DOMPurify && window.DOMPurify.sanitize) {
+        return window.DOMPurify.sanitize(rawHtml, {
+          ALLOWED_TAGS: [
+            'p', 'br', 'b', 'i', 'em', 'strong', 'del', 's',
+            'h4', 'h5', 'h6',
+            'ul', 'ol', 'li', 'input',
+            'blockquote', 'code', 'pre', 'hr',
+            'a', 'img',
+            'table', 'thead', 'tbody', 'tr', 'th', 'td'
+          ],
+          ALLOWED_ATTR: [
+            'href', 'target', 'rel', 'title',
+            'src', 'alt', 'loading', 'referrerpolicy',
+            'type', 'checked', 'disabled'
+          ],
+          ALLOW_DATA_ATTR: false
+        });
+      }
+      return rawHtml;
     }
+
+    // Delegated click handler to zoom images embedded in comment Markdown
+    document.addEventListener('click', (e) => {
+      const img = e.target && e.target.closest ? e.target.closest('.comment-markdown img') : null;
+      if (img && img.src) {
+        openImageModal(img.src, img.alt || 'Imagem do comentário', e);
+      }
+    });
+
+    // Fallback pill when an external Markdown image fails to load
+    document.addEventListener('error', (e) => {
+      const target = e.target;
+      if (!target || target.tagName !== 'IMG' || !target.closest || !target.closest('.comment-markdown')) return;
+      if (target.dataset.imgErrorHandled) return;
+      target.dataset.imgErrorHandled = '1';
+      target.classList.add('hidden');
+      const fallback = document.createElement('a');
+      fallback.href = target.getAttribute('src') || '#';
+      fallback.target = '_blank';
+      fallback.rel = 'noopener noreferrer nofollow';
+      fallback.className = 'inline-flex items-center gap-1.5 my-1 px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 text-[11px] text-sky-400 hover:text-sky-300 no-underline transition';
+      const altText = target.getAttribute('alt') || 'Imagem externa';
+      fallback.innerHTML = `<i class="fa-regular fa-image text-zinc-400"></i> <span>${escapeHtml(altText)} (abrir imagem)</span> <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>`;
+      target.insertAdjacentElement('afterend', fallback);
+    }, true);
 
     function escapeHtml(str) {
       return (str || '')
@@ -1809,16 +2740,10 @@
       if (!dateStr) return '';
       try {
         const d = new Date(dateStr);
-        const now = new Date();
-        const diffMs = now - d;
-        const diffMin = Math.floor(diffMs / 60000);
-        if (diffMin < 1) return 'agora';
-        if (diffMin < 60) return `há ${diffMin}m`;
-        const diffHours = Math.floor(diffMin / 60);
-        if (diffHours < 24) return `há ${diffHours}h`;
-        const diffDays = Math.floor(diffHours / 24);
-        if (diffDays < 7) return `há ${diffDays}d`;
-        return d.toLocaleDateString('pt-BR');
+        if (Number.isNaN(d.getTime())) return '';
+        const datePart = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const timePart = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        return `${datePart} às ${timePart}`;
       } catch (e) {
         return '';
       }
@@ -1828,7 +2753,7 @@
       if (event) event.stopPropagation();
       const el = document.getElementById(`${prefix}-${id}`);
       const icon = document.getElementById(`${iconPrefix}-${id}`);
-      if (!el) return;
+      if (!el) return false;
       const willOpen = el.classList.contains('hidden');
       el.classList.toggle('hidden', !willOpen);
       if (icon) icon.classList.toggle('rotate-180', willOpen);
@@ -1836,10 +2761,19 @@
         if (willOpen) stateSet.add(id);
         else stateSet.delete(id);
       }
+      return willOpen;
+    }
+
+    function syncSeriesCardProgressVisibility(id, isOpen) {
+      const cardProgress = document.getElementById(`series-card-progress-${id}`);
+      if (!cardProgress) return;
+      const hasProgress = cardProgress.dataset.hasProgress === '1';
+      cardProgress.classList.toggle('hidden', isOpen || !hasProgress);
     }
 
     function toggleDetails(id) {
-      toggleCollapsible(id, 'details', 'icon', openDetailsIds);
+      const willOpen = toggleCollapsible(id, 'details', 'icon', openDetailsIds);
+      syncSeriesCardProgressVisibility(id, willOpen);
     }
 
     function toggleEpisodesPanel(seriesId, event) {
@@ -1858,10 +2792,24 @@
       if (icon) icon.classList.add('rotate-180');
       if (panel) panel.classList.remove('hidden');
       if (panelIcon) panelIcon.classList.add('rotate-180');
+      syncSeriesCardProgressVisibility(seriesId, true);
     }
 
     function toggleEpisodeDetails(epId, event) {
       toggleCollapsible(epId, 'ep-details', 'ep-icon', openEpisodeDetailsIds, event);
+    }
+
+    function renderCommentsTriggerButton(itemId, cachedCount, title = 'Comentários e discussões', extraClass = '') {
+      return `
+        <button onclick="toggleCommentsSection('${itemId}', event)"
+          id="btn-comment-trigger-${itemId}"
+          class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs font-medium transition ${extraClass}"
+          title="${escapeHtml(title)}">
+          <i class="fa-regular fa-comment text-sm"></i>
+          <span class="text-xs">Comentários</span>
+          <span id="comment-btn-count-${itemId}" class="text-[10px] bg-zinc-800 px-1.5 py-0.2 rounded font-bold text-zinc-300 ${cachedCount > 0 ? '' : 'hidden'}">${cachedCount}</span>
+        </button>
+      `;
     }
 
     function renderSeriesEpisodesHTML(item, fallbackPoster) {
@@ -1894,8 +2842,8 @@
 
         return `
           ${seasonHeader}
-          <div class="rounded-lg border ${epWatched ? 'border-zinc-800/60 bg-zinc-950/60 opacity-65' : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-700'} transition p-2">
-            <div class="flex items-center justify-between gap-2 cursor-pointer" onclick="toggleEpisodeDetails('${ep.id}', event)">
+          <div class="rounded-lg border ${epWatched ? 'border-zinc-800/70 bg-zinc-950/80' : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-700'} transition p-2">
+            <div class="flex items-center justify-between gap-2 cursor-pointer ${epWatched ? 'opacity-65 hover:opacity-95 transition-opacity' : ''}" onclick="toggleEpisodeDetails('${ep.id}', event)">
               <div class="flex items-center gap-2.5 min-w-0">
                 <input type="checkbox" ${epWatched ? 'checked' : ''} onclick="toggleEpisodeWatched('${item.id}', '${ep.id}', event)"
                   class="w-4 h-4 rounded text-marvel-red bg-zinc-950 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600 shrink-0">
@@ -1947,14 +2895,7 @@
                   <p class="leading-relaxed text-zinc-300 mb-3">${escapeHtml(ep.synopsis || 'Sinopse indisponível.')}</p>
 
                   <div class="flex items-center gap-2">
-                    <button onclick="toggleCommentsSection('${ep.id}', event)"
-                      id="btn-comment-trigger-${ep.id}"
-                      class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-950 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs transition"
-                      title="Comentários do episódio">
-                      <i class="fa-regular fa-comment text-sm"></i>
-                      <span>Comentários</span>
-                      <span id="comment-btn-count-${ep.id}" class="text-[10px] bg-zinc-800 px-1.5 py-0.2 rounded font-bold text-zinc-300 ${cachedCommentsCount > 0 ? '' : 'hidden'}">${cachedCommentsCount}</span>
-                    </button>
+                    ${renderCommentsTriggerButton(ep.id, cachedCommentsCount, 'Comentários do episódio')}
                   </div>
 
                   <div id="comments-section-${ep.id}" class="hidden mt-3 pt-3 border-t border-zinc-800/80"></div>
@@ -1968,24 +2909,75 @@
       return `
         <div class="mt-4 pt-3 border-t border-zinc-800/80" onclick="event.stopPropagation()">
           <button onclick="toggleEpisodesPanel('${item.id}', event)"
-            class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800/80 border border-zinc-800 text-xs transition">
+            class="w-full flex flex-wrap items-center justify-between gap-2 sm:gap-3 px-3 py-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800/80 border border-zinc-800 text-xs transition">
             <div class="flex items-center gap-2 font-semibold text-zinc-200">
               <i class="fa-solid fa-clapperboard text-yellow-500"></i>
               <span>Episódios</span>
               <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800 ${watchedEpCount === episodes.length ? 'text-emerald-400 border-emerald-700/50' : 'text-zinc-400'}">
-                ${watchedEpCount}/${episodes.length} assistidos
+                ${watchedEpCount}/${episodes.length}<span class="hidden sm:inline"> assistidos</span>
               </span>
             </div>
-            <div class="flex items-center gap-2.5">
-              <div class="hidden sm:block w-20 h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-800">
-                <div class="h-full bg-marvel-red transition-all duration-300" style="width: ${pct}%"></div>
+            <div class="flex items-center gap-2 ml-auto">
+              <div class="w-16 sm:w-24 h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-800">
+                <div class="h-full ${pct === 100 ? 'bg-emerald-500' : 'bg-marvel-red'} transition-all duration-300" style="width: ${pct}%"></div>
               </div>
+              <span class="text-[10px] sm:text-[11px] font-mono font-bold tabular-nums ${pct === 100 ? 'text-emerald-400' : 'text-zinc-300'}">${pct}%</span>
               <i id="ep-panel-icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-400 text-[11px] transition-transform duration-300 ${isPanelOpen ? 'rotate-180' : ''}"></i>
             </div>
           </button>
 
           <div id="episodes-panel-${item.id}" class="${isPanelOpen ? '' : 'hidden'} mt-2.5 space-y-2">
             ${rowsHtml}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPostCreditsSectionHTML(item) {
+      const pc = item && item.post_credits;
+      if (!pc || typeof pc.count !== 'number') return '';
+
+      if (pc.count === 0) {
+        return `
+          <div class="mb-3">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-zinc-900 border border-zinc-700/80 text-zinc-400">
+              <i class="fa-regular fa-circle-xmark text-[10px]"></i> Sem cena pós-crédito
+            </span>
+          </div>
+        `;
+      }
+
+      const label = pc.count === 1
+        ? '1 cena pós-crédito'
+        : `${pc.count} cenas pós-crédito`;
+      const scenes = Array.isArray(pc.scenes) ? pc.scenes : [];
+
+      return `
+        <div class="mb-3 space-y-2">
+          <button type="button" id="post-credits-btn-${item.id}" aria-expanded="false"
+            onclick="togglePostCreditsPanel('${item.id}', event)"
+            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-950/40 hover:bg-amber-950/70 border border-amber-700/60 text-amber-300 transition cursor-pointer">
+            <i class="fa-solid fa-film text-[10px]"></i>
+            <span>${label}</span>
+            <i class="fa-solid fa-chevron-down text-[9px] ml-0.5 post-credits-chevron transition-transform duration-200"></i>
+          </button>
+
+          <div id="post-credits-${item.id}" onclick="event.stopPropagation()"
+            class="hidden p-2.5 rounded-lg bg-zinc-950/90 border border-amber-800/40 text-[11px] text-zinc-300 space-y-1.5 max-w-xl">
+            <div class="text-[10px] font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+              <i class="fa-regular fa-clock"></i> Início das cenas nos créditos
+            </div>
+            ${scenes.length > 0 ? `
+              <ul class="space-y-1">
+                ${scenes.map(sc => `
+                  <li class="flex flex-wrap items-center justify-between gap-2 py-0.5 border-b border-zinc-800/50 last:border-b-0">
+                    <span class="text-zinc-300">${escapeHtml(sc.type || 'Cena pós-créditos')}</span>
+                    <span class="font-mono font-semibold text-amber-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800">${escapeHtml(sc.timestamp || '')}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            ` : ''}
+            ${pc.note ? `<p class="text-[10px] text-zinc-400 pt-0.5">${escapeHtml(pc.note)}</p>` : ''}
           </div>
         </div>
       `;
@@ -2009,6 +3001,8 @@
       const filtered = sorted.filter(item => {
         if (hideSeries && item.type === 'series') return false;
         if (selectedPhase !== 'all' && item.phase.toString() !== selectedPhase) return false;
+        if (selectedStatus === 'watched' && !watchedIds.has(item.id)) return false;
+        if (selectedStatus === 'unwatched' && watchedIds.has(item.id)) return false;
         if (searchQuery.trim() !== '') {
           const q = normalize(searchQuery.trim());
           const matchPt = normalize(item.title_pt || item.title).includes(q);
@@ -2034,7 +3028,11 @@
         const isOpen = openDetailsIds.has(item.id);
         const orderNumber = index + 1;
         const fallbackPoster = 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400&q=80';
-        const posterUrl = item.cover_url || fallbackPoster;
+        const rawCover = item.cover_url || '';
+        const tinyCover = rawCover ? getSizedPosterUrl(rawCover, 40) : '';
+        const thumbCover = rawCover ? getSizedPosterUrl(rawCover, 120) : '';
+        const detailCover = rawCover ? getSizedPosterUrl(rawCover, 320) : '';
+        const thumbLoading = index < 8 ? 'eager' : 'lazy';
         const titlePt = item.title_pt || item.title;
         const titleEn = item.title_en || item.original_title;
         const hasDiffEn = titleEn && titleEn.toLowerCase() !== titlePt.toLowerCase();
@@ -2043,54 +3041,68 @@
         if (item.type === 'series') {
           const eps = item.episodes || [];
           const watchedEps = eps.filter(ep => isEpisodeWatched(item, ep.id)).length;
+          const seriesPct = eps.length > 0 ? Math.round((watchedEps / eps.length) * 100) : 0;
+          const hasEpProgress = eps.length > 0 && watchedEps > 0;
           return `
-            <div class="group relative flex flex-col p-2.5 sm:px-4 rounded-xl border transition ${isWatched ? 'border-zinc-800/50 bg-zinc-950/70 opacity-55' : 'border-zinc-800/80 bg-zinc-900/75 hover:bg-zinc-900 hover:border-yellow-500/30'}">
-              <div class="flex items-center justify-between cursor-pointer" onclick="toggleDetails('${item.id}')">
-                <div class="flex items-center gap-2.5 sm:gap-3">
-                  <input type="checkbox" ${isWatched ? 'checked' : ''} onclick="toggleWatched('${item.id}', event)"
-                    class="w-4 h-4 rounded text-marvel-red bg-zinc-900 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600">
-                  <span class="text-[10px] font-mono text-zinc-500 w-4 text-right">${orderNumber}.</span>
-                  
-                  <!-- Mini Thumbnail (modo colapsado) -->
-                  ${item.cover_url ? `
-                    <div class="w-7 h-10 shrink-0 rounded overflow-hidden border border-zinc-800 bg-black cursor-zoom-in shadow-sm hover:scale-110 transition duration-200"
-                      title="Clique para ampliar" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
-                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-full object-cover" loading="lazy">
-                    </div>
-                  ` : ''}
+            <div class="mcu-timeline-card group relative flex flex-col p-2.5 sm:px-4 pt-3.5 rounded-xl border transition ${isWatched ? 'border-zinc-800/70 bg-zinc-950/85' : 'border-zinc-800/80 bg-zinc-900/75 hover:bg-zinc-900 hover:border-yellow-500/30'}">
+              <span class="absolute -top-2.5 right-3 z-10 px-2 py-0.5 text-[9px] sm:text-[10px] font-semibold rounded-full uppercase tracking-wider bg-zinc-900 text-zinc-400 border border-zinc-700/90 shadow-sm pointer-events-none">
+                Ignorável
+              </span>
+              <div class="cursor-pointer ${isWatched ? 'opacity-60 hover:opacity-95 transition-opacity' : ''}" onclick="toggleDetails('${item.id}')">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                    <input type="checkbox" ${isWatched ? 'checked' : ''} onclick="toggleWatched('${item.id}', event)"
+                      class="w-4 h-4 rounded text-marvel-red bg-zinc-900 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600 shrink-0">
+                    <span class="text-[10px] font-mono text-zinc-500 w-4 text-right shrink-0">${orderNumber}.</span>
+                    
+                    <!-- Mini Thumbnail (modo colapsado: apenas expande o card) -->
+                    ${rawCover ? `
+                      <div class="w-7 h-10 shrink-0 rounded overflow-hidden border border-zinc-800 bg-zinc-900 shadow-sm"
+                        style="background-image: url('${tinyCover}'); background-size: cover; background-position: center;">
+                        <img src="${thumbCover}" alt="${escapeHtml(titlePt)}" width="28" height="40" class="w-full h-full object-cover" loading="${thumbLoading}" decoding="async">
+                      </div>
+                    ` : ''}
 
-                  <div>
-                    <small class="text-xs text-zinc-300 group-hover:text-white transition font-normal flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span class="text-[10px] bg-zinc-800 text-yellow-400 px-1.5 py-0.2 rounded uppercase font-semibold">Série</span>
-                      <span class="${isWatched ? 'line-through text-zinc-500' : 'font-semibold text-zinc-100'}">${titlePt}</span>
-                      ${hasDiffEn ? `<span class="text-[11px] text-zinc-400 italic">(${titleEn})</span>` : ''}
-                      <span class="text-[10px] text-zinc-400">(${item.year})</span>
-                    </small>
-                    <div class="text-[10px] text-zinc-400 mt-0.5 flex flex-wrap items-center gap-1.5">
-                      <span>${currentOrder === 'chrono' ? item.chronoDetail : `Lançamento: ${item.year}`} • Fase ${item.phase} (Opcional)</span>
-                      ${eps.length > 0 ? `
-                        <button type="button" onclick="openSeriesEpisodesDirect('${item.id}', event)"
-                          class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-zinc-950/90 hover:bg-zinc-800 border border-zinc-700/80 ${watchedEps === eps.length ? 'text-emerald-400 border-emerald-700/50' : 'text-amber-300 hover:text-white'} transition"
-                          title="Abrir lista de episódios">
-                          <i class="fa-solid fa-clapperboard text-[9px]"></i> ${watchedEps}/${eps.length} eps
-                        </button>
-                      ` : ''}
+                    <div class="min-w-0">
+                      <small class="text-xs text-zinc-300 group-hover:text-white transition font-normal flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        <span class="text-[10px] bg-zinc-800 text-yellow-400 px-1.5 py-0.2 rounded uppercase font-semibold">Série</span>
+                        <span class="${isWatched ? 'line-through text-zinc-500' : 'font-semibold text-zinc-100'}">${titlePt}</span>
+                        ${hasDiffEn ? `<span class="text-[11px] text-zinc-400 italic">(${titleEn})</span>` : ''}
+                        <span class="text-[10px] text-zinc-400">(${item.year})</span>
+                      </small>
+                      <div class="text-[10px] text-zinc-400 mt-0.5 flex flex-wrap items-center gap-1.5">
+                        <span>${currentOrder === 'chrono' ? item.chronoDetail : `Lançamento: ${item.year}`} • Fase ${item.phase} (Opcional)</span>
+                        ${eps.length > 0 ? `
+                          <button type="button" onclick="openSeriesEpisodesDirect('${item.id}', event)"
+                            class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-zinc-950/90 hover:bg-zinc-800 border border-zinc-700/80 ${watchedEps === eps.length ? 'text-emerald-400 border-emerald-700/50' : 'text-amber-300 hover:text-white'} transition"
+                            title="Abrir lista de episódios">
+                            <i class="fa-solid fa-clapperboard text-[9px]"></i> ${watchedEps}/${eps.length} eps
+                          </button>
+                        ` : ''}
+                      </div>
                     </div>
                   </div>
+                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-600 text-xs transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180' : ''}"></i>
                 </div>
-                <div class="flex items-center gap-3">
-                  <span class="text-[10px] text-zinc-600 italic hidden sm:inline">Ignorável</span>
-                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-600 text-xs transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}"></i>
+
+                <!-- Card-level progress bar when collapsed and progress > 0 -->
+                <div id="series-card-progress-${item.id}" data-has-progress="${hasEpProgress ? '1' : '0'}"
+                  class="${(hasEpProgress && !isOpen) ? 'flex' : 'hidden'} items-center gap-2.5 mt-2 pl-7 sm:pl-9 max-w-md">
+                  <div class="flex-1 h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-800">
+                    <div class="h-full ${seriesPct === 100 ? 'bg-emerald-500' : 'bg-marvel-red'} transition-all duration-300" style="width: ${seriesPct}%"></div>
+                  </div>
+                  <span class="text-[10px] font-mono font-bold tabular-nums shrink-0 ${seriesPct === 100 ? 'text-emerald-400' : 'text-amber-300'}">${seriesPct}%</span>
                 </div>
               </div>
               
               <!-- Accordion Content -->
               <div id="details-${item.id}" class="${isOpen ? '' : 'hidden'} mt-3 pt-3 border-t border-zinc-800/60 text-xs text-zinc-300">
                 <div class="flex flex-col sm:flex-row gap-4 items-start">
-                  ${item.cover_url ? `
-                    <div class="w-20 sm:w-24 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-md cursor-zoom-in group/poster relative"
-                      title="Clique para ver em tela cheia" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
-                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-auto object-cover hover:scale-105 transition duration-300" loading="lazy">
+                  ${rawCover ? `
+                    <div class="w-20 sm:w-24 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-md cursor-zoom-in group/poster relative bg-zinc-900"
+                      style="background-image: url('${tinyCover}'); background-size: cover; background-position: center;"
+                      title="Clique para ver em tela cheia" onclick="openImageModal('${rawCover}', '${titlePt.replace(/'/g, "\\'")}', event)">
+                      <img src="${detailCover}" alt="${escapeHtml(titlePt)}" width="96" height="142" class="w-full h-auto object-cover hover:scale-105 transition duration-300" loading="lazy" decoding="async">
                       <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/poster:opacity-100 flex items-center justify-center transition text-white text-xs">
                         <i class="fa-solid fa-maximize"></i>
                       </div>
@@ -2127,13 +3139,7 @@
                           <i class="fa-brands fa-imdb text-yellow-400"></i> IMDb
                         </a>
                       ` : ''}
-                      <button onclick="toggleCommentsSection('${item.id}', event)" 
-                        id="btn-comment-trigger-${item.id}"
-                        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs transition"
-                        title="Comentários e discussões">
-                        <i class="fa-regular fa-comment text-sm"></i>
-                        <span id="comment-btn-count-${item.id}" class="text-[11px] font-medium ${cachedCount > 0 ? '' : 'hidden'}">${cachedCount}</span>
-                      </button>
+                      ${renderCommentsTriggerButton(item.id, cachedCount)}
                     </div>
 
                     <!-- Discrete Comments Drawer Container -->
@@ -2148,25 +3154,28 @@
           `;
         } else {
           return `
-            <div class="group relative flex flex-col p-3 sm:p-4 rounded-xl border ${isWatched ? 'border-zinc-800 bg-zinc-950/70 opacity-60' : 'border-zinc-800/90 bg-gradient-to-r from-zinc-900 to-zinc-900/90 hover:border-red-900/60'} shadow-md transition-all duration-200">
-              <div class="flex items-center justify-between cursor-pointer" onclick="toggleDetails('${item.id}')">
-                <div class="flex items-center gap-3 sm:gap-4">
+            <div class="mcu-timeline-card group relative flex flex-col p-3 sm:p-4 pt-4 rounded-xl border ${isWatched ? 'border-zinc-800/80 bg-zinc-950/85' : 'border-zinc-800/90 bg-gradient-to-r from-zinc-900 to-zinc-900/90 hover:border-red-900/60'} shadow-md transition-all duration-200">
+              <span class="absolute -top-2.5 right-3 z-10 px-2 py-0.5 text-[9px] sm:text-[10px] font-bold rounded-full uppercase tracking-wider bg-red-950 text-red-300 border border-red-800/90 shadow-sm pointer-events-none">
+                Canônico MCU
+              </span>
+              <div class="flex items-center justify-between gap-2 cursor-pointer ${isWatched ? 'opacity-60 hover:opacity-95 transition-opacity' : ''}" onclick="toggleDetails('${item.id}')">
+                <div class="flex items-center gap-3 sm:gap-4 min-w-0">
                   <input type="checkbox" ${isWatched ? 'checked' : ''} onclick="toggleWatched('${item.id}', event)"
-                    class="w-5 h-5 rounded text-marvel-red bg-zinc-950 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600">
+                    class="w-5 h-5 rounded text-marvel-red bg-zinc-950 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600 shrink-0">
                   
-                  <span class="text-xs sm:text-sm font-black font-mono text-zinc-500 w-5 text-right">${orderNumber}.</span>
+                  <span class="text-xs sm:text-sm font-black font-mono text-zinc-500 w-5 text-right shrink-0">${orderNumber}.</span>
                   
-                  <!-- Mini Thumbnail (modo colapsado) -->
-                  ${item.cover_url ? `
-                    <div class="w-9 h-12 sm:w-10 sm:h-14 shrink-0 rounded-md overflow-hidden border border-zinc-800 bg-black cursor-zoom-in shadow-md hover:scale-105 transition duration-200"
-                      title="Clique para ampliar" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
-                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-full object-cover" loading="lazy">
+                  <!-- Mini Thumbnail (modo colapsado: apenas expande o card) -->
+                  ${rawCover ? `
+                    <div class="w-9 h-12 sm:w-10 sm:h-14 shrink-0 rounded-md overflow-hidden border border-zinc-800 bg-zinc-900 shadow-md"
+                      style="background-image: url('${tinyCover}'); background-size: cover; background-position: center;">
+                      <img src="${thumbCover}" alt="${escapeHtml(titlePt)}" width="40" height="56" class="w-full h-full object-cover" loading="${thumbLoading}" decoding="async">
                     </div>
                   ` : ''}
 
-                  <div>
+                  <div class="min-w-0">
                     <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
-                      <div class="flex items-center gap-2">
+                      <div class="flex items-center gap-2 flex-wrap">
                         <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-red-400 transition ${isWatched ? 'line-through text-zinc-400' : ''}">
                           ${titlePt}
                         </h3>
@@ -2190,21 +3199,17 @@
                   </div>
                 </div>
 
-                <div class="flex items-center gap-4">
-                  <span class="hidden sm:inline-flex px-2.5 py-1 text-[11px] font-semibold rounded-md uppercase tracking-wider bg-red-950/40 text-red-300 border border-red-900/50">
-                    MCU Canon
-                  </span>
-                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}"></i>
-                </div>
+                <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180' : ''}"></i>
               </div>
               
               <!-- Accordion Content with Poster & Trailer -->
               <div id="details-${item.id}" class="${isOpen ? '' : 'hidden'} mt-3 pt-3 border-t border-zinc-800 text-sm text-zinc-300">
                 <div class="flex flex-col sm:flex-row gap-4 items-start">
-                  ${item.cover_url ? `
-                    <div class="w-24 sm:w-28 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-xl bg-black cursor-zoom-in group/poster relative"
-                      title="Clique para ver em tela cheia" onclick="openImageModal('${item.cover_url}', '${titlePt.replace(/'/g, "\\'")}', event)">
-                      <img src="${item.cover_url}" alt="${titlePt}" class="w-full h-auto object-cover hover:scale-105 transition duration-300" loading="lazy">
+                  ${rawCover ? `
+                    <div class="w-24 sm:w-28 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-xl bg-zinc-900 cursor-zoom-in group/poster relative"
+                      style="background-image: url('${tinyCover}'); background-size: cover; background-position: center;"
+                      title="Clique para ver em tela cheia" onclick="openImageModal('${rawCover}', '${titlePt.replace(/'/g, "\\'")}', event)">
+                      <img src="${detailCover}" alt="${escapeHtml(titlePt)}" width="112" height="166" class="w-full h-auto object-cover hover:scale-105 transition duration-300" loading="lazy" decoding="async">
                       <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/poster:opacity-100 flex items-center justify-center transition text-white text-xs">
                         <i class="fa-solid fa-maximize"></i>
                       </div>
@@ -2222,6 +3227,7 @@
                         </span>
                       </div>
                       <p class="leading-relaxed text-zinc-300 mb-3">${item.synopsis}</p>
+                      ${renderPostCreditsSectionHTML(item)}
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2.5 mt-2">
@@ -2250,14 +3256,7 @@
                       ` : ''}
 
                       <!-- Discrete Instagram-like comment trigger button -->
-                      <button onclick="toggleCommentsSection('${item.id}', event)" 
-                        id="btn-comment-trigger-${item.id}"
-                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs font-medium transition ml-auto sm:ml-0"
-                        title="Comentários e discussões">
-                        <i class="fa-regular fa-comment text-sm"></i>
-                        <span class="text-xs">Comentários</span>
-                        <span id="comment-btn-count-${item.id}" class="text-[10px] bg-zinc-800 px-1.5 py-0.2 rounded font-bold text-zinc-300 ${cachedCount > 0 ? '' : 'hidden'}">${cachedCount}</span>
-                      </button>
+                      ${renderCommentsTriggerButton(item.id, cachedCount, 'Comentários e discussões', 'ml-auto sm:ml-0')}
                     </div>
 
                     <!-- Discrete Comments Drawer Container -->
@@ -2310,28 +3309,45 @@
       }
     });
 
-    // Load data from mcu_data.json
+    // Load data from mcu_data.json (or render immediately from embedded fallback)
     async function loadMCUData() {
+      let hasRenderedFallback = false;
+      if (Array.isArray(window.__MCU_FALLBACK_DATA__) && window.__MCU_FALLBACK_DATA__.length > 0 && mcuData.length === 0) {
+        mcuData = window.__MCU_FALLBACK_DATA__;
+        if (reconcileSeriesCompletionFromEpisodes()) saveState();
+        updateProgress();
+        renderList();
+        hasRenderedFallback = true;
+      }
+
       try {
-        const response = await fetch('mcu_data.json?v=20261111', { cache: 'no-store' });
+        const response = await fetch('mcu_data.json?v=20261111b');
         if (!response.ok) throw new Error('Network error');
-        mcuData = await response.json();
+        const remoteData = await response.json();
+        if (Array.isArray(remoteData) && remoteData.length > 0) {
+          const changed = !hasRenderedFallback || remoteData.length !== mcuData.length;
+          mcuData = remoteData;
+          if (reconcileSeriesCompletionFromEpisodes()) saveState();
+          if (changed) {
+            updateProgress();
+            renderList();
+          }
+        }
       } catch (err) {
-        console.warn('Falha ao carregar mcu_data.json via fetch (provavelmente arquivo local sem servidor). Carregando fallback embutido...', err);
-        // Fallback: carregar dados embutidos se o fetch falhar
-        if (window.__MCU_FALLBACK_DATA__) {
-          mcuData = window.__MCU_FALLBACK_DATA__;
+        if (!hasRenderedFallback) {
+          console.warn('Falha ao carregar mcu_data.json via fetch. Tentando fallback embutido...', err);
+          if (window.__MCU_FALLBACK_DATA__) {
+            mcuData = window.__MCU_FALLBACK_DATA__;
+            if (reconcileSeriesCompletionFromEpisodes()) saveState();
+            updateProgress();
+            renderList();
+          }
         }
       }
-      if (reconcileSeriesCompletionFromEpisodes()) {
-        saveState();
-      }
-      updateProgress();
-      renderList();
     }
 
-    // Initial Load & Auth Session Check
-    window.onload = async function () {
+    // Initial Load & Auth Session Check (runs as soon as DOM + deferred scripts are ready)
+    async function initApp() {
       loadMCUData();
 
       if (supabaseClient) {
@@ -2355,7 +3371,13 @@
           }
         });
       }
-    };
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
   </script>
 </body>
 </html>

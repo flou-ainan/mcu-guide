@@ -50,6 +50,8 @@ Interactive chronological and release guide for Marvel Cinematic Universe movies
   - `reply_to_name` (text, nullable)
   - `content` (text, max 2000 chars)
   - `created_at` (timestamptz)
+  - `edited_at` (timestamptz, nullable)
+  - `edit_history` (jsonb, default `'[]'::jsonb` — array of `{ content, original_at, replaced_at }`)
   - *Trigger:* enforced max 200 comments per user.
 - **`public.mcu_comment_reactions`**:
   - `comment_id` (uuid, references public.mcu_comments)
@@ -63,12 +65,12 @@ Interactive chronological and release guide for Marvel Cinematic Universe movies
 
 | File | Lines | Description |
 |---|---|---|
-| `index.html` | 2361 | Main SPA: hero banner, sticky top navbar with Gravatar/Google avatar fallback, filters, timeline views, series episode expander, modal trailer, discrete comments drawer, Supabase auth/sync |
+| `index.html` | 3383 | Main SPA: hero banner (`fetchpriority="high"`), sticky top navbar (`Conheça o projeto`, custom/Gravatar/Google avatar & display name), responsive order switcher, watched status filter (`Todos / Não assistidos / Assistidos`), phase filters, shimmer skeletons, timeline views (`content-visibility: auto`, sized IMDb thumbnails, canon/ignorable badges, scoped watched fade), expandable post-credits timestamps, series episode expander & collapsed progress bar, modal trailer, safe Markdown comments drawer (`marked@15` + `DOMPurify@3`, toolbar, preview, inline editing & `#edit-history-modal`), Supabase auth/sync + inline profile customization |
 | `privacy.html` | 125 | Privacy Policy page for Google OAuth compliance and user transparency |
 | `terms.html` | 113 | Terms of Service page |
-| `scraper.py` | 1090 | Python scraper for IMDb covers, YouTube trailers, and Cinemeta series episodes + thumbnails |
-| `data.js` | 3008 | Generated JavaScript fallback bundle containing `window.__MCU_FALLBACK_DATA__` |
-| `mcu_data.json` | 3007 | Source JSON representation of 52 MCU titles + 152 scraped series episodes |
+| `scraper.py` | 1092 | Python scraper for IMDb covers, YouTube trailers, Cinemeta series episodes + thumbnails, preserving researched `post_credits` data |
+| `data.js` | 3472 | Generated JavaScript fallback bundle containing `window.__MCU_FALLBACK_DATA__` (including movie `post_credits`) |
+| `mcu_data.json` | 3471 | Source JSON representation of 52 MCU titles (all 37 movies with `post_credits`) + 152 scraped series episodes |
 | `README.md` | 51 | Repository presentation and deployment details |
 | `robots.txt` | 5 | Crawler directive allowing TelegramBot and social media link previews |
 | `hero-banner.webp` | - | High-res (2048x718) MCU collage banner |

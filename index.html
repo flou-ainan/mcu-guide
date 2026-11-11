@@ -221,10 +221,9 @@
       color: #f4f4f5;
       font-weight: 600;
     }
-    /* PageSpeed: skip layout/paint on off-screen timeline cards */
+    /* Keep floating card badges unclipped */
     .mcu-timeline-card {
-      content-visibility: auto;
-      contain-intrinsic-size: auto 92px;
+      overflow: visible;
     }
     /* YouTube-style Shimmer Skeleton Loading */
     @keyframes mcuShimmer {
@@ -402,7 +401,7 @@
     </div>
 
     <!-- Timeline List Container -->
-    <div id="timeline-container" class="space-y-4">
+    <div id="timeline-container" class="space-y-4 pt-2">
       <div aria-hidden="true" class="space-y-4">
         <div class="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-zinc-800/80 bg-zinc-900/70">
           <div class="w-4 h-4 rounded skeleton-shimmer shrink-0"></div>
@@ -760,6 +759,61 @@
           Fechar
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal: Inserir Imagem por URL no Comentário -->
+  <div id="insert-image-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4" onclick="closeInsertImageModal(event)">
+    <div class="bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-fade-in" onclick="event.stopPropagation()">
+      <div class="p-4 border-b border-zinc-800/80 flex items-center justify-between">
+        <h3 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+          <i class="fa-regular fa-image text-emerald-400"></i>
+          Inserir Imagem no Comentário
+        </h3>
+        <button type="button" onclick="closeInsertImageModal()" class="text-zinc-400 hover:text-white p-1 transition" aria-label="Fechar modal de imagem">
+          <i class="fa-solid fa-xmark text-base"></i>
+        </button>
+      </div>
+
+      <form onsubmit="confirmInsertImageModal(event)" class="p-4 space-y-3">
+        <div class="p-2.5 rounded-xl bg-sky-950/30 border border-sky-800/50 text-[11px] text-sky-200/90 flex items-start gap-2 leading-relaxed">
+          <i class="fa-solid fa-circle-info text-sky-400 mt-0.5 text-xs shrink-0" title="Aviso sobre hospedagem de imagens"></i>
+          <span>
+            Não hospedamos arquivos de imagem aqui, portanto apenas imagens por <strong>URL pública</strong> podem ser exibidas. Recomendamos hospedar gratuitamente no
+            <a href="https://pt-br.imgbb.com/" target="_blank" rel="noopener noreferrer" class="text-sky-300 hover:text-white underline font-semibold">ImgBB</a>
+            e colar o link direto da imagem abaixo.
+          </span>
+        </div>
+
+        <div>
+          <label for="insert-img-alt" class="block text-[11px] font-semibold text-zinc-300 mb-1">Descrição da imagem</label>
+          <input type="text" id="insert-img-alt" maxlength="120" placeholder="Ex: Cena pós-créditos ou meme"
+            class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition">
+        </div>
+
+        <div>
+          <label for="insert-img-url" class="block text-[11px] font-semibold text-zinc-300 mb-1">URL da imagem</label>
+          <input type="text" id="insert-img-url" required maxlength="500" placeholder="https://i.ibb.co/..."
+            oninput="previewInsertImageModal()"
+            class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-emerald-500 transition">
+        </div>
+
+        <div id="insert-img-preview-box" class="rounded-xl border border-dashed border-zinc-800 bg-zinc-900/60 p-3 min-h-[120px] flex flex-col items-center justify-center text-center gap-1.5">
+          <span id="insert-img-preview-empty" class="text-[11px] text-zinc-500">Cole uma URL válida para visualizar o preview aqui.</span>
+          <img id="insert-img-preview" src="" alt="Preview da imagem" class="hidden max-h-48 max-w-full object-contain rounded-lg border border-zinc-800 bg-black" referrerpolicy="no-referrer">
+        </div>
+
+        <div id="insert-img-error" class="hidden text-[11px] text-red-400 bg-red-950/40 border border-red-900/50 rounded-lg px-2.5 py-1.5"></div>
+
+        <div class="pt-1 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeInsertImageModal()" class="px-3.5 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-medium transition">
+            Cancelar
+          </button>
+          <button type="submit" class="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-check text-[10px]"></i> OK, Inserir
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -1194,6 +1248,7 @@
         closeSyncConflictModal();
         closeImportConflictModal();
         closeEditHistoryModal();
+        closeInsertImageModal();
       }
     });
 
@@ -1867,10 +1922,22 @@
       }).join('');
     }
 
-    function renderMarkdownToolbarHTML(textareaId, movieId, editCommentId = '') {
+    function renderMarkdownToolbarToggleHTML(toolbarId) {
+      return `
+        <button type="button" onclick="toggleMarkdownToolbar('${toolbarId}', this)"
+          aria-expanded="false" aria-controls="${toolbarId}"
+          class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] text-zinc-400 hover:text-zinc-200 transition"
+          title="Abrir barra de formatação Markdown">
+          <i class="fa-solid fa-sliders text-[10px]"></i>
+          <span class="hidden sm:inline">Formatar</span>
+        </button>
+      `;
+    }
+
+    function renderMarkdownToolbarHTML(toolbarId, textareaId, movieId, editCommentId = '') {
       const editArg = editCommentId ? `'${editCommentId}'` : `''`;
       return `
-        <div class="flex flex-wrap items-center gap-1" role="toolbar" aria-label="Ferramentas de formatação Markdown">
+        <div id="${toolbarId}" class="hidden flex flex-wrap items-center gap-1 pt-0.5" role="toolbar" aria-label="Ferramentas de formatação Markdown">
           <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'bold', '${movieId}', ${editArg})"
             class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] font-bold text-zinc-300 hover:text-white transition" title="Negrito (**texto**)">B</button>
           <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'italic', '${movieId}', ${editArg})"
@@ -1881,7 +1948,7 @@
             class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] text-sky-400 hover:text-sky-300 transition flex items-center gap-1" title="Inserir link">
             <i class="fa-solid fa-link text-[9px]"></i> Link
           </button>
-          <button type="button" onclick="insertCommentMarkdown('${textareaId}', 'image', '${movieId}', ${editArg})"
+          <button type="button" onclick="openInsertImageModal('${textareaId}', '${movieId}', ${editArg})"
             class="px-2 py-0.5 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-[11px] text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1" title="Inserir imagem via URL">
             <i class="fa-regular fa-image text-[9px]"></i> Img
           </button>
@@ -1936,18 +2003,24 @@
               ` : ''}
 
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="inline-flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5 text-[11px]">
-                  <button type="button" id="tab-write-${movieId}" onclick="setCommentEditorMode('${movieId}', 'write')"
-                    class="px-2.5 py-1 rounded-md font-semibold bg-zinc-800 text-white transition flex items-center gap-1">
-                    <i class="fa-solid fa-pen text-[9px]"></i> Escrever
-                  </button>
-                  <button type="button" id="tab-preview-${movieId}" onclick="setCommentEditorMode('${movieId}', 'preview')"
-                    class="px-2.5 py-1 rounded-md font-semibold text-zinc-400 hover:text-zinc-200 transition flex items-center gap-1">
-                    <i class="fa-regular fa-eye text-[10px]"></i> Preview
-                  </button>
+                <div class="flex flex-wrap items-center gap-2">
+                  <div class="inline-flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5 text-[11px]">
+                    <button type="button" id="tab-write-${movieId}" onclick="setCommentEditorMode('${movieId}', 'write')"
+                      class="px-2.5 py-1 rounded-md font-semibold bg-zinc-800 text-white transition flex items-center gap-1">
+                      <i class="fa-solid fa-pen text-[9px]"></i> Escrever
+                    </button>
+                    <button type="button" id="tab-preview-${movieId}" onclick="setCommentEditorMode('${movieId}', 'preview')"
+                      class="px-2.5 py-1 rounded-md font-semibold text-zinc-400 hover:text-zinc-200 transition flex items-center gap-1">
+                      <i class="fa-regular fa-eye text-[10px]"></i> Preview
+                    </button>
+                  </div>
+                  <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400">
+                    Markdown Permitido
+                  </span>
                 </div>
-                ${renderMarkdownToolbarHTML(`comment-input-${movieId}`, movieId)}
+                ${renderMarkdownToolbarToggleHTML(`md-toolbar-${movieId}`)}
               </div>
+              ${renderMarkdownToolbarHTML(`md-toolbar-${movieId}`, `comment-input-${movieId}`, movieId)}
 
               <div class="relative">
                 <textarea id="comment-input-${movieId}" rows="3" maxlength="2000"
@@ -2015,18 +2088,24 @@
       return `
         <div class="${indentClass} space-y-2 bg-zinc-950/90 border border-zinc-700/80 rounded-lg p-2.5">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <div class="inline-flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5 text-[11px]">
-              <button type="button" id="edit-tab-write-${comment.id}" onclick="setInlineEditMode('${comment.id}', 'write')"
-                class="px-2 py-0.5 rounded-md font-semibold bg-zinc-800 text-white transition flex items-center gap-1">
-                <i class="fa-solid fa-pen text-[9px]"></i> Escrever
-              </button>
-              <button type="button" id="edit-tab-preview-${comment.id}" onclick="setInlineEditMode('${comment.id}', 'preview')"
-                class="px-2 py-0.5 rounded-md font-semibold text-zinc-400 hover:text-zinc-200 transition flex items-center gap-1">
-                <i class="fa-regular fa-eye text-[9px]"></i> Preview
-              </button>
+            <div class="flex flex-wrap items-center gap-2">
+              <div class="inline-flex items-center bg-zinc-900 border border-zinc-800 rounded-lg p-0.5 text-[11px]">
+                <button type="button" id="edit-tab-write-${comment.id}" onclick="setInlineEditMode('${comment.id}', 'write')"
+                  class="px-2 py-0.5 rounded-md font-semibold bg-zinc-800 text-white transition flex items-center gap-1">
+                  <i class="fa-solid fa-pen text-[9px]"></i> Escrever
+                </button>
+                <button type="button" id="edit-tab-preview-${comment.id}" onclick="setInlineEditMode('${comment.id}', 'preview')"
+                  class="px-2 py-0.5 rounded-md font-semibold text-zinc-400 hover:text-zinc-200 transition flex items-center gap-1">
+                  <i class="fa-regular fa-eye text-[9px]"></i> Preview
+                </button>
+              </div>
+              <span class="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400">
+                Markdown Permitido
+              </span>
             </div>
-            ${renderMarkdownToolbarHTML(`edit-input-${comment.id}`, movieId, comment.id)}
+            ${renderMarkdownToolbarToggleHTML(`md-toolbar-edit-${comment.id}`)}
           </div>
+          ${renderMarkdownToolbarHTML(`md-toolbar-edit-${comment.id}`, `edit-input-${comment.id}`, movieId, comment.id)}
           <textarea id="edit-input-${comment.id}" rows="3" maxlength="2000"
             oninput="updateEditCharCount('${comment.id}')"
             class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2 text-xs text-zinc-200 focus:outline-none focus:border-amber-500 transition resize-y">${initialContent}</textarea>
@@ -2352,7 +2431,136 @@
       renderCommentsUI(movieId);
     }
 
+    let pendingInsertImageTarget = null; // { textareaId, movieId, editCommentId, start, end }
+
+    function toggleMarkdownToolbar(toolbarId, btnEl) {
+      const toolbar = document.getElementById(toolbarId);
+      if (!toolbar) return;
+      const isOpening = toolbar.classList.contains('hidden');
+      toolbar.classList.toggle('hidden', !isOpening);
+      if (btnEl) {
+        btnEl.setAttribute('aria-expanded', isOpening ? 'true' : 'false');
+        btnEl.classList.toggle('border-red-600/60', isOpening);
+        btnEl.classList.toggle('text-white', isOpening);
+      }
+    }
+
+    function openInsertImageModal(textareaId, movieId, editCommentId = '') {
+      const textarea = document.getElementById(textareaId);
+      const modal = document.getElementById('insert-image-modal');
+      const altInput = document.getElementById('insert-img-alt');
+      const urlInput = document.getElementById('insert-img-url');
+      const errEl = document.getElementById('insert-img-error');
+      if (!textarea || !modal || !altInput || !urlInput) return;
+
+      const start = textarea.selectionStart ?? textarea.value.length;
+      const end = textarea.selectionEnd ?? textarea.value.length;
+      const selected = textarea.value.slice(start, end).trim();
+
+      pendingInsertImageTarget = { textareaId, movieId, editCommentId, start, end };
+      altInput.value = selected;
+      urlInput.value = '';
+      if (errEl) errEl.classList.add('hidden');
+      previewInsertImageModal();
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      setTimeout(() => (selected ? urlInput : altInput).focus(), 30);
+    }
+
+    function closeInsertImageModal(event) {
+      if (event && event.target && event.target.id !== 'insert-image-modal') return;
+      const modal = document.getElementById('insert-image-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      pendingInsertImageTarget = null;
+    }
+
+    function previewInsertImageModal() {
+      const urlInput = document.getElementById('insert-img-url');
+      const imgEl = document.getElementById('insert-img-preview');
+      const emptyEl = document.getElementById('insert-img-preview-empty');
+      const errEl = document.getElementById('insert-img-error');
+      if (!urlInput || !imgEl || !emptyEl) return;
+
+      const raw = urlInput.value.trim();
+      if (errEl) errEl.classList.add('hidden');
+
+      if (!raw) {
+        imgEl.classList.add('hidden');
+        imgEl.src = '';
+        emptyEl.textContent = 'Cole uma URL válida para visualizar o preview aqui.';
+        emptyEl.classList.remove('hidden');
+        return;
+      }
+
+      const safeUrl = normalizeSafeExternalUrl(raw, false);
+      if (!safeUrl) {
+        imgEl.classList.add('hidden');
+        imgEl.src = '';
+        emptyEl.textContent = 'URL inválida. Use um link público começando com https:// ou http://.';
+        emptyEl.classList.remove('hidden');
+        return;
+      }
+
+      emptyEl.textContent = 'Carregando preview...';
+      emptyEl.classList.remove('hidden');
+      imgEl.onload = () => {
+        emptyEl.classList.add('hidden');
+        imgEl.classList.remove('hidden');
+      };
+      imgEl.onerror = () => {
+        imgEl.classList.add('hidden');
+        emptyEl.textContent = 'Não foi possível carregar o preview (verifique se é o link direto da imagem).';
+        emptyEl.classList.remove('hidden');
+      };
+      imgEl.src = safeUrl;
+    }
+
+    function confirmInsertImageModal(event) {
+      event.preventDefault();
+      if (!pendingInsertImageTarget) return;
+
+      const altInput = document.getElementById('insert-img-alt');
+      const urlInput = document.getElementById('insert-img-url');
+      const errEl = document.getElementById('insert-img-error');
+      const safeUrl = normalizeSafeExternalUrl(urlInput ? urlInput.value : '', false);
+
+      if (!safeUrl) {
+        if (errEl) {
+          errEl.textContent = 'Informe uma URL pública válida (ex: https://i.ibb.co/.../imagem.png).';
+          errEl.classList.remove('hidden');
+        }
+        return;
+      }
+
+      const cleanAlt = ((altInput && altInput.value) || '').trim().replace(/[\r\n\[\]]+/g, ' ') || 'imagem';
+      const markdownSnippet = `![${cleanAlt}](${safeUrl})`;
+      const { textareaId, movieId, editCommentId, start, end } = pendingInsertImageTarget;
+
+      if (editCommentId) setInlineEditMode(editCommentId, 'write');
+      else setCommentEditorMode(movieId, 'write');
+
+      const textarea = document.getElementById(textareaId);
+      if (textarea) {
+        const nextVal = textarea.value.slice(0, start) + markdownSnippet + textarea.value.slice(end);
+        textarea.value = nextVal.slice(0, 2000);
+        const newPos = Math.min(start + markdownSnippet.length, textarea.value.length);
+        textarea.focus();
+        textarea.setSelectionRange(newPos, newPos);
+        if (editCommentId) updateEditCharCount(editCommentId);
+        else updateCharCount(movieId);
+      }
+
+      closeInsertImageModal();
+    }
+
     function insertCommentMarkdown(textareaId, kind, movieId, editCommentId = '') {
+      if (kind === 'image') {
+        openInsertImageModal(textareaId, movieId, editCommentId);
+        return;
+      }
       if (editCommentId) setInlineEditMode(editCommentId, 'write');
       else setCommentEditorMode(movieId, 'write');
 

@@ -2,7 +2,7 @@
 
 **The one list of what is left.** Keep this list updated as tasks are planned and executed.
 
-**Last updated:** 2026-11-11 (step 06: watched status filter, profile customization, mobile order toggle polish & GitHub Pages deploy).
+**Last updated:** 2026-11-11 (step 07 published to GitHub Pages: unclipped card badges, collapsible Markdown toolbar + `Markdown Permitido` badge, `#insert-image-modal` with preview & ImgBB info).
 
 ## Now: external configuration
 
@@ -52,6 +52,10 @@
   - Added watched status filter (`Todos`, `Não assistidos`, `Assistidos`) next to phase chips.
   - Added profile customization form inside logged-in Auth Modal (`display_name` & `custom_avatar_url` persisted via `supabase.auth.updateUser` and propagated to navbar & `public.mcu_comments`).
   - Polished Chronological vs Release order toggle responsiveness for `360px` mobile screens (zero horizontal overflow) and published Steps 03–06 to `origin/main` (GitHub Pages).
+- **Step 07 (2026-11-11, Plan 07):**
+  - Removed `content-visibility: auto` paint containment on `.mcu-timeline-card` so floating `Canônico MCU` / `Ignorável` badges render completely unclipped.
+  - Added `Markdown Permitido` badge beside `Escrever / Preview` tabs and hid the formatting toolbar behind a discrete `Formatar` toggle button (`toggleMarkdownToolbar`).
+  - Replaced `Img` snippet insertion with `#insert-image-modal` featuring an `(i)` ImgBB hosting recommendation, description input, URL input with live preview, and direct Markdown insertion; published to `origin/main` (GitHub Pages).
 
 ## Plans at a glance
 
@@ -63,3 +67,4 @@
 | [plan_04_markdown_preview_replies_ignorable.md](planning/plan_04_markdown_preview_replies_ignorable.md) | done |
 | [plan_05_markdown_links_edit_pagespeed_postcredits.md](planning/plan_05_markdown_links_edit_pagespeed_postcredits.md) | done |
 | [plan_06_watched_filter_and_profile_customization.md](planning/plan_06_watched_filter_and_profile_customization.md) | done |
+| [plan_07_badge_clip_toolbar_image_modal.md](planning/plan_07_badge_clip_toolbar_image_modal.md) | done |

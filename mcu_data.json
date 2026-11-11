@@ -183,9 +183,14 @@
     "trailer_legendado_url": "https://www.youtube.com/watch?v=vZWg0TBJSD4",
     "trailer_legendado_embed": "https://www.youtube.com/embed/vZWg0TBJSD4",
     "post_credits": {
-      "count": 0,
-      "note": "Não possui cena após os créditos (a cena com Tony Stark ocorre antes da rolagem dos créditos, por volta de 01:47:00).",
-      "scenes": []
+      "count": 1,
+      "scenes": [
+        {
+          "type": "Cena de pré-créditos (Tony Stark / Iniciativa Vingadores)",
+          "timestamp": "~01:47:00"
+        }
+      ],
+      "note": "A cena ocorre logo antes da rolagem dos créditos finais: Tony Stark aparece em um bar para conversar com o General Thaddeus 'Thunderbolt' Ross sobre reunir uma equipe — a Iniciativa Vingadores. Muitos a consideram pré-créditos, mas é a stinger oficial do MCU."
     }
   },
   {

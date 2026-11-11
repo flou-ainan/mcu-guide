@@ -806,6 +806,117 @@ MCU_CATALOG = [
     }
 ]
 
+SERIES_EPISODE_RULES = {
+    "aos_s1": {"seasons": [1], "ep_min": 1, "ep_max": 16},
+    "aos_s1_end": {"seasons": [1], "ep_min": 17, "ep_max": 22},
+    "daredevil_s1": {"seasons": [1]},
+    "loki_s1": {"seasons": [1, 2]},
+    "whatif": {"seasons": [1, 2, 3]},
+    "wandavision": {"seasons": [1]},
+    "fatws": {"seasons": [1]},
+    "hawkeye": {"seasons": [1]},
+    "moonknight": {"seasons": [1]},
+    "msmarvel": {"seasons": [1]},
+    "shehulk": {"seasons": [1]},
+    "invasion": {"seasons": [1]},
+    "echo": {"seasons": [1]},
+    "agatha": {"seasons": [1]},
+    "daredevil_ba": {"seasons": [1, 2]},
+}
+
+_CINEMETA_SERIES_CACHE = {}
+
+
+def translate_en_to_pt(text):
+    """Traduz texto curto do inglês para português brasileiro com fallback seguro."""
+    if not text or not text.strip():
+        return ""
+    try:
+        query = urllib.parse.urlencode({
+            "client": "gtx",
+            "sl": "en",
+            "tl": "pt",
+            "dt": "t",
+            "q": text.strip()
+        })
+        url = f"https://translate.googleapis.com/translate_a/single?{query}"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64)"})
+        with urllib.request.urlopen(req, timeout=8) as response:
+            parsed = json.loads(response.read().decode("utf-8"))
+            translated = "".join(seg[0] for seg in parsed[0] if seg and seg[0])
+            return translated.strip() or text.strip()
+    except Exception:
+        return text.strip()
+
+
+def fetch_cinemeta_episodes(imdb_id):
+    """Obtém metadados e thumbnails de episódios via Stremio Cinemeta."""
+    if not imdb_id:
+        return []
+    if imdb_id in _CINEMETA_SERIES_CACHE:
+        return _CINEMETA_SERIES_CACHE[imdb_id]
+    try:
+        url = f"https://v3-cinemeta.strem.io/meta/series/{imdb_id}.json"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64)"})
+        with urllib.request.urlopen(req, timeout=12) as response:
+            meta = json.loads(response.read().decode("utf-8")).get("meta", {})
+            videos = meta.get("videos", [])
+            _CINEMETA_SERIES_CACHE[imdb_id] = videos
+            return videos
+    except Exception as e:
+        print(f"  [Aviso Cinemeta] Falha ao buscar episódios de '{imdb_id}': {e}")
+        return []
+
+
+def build_series_episodes(series_id, imdb_id, fallback_cover=""):
+    """Filtra e formata episódios de uma série (com tradução PT-BR e thumbnails)."""
+    raw_videos = fetch_cinemeta_episodes(imdb_id)
+    if not raw_videos:
+        return []
+
+    rule = SERIES_EPISODE_RULES.get(series_id, {})
+    allowed_seasons = set(rule.get("seasons", []))
+    ep_min = rule.get("ep_min", 1)
+    ep_max = rule.get("ep_max", 9999)
+
+    filtered = []
+    for v in raw_videos:
+        season = int(v.get("season") or 0)
+        ep_num = int(v.get("episode") or v.get("number") or 0)
+        if season <= 0 or ep_num <= 0:
+            continue
+        if allowed_seasons and season not in allowed_seasons:
+            continue
+        if ep_num < ep_min or ep_num > ep_max:
+            continue
+        filtered.append((season, ep_num, v))
+
+    filtered.sort(key=lambda x: (x[0], x[1]))
+
+    episodes = []
+    for season, ep_num, v in filtered:
+        title_en = (v.get("name") or f"Episode {ep_num}").strip()
+        overview_en = (v.get("overview") or v.get("description") or "").strip()
+        title_pt = translate_en_to_pt(title_en)
+        synopsis_pt = translate_en_to_pt(overview_en) if overview_en else "Sinopse ainda não disponível."
+        thumb = v.get("thumbnail") or fallback_cover
+        released = (v.get("released") or v.get("firstAired") or "")[:10]
+
+        episodes.append({
+            "id": f"{series_id}-s{season}e{ep_num}",
+            "season": season,
+            "episode": ep_num,
+            "title_pt": title_pt,
+            "title_en": title_en,
+            "synopsis": synopsis_pt,
+            "thumbnail": thumb,
+            "released": released
+        })
+        time.sleep(0.05)
+
+    return episodes
+
+
 def fetch_imdb_info(query):
     """Obtém capa em alta resolução e ID do IMDb através do endpoint de sugestão."""
     try:
@@ -913,6 +1024,21 @@ def run_scraper(output_file="mcu_data.json", force_refresh=False):
             print(f"  ✓ Trailer YouTube: {yt_info.get('trailer_url')}")
             time.sleep(0.2)
 
+        # Episódios (apenas para séries, via Cinemeta/Stremio + tradução PT-BR)
+        episodes = []
+        if item["type"] == "series":
+            refresh_eps = force_refresh or ("--episodes" in sys.argv)
+            if cached.get("episodes") and not refresh_eps:
+                episodes = cached["episodes"]
+                print(f"  ✓ Episódios (cache: {len(episodes)})")
+            else:
+                episodes = build_series_episodes(
+                    item_id,
+                    imdb_info.get("imdb_id", ""),
+                    fallback_cover=imdb_info.get("cover_url", "")
+                )
+                print(f"  ✓ Episódios Cinemeta: {len(episodes)}")
+
         record = {
             "id": item["id"],
             "title_pt": item["title"],
@@ -941,15 +1067,15 @@ def run_scraper(output_file="mcu_data.json", force_refresh=False):
             "trailer_legendado_url": yt_info.get("trailer_legendado_url", yt_info.get("trailer_url", "")),
             "trailer_legendado_embed": yt_info.get("trailer_legendado_embed", yt_info.get("trailer_embed", ""))
         }
+        if item["type"] == "series":
+            record["episodes"] = episodes
         scraped_records.append(record)
 
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(scraped_records, f, ensure_ascii=False, indent=2)
 
     # Gera também data.js para suporte offline e fallback imediato sem CORS
-    js_file = output_file.replace('.json', '.js') if output_file.endswith('.json') else 'data.js'
-    if js_file == output_file:
-        js_file = 'data.js'
+    js_file = 'data.js'
     with open(js_file, 'w', encoding='utf-8') as f:
         f.write('window.__MCU_FALLBACK_DATA__ = ' + json.dumps(scraped_records, ensure_ascii=False, indent=2) + ';\n')
 

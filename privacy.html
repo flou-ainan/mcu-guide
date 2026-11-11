@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidade - Guia de Maratona MCU</title>
+  <meta name="theme-color" content="#E23636">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marvel: {
+              red: '#E23636',
+              darkred: '#8B0000',
+              deep: '#150505',
+              gold: '#F4B41A',
+              card: '#18181b',
+              accent: '#301b1e'
+            }
+          },
+          fontFamily: {
+            marvel: ['Impact', 'Trebuchet MS', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .marvel-badge {
+      font-family: 'Impact', 'Trebuchet MS', -apple-system, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      transform: scaleY(0.95);
+      display: inline-block;
+    }
+  </style>
+</head>
+<body class="bg-[#0b0b0e] text-zinc-200 min-h-screen font-sans selection:bg-marvel-red selection:text-white flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <nav class="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 group">
+        <span class="bg-marvel-red text-white text-base tracking-[1px] px-2 py-0.5 rounded shadow uppercase marvel-badge">
+          MARVEL
+        </span>
+        <span class="text-zinc-400 group-hover:text-white font-bold tracking-widest text-[11px] uppercase transition">Guia de Maratona MCU</span>
+      </a>
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white transition">
+        <i class="fa-solid fa-arrow-left text-[11px]"></i> Voltar ao Guia
+      </a>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-4 py-10 flex-1 space-y-8">
+    <header class="space-y-2 border-b border-zinc-800 pb-6">
+      <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Política de Privacidade</h1>
+      <p class="text-xs text-zinc-400">Última atualização: Novembro de 2026 • Guia de Maratona MCU (`flou-ainan.github.io/mcu-guide`)</p>
+    </header>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-database text-marvel-red text-sm"></i> 1. Uso Offline e Armazenamento Local
+      </h2>
+      <p>
+        O <strong>Guia de Maratona MCU</strong> funciona sem necessidade de cadastro. Quando você marca filmes, séries ou episódios assistidos sem estar conectado, essas marcações ficam salvas exclusivamente no armazenamento local do seu navegador (<code>localStorage</code>) e não são enviadas para nenhum servidor.
+      </p>
+    </section>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-cloud text-sky-400 text-sm"></i> 2. Autenticação Opcional (Google e E-mail) e Nuvem
+      </h2>
+      <p>
+        Caso você opte por fazer login (via Google OAuth ou E-mail/Senha através da infraestrutura do <strong>Supabase</strong>) para sincronizar seu progresso entre dispositivos ou publicar comentários:
+      </p>
+      <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+        <li><strong>Dados recebidos:</strong> endereço de e-mail, nome de exibição (quando fornecido pelo provedor) e identificador único de usuário (UUID).</li>
+        <li><strong>Progresso na nuvem:</strong> armazenamos apenas a lista de identificadores dos títulos e episódios que você marcou como assistidos.</li>
+        <li><strong>Avatar:</strong> exibimos o avatar associado ao seu endereço de e-mail por meio do serviço <strong>Gravatar</strong> (usando apenas o hash MD5 do e-mail).</li>
+        <li><strong>Comentários e reações:</strong> comentários publicados e reações ficam visíveis publicamente na página do respectivo filme, série ou episódio, junto com o nome de usuário e avatar Gravatar.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-shield-halved text-emerald-400 text-sm"></i> 3. Compartilhamento e Finalidade
+      </h2>
+      <p>
+        Não vendemos, alugamos nem compartilhamos seus dados pessoais com terceiros para fins publicitários ou comerciais. Os dados coletados são usados exclusivamente para manter a autenticação, sincronizar seu checklist de maratona e exibir os comentários que você publicar voluntariamente.
+      </p>
+    </section>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-globe text-amber-400 text-sm"></i> 4. Serviços e Conteúdos de Terceiros
+      </h2>
+      <p>
+        A aplicação carrega metadados, imagens de capas/miniaturas, trailers incorporados e fontes por meio de serviços externos (como YouTube, IMDb, Metahub/Stremio, Gravatar e Supabase). Cada um desses serviços possui suas próprias políticas de privacidade ao processar requisições de mídia ou login.
+      </p>
+    </section>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-trash-can text-red-400 text-sm"></i> 5. Exclusão de Dados e Contato
+      </h2>
+      <p>
+        Você pode excluir comentários individuais diretamente pela interface do site, limpar os dados locais a qualquer momento pelo botão de reset ou configurações do navegador, e solicitar a remoção completa da sua conta e dados associados enviando um e-mail para <a href="mailto:flouainan@gmail.com" class="text-red-400 hover:underline">flouainan@gmail.com</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-800 py-6 text-center text-xs text-zinc-500">
+    <div class="max-w-4xl mx-auto px-4 flex flex-wrap items-center justify-center gap-4">
+      <a href="index.html" class="hover:text-white transition">Voltar ao Guia</a>
+      <span>•</span>
+      <a href="terms.html" class="hover:text-white transition">Termos de Serviço</a>
+    </div>
+  </footer>
+</body>
+</html>

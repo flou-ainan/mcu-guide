@@ -92,6 +92,32 @@
 </head>
 <body class="bg-[#0b0b0e] text-zinc-100 min-h-screen font-sans selection:bg-marvel-red selection:text-white">
 
+  <!-- Top Navigation Bar -->
+  <nav class="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <span class="bg-marvel-red text-white text-base tracking-[1px] px-2 py-0.5 rounded shadow uppercase marvel-badge">
+          MARVEL
+        </span>
+        <span class="text-zinc-400 font-bold tracking-widest text-[11px] uppercase hidden sm:inline">Guia de Maratona MCU</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/flou-ainan/mcu-guide" target="_blank"
+          class="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition">
+          <i class="fa-brands fa-github text-sm"></i> <span class="hidden sm:inline">GitHub</span>
+        </a>
+        <!-- Prominent Top-Right Login Button -->
+        <button id="auth-btn" onclick="openAuthModal()"
+          class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-lg border transition bg-zinc-900 hover:bg-zinc-800 border-sky-500/50 hover:border-sky-400 text-sky-400 hover:text-white shadow">
+          <i id="auth-btn-cloud" class="fa-solid fa-cloud text-xs text-sky-400"></i>
+          <img id="auth-btn-avatar" src="" alt="Avatar" class="w-5 h-5 rounded-full object-cover border border-emerald-400/60 hidden">
+          <span id="auth-btn-label">Login</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
   <!-- Header & Hero -->
   <header class="relative border-b border-red-900/40 cinema-gradient overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-marvel-red/20 via-transparent to-transparent pointer-events-none"></div>
@@ -102,7 +128,7 @@
         <picture>
           <source srcset="hero-banner.webp" type="image/webp">
           <img src="hero-banner.jpg" alt="Guia de Maratona MCU - Marvel Studios" 
-            class="w-full h-auto object-cover max-h-[220px] sm:max-h-[360px] block"
+            class="w-full h-auto object-cover max-h-[260px] sm:max-h-[420px] block"
             loading="eager">
         </picture>
         <!-- Seamless subtle bottom vignette -->
@@ -114,22 +140,9 @@
       <div class="flex flex-col md:flex-row items-center justify-between gap-6">
         <div>
           <div class="flex items-center gap-3">
-            <span class="bg-marvel-red text-white text-xl tracking-[1px] px-2.5 py-0.5 rounded shadow-lg uppercase marvel-badge">
-              MARVEL
-            </span>
             <span class="text-zinc-400 font-bold tracking-widest text-xs uppercase">Studios Timeline</span>
-            <a href="https://github.com/flou-ainan/mcu-guide" target="_blank"
-              class="hidden sm:inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 px-2.5 py-1 rounded-lg transition ml-2">
-              <i class="fa-brands fa-github text-sm"></i> GitHub
-            </a>
-            <!-- Supabase Cloud Sync / Auth Button (Mais visível e destacado) -->
-            <button id="auth-btn" onclick="openAuthModal()"
-              class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl border transition ml-1 bg-zinc-900/90 hover:bg-zinc-850 border-sky-500/40 hover:border-sky-400 text-sky-400 hover:text-white shadow-lg shadow-sky-950/20">
-              <i class="fa-solid fa-cloud text-sm text-sky-400"></i>
-              <span id="auth-btn-label">Login</span>
-            </button>
           </div>
-          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mt-2 text-white">
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight mt-1 text-white">
             Ordem de <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-yellow-400">Maratona do MCU</span>
           </h1>
           <p class="text-zinc-400 mt-1 max-w-xl text-sm sm:text-base">
@@ -305,8 +318,9 @@
       <!-- Logged In State View -->
       <div id="auth-view-logged-in" class="hidden py-4 space-y-4">
         <div class="p-3.5 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-marvel-red/20 border border-red-500/30 flex items-center justify-center text-marvel-red font-bold text-sm" id="user-avatar-initials">
-            U
+          <div class="w-10 h-10 rounded-full bg-marvel-red/20 border border-red-500/30 flex items-center justify-center text-marvel-red font-bold text-sm overflow-hidden shrink-0">
+            <img id="user-avatar-img" src="" alt="Avatar" class="w-full h-full object-cover hidden">
+            <span id="user-avatar-initials">U</span>
           </div>
           <div class="overflow-hidden">
             <div class="text-xs text-zinc-400">Conectado como:</div>
@@ -493,10 +507,14 @@
       <p class="text-zinc-300">
         Desenvolvido com carinho por <strong class="text-white font-semibold">flou-ainan</strong> para maratonar o MCU em família.
       </p>
-      <div class="flex items-center justify-center gap-3 text-xs">
+      <div class="flex flex-wrap items-center justify-center gap-3 text-xs">
         <a href="https://github.com/flou-ainan/mcu-guide" target="_blank" class="inline-flex items-center gap-1.5 text-zinc-300 hover:text-white underline transition">
           <i class="fa-brands fa-github text-sm"></i> Repositório no GitHub
         </a>
+        <span class="text-zinc-700">•</span>
+        <a href="privacy.html" class="text-zinc-400 hover:text-white underline transition">Política de Privacidade</a>
+        <span class="text-zinc-700">•</span>
+        <a href="terms.html" class="text-zinc-400 hover:text-white underline transition">Termos de Serviço</a>
       </div>
       <p class="pt-2 text-[11px] text-zinc-600">
         Projeto aberto e colaborativo. Marvel Studios é marca registrada da The Walt Disney Company. Metadados e capas via IMDb & YouTube.
@@ -506,7 +524,7 @@
 
   <!-- Supabase JS Client & MCU Database Logic -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="data.js"></script>
+  <script src="data.js?v=20261111"></script>
   <script>
     // State Variables
     let mcuData = [];
@@ -561,15 +579,81 @@
       }
     }
 
+    const openDetailsIds = new Set();
+    const openEpisodesPanels = new Set();
+    const openEpisodeDetailsIds = new Set();
+    const openCommentsIds = new Set();
+
+    function isEpisodeWatched(seriesItem, epId) {
+      if (watchedIds.has(epId)) return true;
+      if (!seriesItem || !watchedIds.has(seriesItem.id)) return false;
+      const hasAnyExplicit = (seriesItem.episodes || []).some(e => watchedIds.has(e.id));
+      return !hasAnyExplicit;
+    }
+
     function toggleWatched(id, event) {
       if (event) event.stopPropagation();
-      if (watchedIds.has(id)) {
-        watchedIds.delete(id);
-      } else {
+      const item = mcuData.find(x => x.id === id);
+      const markingWatched = !watchedIds.has(id);
+
+      if (markingWatched) {
         watchedIds.add(id);
+        if (item && Array.isArray(item.episodes)) {
+          item.episodes.forEach(ep => watchedIds.add(ep.id));
+        }
+      } else {
+        watchedIds.delete(id);
+        if (item && Array.isArray(item.episodes)) {
+          item.episodes.forEach(ep => watchedIds.delete(ep.id));
+        }
       }
       saveState();
       renderList();
+    }
+
+    function toggleEpisodeWatched(seriesId, epId, event) {
+      if (event) event.stopPropagation();
+      const seriesItem = mcuData.find(x => x.id === seriesId);
+      const eps = (seriesItem && Array.isArray(seriesItem.episodes)) ? seriesItem.episodes : [];
+
+      // Retrocompatibilidade: se a série inteira já estava marcada sem episódios explícitos
+      const hasAnyExplicit = eps.some(e => watchedIds.has(e.id));
+      if (watchedIds.has(seriesId) && !hasAnyExplicit && eps.length > 0) {
+        eps.forEach(e => watchedIds.add(e.id));
+      }
+
+      if (watchedIds.has(epId)) {
+        watchedIds.delete(epId);
+      } else {
+        watchedIds.add(epId);
+      }
+
+      if (eps.length > 0) {
+        const allEpsWatched = eps.every(e => watchedIds.has(e.id));
+        if (allEpsWatched) {
+          watchedIds.add(seriesId);
+        } else {
+          watchedIds.delete(seriesId);
+        }
+      }
+
+      saveState();
+      renderList();
+    }
+
+    function reconcileSeriesCompletionFromEpisodes() {
+      if (!Array.isArray(mcuData) || mcuData.length === 0) return false;
+      let changed = false;
+      mcuData.forEach(item => {
+        if (item.type === 'series' && Array.isArray(item.episodes) && item.episodes.length > 0) {
+          const allEpsWatched = item.episodes.every(e => watchedIds.has(e.id));
+          if (allEpsWatched && !watchedIds.has(item.id)) {
+            watchedIds.add(item.id);
+            changed = true;
+          }
+        }
+      });
+      return changed;
     }
 
     function updateProgress() {
@@ -788,6 +872,7 @@
         watchedIds = new Set(pendingImportWatchedIds);
       }
 
+      reconcileSeriesCompletionFromEpisodes();
       await saveState();
       renderList();
       closeImportConflictModal();
@@ -810,13 +895,127 @@
       }
     });
 
+    // Compact RFC 1321 MD5 implementation for Gravatar hashes
+    function md5(str) {
+      function rotl(x, n) { return (x << n) | (x >>> (32 - n)); }
+      function add(a, b) { return (a + b) | 0; }
+      function cmn(q, a, b, x, s, t) { return add(rotl(add(add(a, q), add(x, t)), s), b); }
+      function ff(a, b, c, d, x, s, t) { return cmn((b & c) | (~b & d), a, b, x, s, t); }
+      function gg(a, b, c, d, x, s, t) { return cmn((b & d) | (c & ~d), a, b, x, s, t); }
+      function hh(a, b, c, d, x, s, t) { return cmn(b ^ c ^ d, a, b, x, s, t); }
+      function ii(a, b, c, d, x, s, t) { return cmn(c ^ (b | ~d), a, b, x, s, t); }
+
+      const bytes = unescape(encodeURIComponent(str || ''));
+      const n = bytes.length;
+      const words = [];
+      for (let i = 0; i < n; i++) words[i >> 2] |= bytes.charCodeAt(i) << ((i % 4) * 8);
+      words[n >> 2] |= 0x80 << ((n % 4) * 8);
+      const len = (((n + 8) >> 6) + 1) * 16;
+      words.length = len;
+      for (let i = 0; i < len; i++) if (!words[i]) words[i] = 0;
+      words[len - 2] = (n * 8) | 0;
+      words[len - 1] = (n >>> 29) | 0;
+
+      let a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+      for (let i = 0; i < len; i += 16) {
+        const oa = a, ob = b, oc = c, od = d;
+        a = ff(a, b, c, d, words[i + 0], 7, -680876936); d = ff(d, a, b, c, words[i + 1], 12, -389564586);
+        c = ff(c, d, a, b, words[i + 2], 17, 606105819); b = ff(b, c, d, a, words[i + 3], 22, -1044525330);
+        a = ff(a, b, c, d, words[i + 4], 7, -176418897); d = ff(d, a, b, c, words[i + 5], 12, 1200080426);
+        c = ff(c, d, a, b, words[i + 6], 17, -1473231341); b = ff(b, c, d, a, words[i + 7], 22, -45705983);
+        a = ff(a, b, c, d, words[i + 8], 7, 1770035416); d = ff(d, a, b, c, words[i + 9], 12, -1958414417);
+        c = ff(c, d, a, b, words[i + 10], 17, -42063); b = ff(b, c, d, a, words[i + 11], 22, -1990404162);
+        a = ff(a, b, c, d, words[i + 12], 7, 1804603682); d = ff(d, a, b, c, words[i + 13], 12, -40341101);
+        c = ff(c, d, a, b, words[i + 14], 17, -1502002290); b = ff(b, c, d, a, words[i + 15], 22, 1236535329);
+
+        a = gg(a, b, c, d, words[i + 1], 5, -165796510); d = gg(d, a, b, c, words[i + 6], 9, -1069501632);
+        c = gg(c, d, a, b, words[i + 11], 14, 643717713); b = gg(b, c, d, a, words[i + 0], 20, -373897302);
+        a = gg(a, b, c, d, words[i + 5], 5, -701558691); d = gg(d, a, b, c, words[i + 10], 9, 38016083);
+        c = gg(c, d, a, b, words[i + 15], 14, -660478335); b = gg(b, c, d, a, words[i + 4], 20, -405537848);
+        a = gg(a, b, c, d, words[i + 9], 5, 568446438); d = gg(d, a, b, c, words[i + 14], 9, -1019803690);
+        c = gg(c, d, a, b, words[i + 3], 14, -187363961); b = gg(b, c, d, a, words[i + 8], 20, 1163531501);
+        a = gg(a, b, c, d, words[i + 13], 5, -1444681467); d = gg(d, a, b, c, words[i + 2], 9, -51403784);
+        c = gg(c, d, a, b, words[i + 7], 14, 1735328473); b = gg(b, c, d, a, words[i + 12], 20, -1926607734);
+
+        a = hh(a, b, c, d, words[i + 5], 4, -378558); d = hh(d, a, b, c, words[i + 8], 11, -2022574463);
+        c = hh(c, d, a, b, words[i + 11], 16, 1839030562); b = hh(b, c, d, a, words[i + 14], 23, -35309556);
+        a = hh(a, b, c, d, words[i + 1], 4, -1530992060); d = hh(d, a, b, c, words[i + 4], 11, 1272893353);
+        c = hh(c, d, a, b, words[i + 7], 16, -155497632); b = hh(b, c, d, a, words[i + 10], 23, -1094730640);
+        a = hh(a, b, c, d, words[i + 13], 4, 681279174); d = hh(d, a, b, c, words[i + 0], 11, -358537222);
+        c = hh(c, d, a, b, words[i + 3], 16, -722521979); b = hh(b, c, d, a, words[i + 6], 23, 76029189);
+        a = hh(a, b, c, d, words[i + 9], 4, -640364487); d = hh(d, a, b, c, words[i + 12], 11, -421815835);
+        c = hh(c, d, a, b, words[i + 15], 16, 530742520); b = hh(b, c, d, a, words[i + 2], 23, -995338651);
+
+        a = ii(a, b, c, d, words[i + 0], 6, -198630844); d = ii(d, a, b, c, words[i + 7], 10, 1126891415);
+        c = ii(c, d, a, b, words[i + 14], 15, -1416354905); b = ii(b, c, d, a, words[i + 5], 21, -57434055);
+        a = ii(a, b, c, d, words[i + 12], 6, 1700485571); d = ii(d, a, b, c, words[i + 3], 10, -1894986606);
+        c = ii(c, d, a, b, words[i + 10], 15, -1051523); b = ii(b, c, d, a, words[i + 1], 21, -2054922799);
+        a = ii(a, b, c, d, words[i + 8], 6, 1873313359); d = ii(d, a, b, c, words[i + 15], 10, -30611744);
+        c = ii(c, d, a, b, words[i + 6], 15, -1560198380); b = ii(b, c, d, a, words[i + 13], 21, 1309151649);
+        a = ii(a, b, c, d, words[i + 4], 6, -145523070); d = ii(d, a, b, c, words[i + 11], 10, -1120210379);
+        c = ii(c, d, a, b, words[i + 2], 15, 718787259); b = ii(b, c, d, a, words[i + 9], 21, -343485551);
+
+        a = add(a, oa); b = add(b, ob); c = add(c, oc); d = add(d, od);
+      }
+      return [a, b, c, d].map(x => {
+        let s = '';
+        for (let j = 0; j < 4; j++) s += ((x >>> (j * 8)) & 0xff).toString(16).padStart(2, '0');
+        return s;
+      }).join('');
+    }
+
+    function getGravatarUrl(email, size = 64, defaultMode = '404') {
+      const normalized = (email || '').trim().toLowerCase();
+      if (!normalized) return '';
+      return `https://www.gravatar.com/avatar/${md5(normalized)}?s=${size}&d=${defaultMode}`;
+    }
+
+    function getGoogleAvatarUrl(user) {
+      const meta = user && user.user_metadata ? user.user_metadata : null;
+      if (!meta) return '';
+      return meta.avatar_url || meta.picture || '';
+    }
+
+    function handleAvatarError(imgEl, fallbackUrl, fallbackElId) {
+      if (!imgEl) return;
+      if (fallbackUrl && imgEl.dataset.fallbackUsed !== '1' && imgEl.src !== fallbackUrl) {
+        imgEl.dataset.fallbackUsed = '1';
+        imgEl.src = fallbackUrl;
+        return;
+      }
+      imgEl.onerror = null;
+      imgEl.classList.add('hidden');
+      const fallbackEl = fallbackElId ? document.getElementById(fallbackElId) : imgEl.nextElementSibling;
+      if (fallbackEl) fallbackEl.classList.remove('hidden');
+    }
+
+    function renderAvatarHTML(email, displayName, sizeClass = 'w-6 h-6', textClass = 'text-[10px]', fallbackAvatarUrl = '') {
+      const initial = escapeHtml(((displayName || email || 'U')[0] || 'U').toUpperCase());
+      const safeFallbackUrl = (typeof fallbackAvatarUrl === 'string' && /^https?:\/\//i.test(fallbackAvatarUrl)) ? fallbackAvatarUrl : '';
+      const gravatarUrl = getGravatarUrl(email, 64, '404');
+      const initialSrc = gravatarUrl || safeFallbackUrl;
+      if (!initialSrc) {
+        return `<div class="${sizeClass} rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold ${textClass} text-zinc-300 shrink-0">${initial}</div>`;
+      }
+      return `
+        <div class="${sizeClass} rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold ${textClass} text-zinc-300 overflow-hidden shrink-0">
+          <img src="${escapeHtml(initialSrc)}" alt="${escapeHtml(displayName)}" data-fallback="${escapeHtml(gravatarUrl ? safeFallbackUrl : '')}" class="w-full h-full object-cover" loading="lazy" referrerpolicy="no-referrer"
+            onerror="handleAvatarError(this, this.dataset.fallback, null)">
+          <span class="hidden">${initial}</span>
+        </div>
+      `;
+    }
+
     // Auth Modal & Supabase Functions
     const authModal = document.getElementById('auth-modal');
     const authBtnLabel = document.getElementById('auth-btn-label');
+    const authBtnCloud = document.getElementById('auth-btn-cloud');
+    const authBtnAvatar = document.getElementById('auth-btn-avatar');
     const authViewLoggedIn = document.getElementById('auth-view-logged-in');
     const authViewLoggedOut = document.getElementById('auth-view-logged-out');
     const userDisplayEmail = document.getElementById('user-display-email');
     const userAvatarInitials = document.getElementById('user-avatar-initials');
+    const userAvatarImg = document.getElementById('user-avatar-img');
     const authErrorMsg = document.getElementById('auth-error-msg');
     const authSuccessMsg = document.getElementById('auth-success-msg');
 
@@ -835,17 +1034,56 @@
 
     function updateAuthUIState() {
       if (currentUser) {
+        const gravatarUrl = getGravatarUrl(currentUser.email, 64, '404');
+        const googleAvatarUrl = getGoogleAvatarUrl(currentUser);
+        const initialAvatarUrl = gravatarUrl || googleAvatarUrl;
+        const fallbackUrl = gravatarUrl ? googleAvatarUrl : '';
+
         authBtnLabel.textContent = currentUser.email.split('@')[0];
         document.getElementById('auth-btn').className = 'inline-flex items-center gap-2 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl border transition ml-1 bg-emerald-950/50 hover:bg-emerald-900/60 border-emerald-500/50 text-emerald-300 shadow-lg shadow-emerald-950/20';
         authViewLoggedIn.classList.remove('hidden');
         authViewLoggedOut.classList.add('hidden');
         userDisplayEmail.textContent = currentUser.email;
         userAvatarInitials.textContent = (currentUser.email[0] || 'U').toUpperCase();
+
+        if (initialAvatarUrl) {
+          authBtnCloud.classList.add('hidden');
+          authBtnAvatar.dataset.fallbackUsed = '';
+          authBtnAvatar.referrerPolicy = 'no-referrer';
+          authBtnAvatar.onerror = () => handleAvatarError(authBtnAvatar, fallbackUrl, 'auth-btn-cloud');
+          authBtnAvatar.src = initialAvatarUrl;
+          authBtnAvatar.classList.remove('hidden');
+
+          userAvatarImg.dataset.fallbackUsed = '';
+          userAvatarImg.referrerPolicy = 'no-referrer';
+          userAvatarImg.onerror = () => handleAvatarError(userAvatarImg, fallbackUrl, 'user-avatar-initials');
+          userAvatarImg.src = initialAvatarUrl;
+          userAvatarImg.classList.remove('hidden');
+          userAvatarInitials.classList.add('hidden');
+        } else {
+          authBtnCloud.classList.remove('hidden');
+          authBtnAvatar.classList.add('hidden');
+          userAvatarImg.classList.add('hidden');
+          userAvatarInitials.classList.remove('hidden');
+        }
       } else {
         authBtnLabel.textContent = 'Login';
         document.getElementById('auth-btn').className = 'inline-flex items-center gap-2 text-xs sm:text-sm font-bold px-3 py-1.5 rounded-xl border transition ml-1 bg-zinc-900/90 hover:bg-zinc-850 border-sky-500/40 hover:border-sky-400 text-sky-400 hover:text-white shadow-lg shadow-sky-950/20';
+        authBtnCloud.classList.remove('hidden');
+        authBtnAvatar.onerror = null;
+        authBtnAvatar.dataset.fallbackUsed = '';
+        authBtnAvatar.classList.add('hidden');
+        userAvatarImg.onerror = null;
+        userAvatarImg.dataset.fallbackUsed = '';
+        userAvatarImg.classList.add('hidden');
         authViewLoggedIn.classList.add('hidden');
         authViewLoggedOut.classList.remove('hidden');
+      }
+
+      if (typeof openCommentsIds !== 'undefined') {
+        openCommentsIds.forEach(cid => {
+          if (commentsCache[cid]) renderCommentsUI(cid);
+        });
       }
     }
 
@@ -1068,10 +1306,12 @@
 
       const isHidden = section.classList.contains('hidden');
       if (isHidden) {
+        openCommentsIds.add(movieId);
         section.classList.remove('hidden');
         if (!commentsLimit[movieId]) commentsLimit[movieId] = 5;
         await loadComments(movieId);
       } else {
+        openCommentsIds.delete(movieId);
         section.classList.add('hidden');
       }
     }
@@ -1094,7 +1334,7 @@
       }
 
       try {
-        // Busca todos os comentários do filme
+        // Busca todos os comentários do item/episódio
         const { data: comments, error } = await supabaseClient
           .from('mcu_comments')
           .select('*')
@@ -1145,6 +1385,37 @@
         console.error('Erro ao buscar comentários:', err);
         section.innerHTML = `<p class="text-xs text-red-400 py-2">Não foi possível carregar os comentários.</p>`;
       }
+    }
+
+    const REACTION_META = [
+      { key: 'like', emoji: '👍', title: 'Curtir', activeRoot: 'bg-sky-950 border-sky-600 text-sky-400', activeReply: 'text-sky-400 font-bold', hoverClass: 'hover:text-white', countClass: '' },
+      { key: 'dislike', emoji: '👎', title: 'Não curtir', activeRoot: 'bg-red-950 border-red-600 text-red-400', activeReply: 'text-red-400 font-bold', hoverClass: 'hover:text-white', countClass: '' },
+      { key: 'hulk', emoji: '👊', title: 'Soco do Hulk!', activeRoot: 'bg-emerald-950 border-emerald-500 text-emerald-400', activeReply: 'text-emerald-400 font-bold', hoverClass: 'hover:text-emerald-400', countClass: 'text-emerald-400' },
+      { key: 'laugh', emoji: '😂', title: 'Engraçado', activeRoot: 'bg-amber-950 border-amber-500 text-amber-400', activeReply: 'text-amber-400 font-bold', hoverClass: 'hover:text-amber-400', countClass: '' }
+    ];
+
+    function renderReactionButtonsHTML(commentId, movieId, reactions, compact = false) {
+      const r = reactions || { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
+      return REACTION_META.map(m => {
+        const count = r[m.key] || 0;
+        const isActive = r.userReaction === m.key;
+        if (compact) {
+          return `
+            <button onclick="handleReaction('${commentId}', '${m.key}', '${movieId}', true)"
+              class="px-1.5 py-0.2 rounded text-[11px] transition ${isActive ? m.activeReply : `text-zinc-500 ${m.hoverClass}`}"
+              title="${m.title}">
+              ${m.emoji} <span class="text-[9px]">${count || ''}</span>
+            </button>
+          `;
+        }
+        return `
+          <button onclick="handleReaction('${commentId}', '${m.key}', '${movieId}', false)"
+            class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${isActive ? m.activeRoot : `bg-zinc-900 border-zinc-800/70 text-zinc-400 ${m.hoverClass}`}"
+            title="${m.title}">
+            ${m.emoji} <span class="text-[10px] font-bold ${count && m.countClass ? m.countClass : ''}">${count || ''}</span>
+          </button>
+        `;
+      }).join('');
     }
 
     function renderCommentsUI(movieId) {
@@ -1220,7 +1491,7 @@
           <!-- Lista de Comentários -->
           <div class="space-y-3 pt-1">
             ${displayedRoots.length === 0 ? `
-              <p class="text-xs text-zinc-500 text-center py-4 italic">Nenhum comentário ainda. Seja o primeiro a comentar sobre este filme!</p>
+              <p class="text-xs text-zinc-500 text-center py-4 italic">Nenhum comentário ainda. Seja o primeiro a comentar!</p>
             ` : displayedRoots.map(c => renderCommentCard(c, repliesMap[c.id] || [], movieId)).join('')}
           </div>
 
@@ -1240,10 +1511,12 @@
     }
 
     function renderCommentCard(comment, replies, movieId) {
-      const userName = escapeHtml(comment.user_name || comment.user_email.split('@')[0]);
+      const rawName = comment.user_name || (comment.user_email ? comment.user_email.split('@')[0] : 'Usuário');
+      const userName = escapeHtml(rawName);
       const dateStr = formatCommentDate(comment.created_at);
       const contentHtml = parseMarkdownSafe(comment.content);
       const isAuthor = currentUser && currentUser.id === comment.user_id;
+      const fallbackAvatarUrl = comment.avatar_url || (isAuthor ? getGoogleAvatarUrl(currentUser) : '');
       const reactions = reactionsCache[comment.id] || { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
 
       return `
@@ -1251,9 +1524,7 @@
           <!-- Topo do Comentário -->
           <div class="flex items-center justify-between text-xs">
             <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-[10px] text-zinc-300">
-                ${(userName[0] || 'U').toUpperCase()}
-              </div>
+              ${renderAvatarHTML(comment.user_email, rawName, 'w-6 h-6', 'text-[10px]', fallbackAvatarUrl)}
               <strong class="font-semibold text-zinc-200">${userName}</strong>
               <span class="text-[10px] text-zinc-500">• ${dateStr}</span>
             </div>
@@ -1272,32 +1543,8 @@
 
           <!-- Barra de Ações: Reações e Botão Responder -->
           <div class="flex items-center justify-between pl-8 pt-1 text-xs">
-            <div class="flex items-center gap-2">
-              <!-- Like -->
-              <button onclick="handleReaction('${comment.id}', 'like', '${movieId}')" 
-                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'like' ? 'bg-sky-950 border-sky-600 text-sky-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-white'}">
-                👍 <span class="text-[10px] font-bold">${reactions.like || ''}</span>
-              </button>
-
-              <!-- Dislike -->
-              <button onclick="handleReaction('${comment.id}', 'dislike', '${movieId}')" 
-                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'dislike' ? 'bg-red-950 border-red-600 text-red-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-white'}">
-                👎 <span class="text-[10px] font-bold">${reactions.dislike || ''}</span>
-              </button>
-
-              <!-- Soco do Hulk (Verde) -->
-              <button onclick="handleReaction('${comment.id}', 'hulk', '${movieId}')" 
-                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'hulk' ? 'bg-emerald-950 border-emerald-500 text-emerald-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-emerald-400'}"
-                title="Soco do Hulk!">
-                👊 <span class="text-[10px] font-bold ${reactions.hulk ? 'text-emerald-400' : ''}">${reactions.hulk || ''}</span>
-              </button>
-
-              <!-- Risada -->
-              <button onclick="handleReaction('${comment.id}', 'laugh', '${movieId}')" 
-                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-xs transition border ${reactions.userReaction === 'laugh' ? 'bg-amber-950 border-amber-500 text-amber-400' : 'bg-zinc-900 border-zinc-800/70 text-zinc-400 hover:text-amber-400'}"
-                title="Engraçado">
-                😂 <span class="text-[10px] font-bold">${reactions.laugh || ''}</span>
-              </button>
+            <div id="reactions-bar-${comment.id}" class="flex items-center gap-2">
+              ${renderReactionButtonsHTML(comment.id, movieId, reactions, false)}
             </div>
 
             <!-- Botão de Responder (1 camada) -->
@@ -1320,19 +1567,19 @@
     }
 
     function renderReplyCard(reply, parentCommentId, movieId) {
-      const userName = escapeHtml(reply.user_name || reply.user_email.split('@')[0]);
+      const rawName = reply.user_name || (reply.user_email ? reply.user_email.split('@')[0] : 'Usuário');
+      const userName = escapeHtml(rawName);
       const dateStr = formatCommentDate(reply.created_at);
       const contentHtml = parseMarkdownSafe(reply.content);
       const isAuthor = currentUser && currentUser.id === reply.user_id;
+      const fallbackAvatarUrl = reply.avatar_url || (isAuthor ? getGoogleAvatarUrl(currentUser) : '');
       const reactions = reactionsCache[reply.id] || { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
 
       return `
         <div class="p-2.5 bg-zinc-900/60 border border-zinc-800/60 rounded-lg space-y-1.5">
           <div class="flex items-center justify-between text-xs">
             <div class="flex items-center gap-1.5">
-              <div class="w-5 h-5 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center font-bold text-[9px] text-zinc-300">
-                ${(userName[0] || 'U').toUpperCase()}
-              </div>
+              ${renderAvatarHTML(reply.user_email, rawName, 'w-5 h-5', 'text-[9px]', fallbackAvatarUrl)}
               <strong class="font-semibold text-zinc-200 text-xs">${userName}</strong>
               ${reply.reply_to_name ? `
                 <span class="text-[10px] text-red-400 bg-red-950/40 px-1 rounded">@${escapeHtml(reply.reply_to_name)}</span>
@@ -1360,23 +1607,8 @@
           </div>
 
           <!-- Reações da resposta -->
-          <div class="flex items-center gap-1.5 pl-6 pt-0.5">
-            <button onclick="handleReaction('${reply.id}', 'like', '${movieId}')" 
-              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'like' ? 'text-sky-400 font-bold' : 'text-zinc-500 hover:text-white'}">
-              👍 <span class="text-[9px]">${reactions.like || ''}</span>
-            </button>
-            <button onclick="handleReaction('${reply.id}', 'dislike', '${movieId}')" 
-              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'dislike' ? 'text-red-400 font-bold' : 'text-zinc-500 hover:text-white'}">
-              👎 <span class="text-[9px]">${reactions.dislike || ''}</span>
-            </button>
-            <button onclick="handleReaction('${reply.id}', 'hulk', '${movieId}')" 
-              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'hulk' ? 'text-emerald-400 font-bold' : 'text-zinc-500 hover:text-emerald-400'}">
-              👊 <span class="text-[9px]">${reactions.hulk || ''}</span>
-            </button>
-            <button onclick="handleReaction('${reply.id}', 'laugh', '${movieId}')" 
-              class="px-1.5 py-0.2 rounded text-[11px] transition ${reactions.userReaction === 'laugh' ? 'text-amber-400 font-bold' : 'text-zinc-500 hover:text-amber-400'}">
-              😂 <span class="text-[9px]">${reactions.laugh || ''}</span>
-            </button>
+          <div id="reactions-bar-${reply.id}" class="flex items-center gap-1.5 pl-6 pt-0.5">
+            ${renderReactionButtonsHTML(reply.id, movieId, reactions, true)}
           </div>
         </div>
       `;
@@ -1450,6 +1682,7 @@
             user_id: currentUser.id,
             user_name: userName,
             user_email: currentUser.email,
+            avatar_url: getGoogleAvatarUrl(currentUser) || null,
             parent_id: parentId,
             reply_to_name: replyToName,
             content: content
@@ -1489,34 +1722,60 @@
       }
     }
 
-    async function handleReaction(commentId, reactionType, movieId) {
+    function updateReactionBarDOM(commentId, movieId, compact) {
+      const bar = document.getElementById(`reactions-bar-${commentId}`);
+      if (bar) {
+        bar.innerHTML = renderReactionButtonsHTML(commentId, movieId, reactionsCache[commentId], compact);
+      }
+    }
+
+    async function handleReaction(commentId, reactionType, movieId, compact = false) {
       if (!currentUser || !supabaseClient) {
         openAuthModal();
         return;
       }
 
-      const current = (reactionsCache[commentId] && reactionsCache[commentId].userReaction === reactionType);
+      if (!reactionsCache[commentId]) {
+        reactionsCache[commentId] = { like: 0, dislike: 0, hulk: 0, laugh: 0, userReaction: null };
+      }
+
+      const prevState = { ...reactionsCache[commentId] };
+      const removing = prevState.userReaction === reactionType;
+
+      // Atualização otimista imediata sem loading spinner
+      if (prevState.userReaction) {
+        reactionsCache[commentId][prevState.userReaction] = Math.max(0, (reactionsCache[commentId][prevState.userReaction] || 0) - 1);
+      }
+      if (removing) {
+        reactionsCache[commentId].userReaction = null;
+      } else {
+        reactionsCache[commentId][reactionType] = (reactionsCache[commentId][reactionType] || 0) + 1;
+        reactionsCache[commentId].userReaction = reactionType;
+      }
+
+      updateReactionBarDOM(commentId, movieId, compact);
 
       try {
-        if (current) {
-          // Remove a reação se já tiver clicado nela
-          await supabaseClient
+        if (removing) {
+          const { error } = await supabaseClient
             .from('mcu_comment_reactions')
             .delete()
             .match({ comment_id: commentId, user_id: currentUser.id });
+          if (error) throw error;
         } else {
-          // Insere ou atualiza reação
-          await supabaseClient
+          const { error } = await supabaseClient
             .from('mcu_comment_reactions')
             .upsert({
               comment_id: commentId,
               user_id: currentUser.id,
               reaction: reactionType
             });
+          if (error) throw error;
         }
-        await loadComments(movieId);
       } catch (err) {
         console.warn('Erro ao registrar reação:', err);
+        reactionsCache[commentId] = prevState;
+        updateReactionBarDOM(commentId, movieId, compact);
       }
     }
 
@@ -1565,6 +1824,173 @@
       }
     }
 
+    function toggleCollapsible(id, prefix, iconPrefix, stateSet, event) {
+      if (event) event.stopPropagation();
+      const el = document.getElementById(`${prefix}-${id}`);
+      const icon = document.getElementById(`${iconPrefix}-${id}`);
+      if (!el) return;
+      const willOpen = el.classList.contains('hidden');
+      el.classList.toggle('hidden', !willOpen);
+      if (icon) icon.classList.toggle('rotate-180', willOpen);
+      if (stateSet) {
+        if (willOpen) stateSet.add(id);
+        else stateSet.delete(id);
+      }
+    }
+
+    function toggleDetails(id) {
+      toggleCollapsible(id, 'details', 'icon', openDetailsIds);
+    }
+
+    function toggleEpisodesPanel(seriesId, event) {
+      toggleCollapsible(seriesId, 'episodes-panel', 'ep-panel-icon', openEpisodesPanels, event);
+    }
+
+    function openSeriesEpisodesDirect(seriesId, event) {
+      if (event) event.stopPropagation();
+      openDetailsIds.add(seriesId);
+      openEpisodesPanels.add(seriesId);
+      const details = document.getElementById(`details-${seriesId}`);
+      const icon = document.getElementById(`icon-${seriesId}`);
+      const panel = document.getElementById(`episodes-panel-${seriesId}`);
+      const panelIcon = document.getElementById(`ep-panel-icon-${seriesId}`);
+      if (details) details.classList.remove('hidden');
+      if (icon) icon.classList.add('rotate-180');
+      if (panel) panel.classList.remove('hidden');
+      if (panelIcon) panelIcon.classList.add('rotate-180');
+    }
+
+    function toggleEpisodeDetails(epId, event) {
+      toggleCollapsible(epId, 'ep-details', 'ep-icon', openEpisodeDetailsIds, event);
+    }
+
+    function renderSeriesEpisodesHTML(item, fallbackPoster) {
+      const episodes = item.episodes || [];
+      if (episodes.length === 0) return '';
+
+      const watchedEpCount = episodes.filter(ep => isEpisodeWatched(item, ep.id)).length;
+      const isPanelOpen = openEpisodesPanels.has(item.id);
+      const seasons = [...new Set(episodes.map(e => e.season))];
+      const multiSeason = seasons.length > 1;
+      const pct = Math.round((watchedEpCount / episodes.length) * 100);
+
+      let lastSeason = null;
+      const rowsHtml = episodes.map(ep => {
+        const epWatched = isEpisodeWatched(item, ep.id);
+        const epOpen = openEpisodeDetailsIds.has(ep.id);
+        const epTitlePt = ep.title_pt || ep.title_en || `Episódio ${ep.episode}`;
+        const epTitleEn = ep.title_en || '';
+        const hasDiffEpEn = epTitleEn && epTitleEn.toLowerCase() !== epTitlePt.toLowerCase();
+        const epThumb = ep.thumbnail || item.cover_url || fallbackPoster;
+        const safeCoverFallback = (item.cover_url || fallbackPoster).replace(/'/g, "\\'");
+        const safeEpTitle = epTitlePt.replace(/'/g, "\\'");
+        const epCode = `T${ep.season}E${String(ep.episode).padStart(2, '0')}`;
+        const cachedCommentsCount = (commentsCache[ep.id] || []).length;
+
+        const seasonHeader = (multiSeason && ep.season !== lastSeason)
+          ? `<div class="pt-2 pb-1 text-[11px] font-bold uppercase tracking-wider text-yellow-400/90 border-b border-zinc-800/70">Temporada ${ep.season}</div>`
+          : '';
+        lastSeason = ep.season;
+
+        return `
+          ${seasonHeader}
+          <div class="rounded-lg border ${epWatched ? 'border-zinc-800/60 bg-zinc-950/60 opacity-65' : 'border-zinc-800 bg-zinc-900/60 hover:border-zinc-700'} transition p-2">
+            <div class="flex items-center justify-between gap-2 cursor-pointer" onclick="toggleEpisodeDetails('${ep.id}', event)">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <input type="checkbox" ${epWatched ? 'checked' : ''} onclick="toggleEpisodeWatched('${item.id}', '${ep.id}', event)"
+                  class="w-4 h-4 rounded text-marvel-red bg-zinc-950 border-zinc-700 focus:ring-0 focus:ring-offset-0 cursor-pointer accent-red-600 shrink-0">
+
+                <span class="text-[10px] font-mono font-bold text-amber-400/90 bg-zinc-950 border border-zinc-800 px-1.5 py-0.5 rounded shrink-0">${epCode}</span>
+
+                <div class="w-16 h-9 sm:w-20 sm:h-11 shrink-0 rounded overflow-hidden border border-zinc-800 bg-black cursor-zoom-in shadow-sm hover:scale-105 transition duration-200"
+                  title="Clique para ampliar" onclick="openImageModal(this.querySelector('img').src, '${safeEpTitle}', event)">
+                  <img src="${epThumb}" alt="${escapeHtml(epTitlePt)}" class="w-full h-full object-cover" loading="lazy"
+                    onerror="if (this.src !== '${safeCoverFallback}') this.src = '${safeCoverFallback}';">
+                </div>
+
+                <div class="min-w-0">
+                  <div class="text-xs font-medium flex flex-wrap items-baseline gap-1.5">
+                    <span class="${epWatched ? 'line-through text-zinc-500' : 'text-zinc-200'} truncate">${escapeHtml(epTitlePt)}</span>
+                    ${hasDiffEpEn ? `<span class="text-[10px] text-zinc-500 italic hidden sm:inline truncate">(${escapeHtml(epTitleEn)})</span>` : ''}
+                  </div>
+                  ${ep.released ? `<div class="text-[10px] text-zinc-500">${ep.released}</div>` : ''}
+                </div>
+              </div>
+
+              <i id="ep-icon-${ep.id}" class="fa-solid fa-chevron-down text-zinc-500 text-[11px] shrink-0 transition-transform duration-300 ${epOpen ? 'rotate-180' : ''}"></i>
+            </div>
+
+            <!-- Episode Expanded Content (Synopsis + Comments only, NO trailers/IMDb) -->
+            <div id="ep-details-${ep.id}" class="${epOpen ? '' : 'hidden'} mt-2.5 pt-2.5 border-t border-zinc-800/70 text-xs text-zinc-300" onclick="event.stopPropagation()">
+              <div class="flex flex-col sm:flex-row gap-3 items-start">
+                <div class="w-full sm:w-44 aspect-video shrink-0 rounded-lg overflow-hidden border border-zinc-800 bg-black shadow cursor-zoom-in group/epthumb relative"
+                  title="Clique para ver em tela cheia" onclick="openImageModal(this.querySelector('img').src, '${safeEpTitle}', event)">
+                  <img src="${epThumb}" alt="${escapeHtml(epTitlePt)}" class="w-full h-full object-cover hover:scale-105 transition duration-300" loading="lazy"
+                    onerror="if (this.src !== '${safeCoverFallback}') this.src = '${safeCoverFallback}';">
+                  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover/epthumb:opacity-100 flex items-center justify-center transition text-white text-xs">
+                    <i class="fa-solid fa-maximize"></i>
+                  </div>
+                </div>
+
+                <div class="flex-1 w-full">
+                  <div class="flex flex-wrap items-center gap-1.5 mb-2 pb-1.5 border-b border-zinc-800/60 text-[11px]">
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-950 border border-zinc-800 rounded text-zinc-300">
+                      <span>🇧🇷</span> <strong>PT:</strong> ${escapeHtml(epTitlePt)}
+                    </span>
+                    ${epTitleEn ? `
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-950 border border-zinc-800 rounded text-zinc-300">
+                        <span>🇺🇸</span> <strong>EN:</strong> ${escapeHtml(epTitleEn)}
+                      </span>
+                    ` : ''}
+                  </div>
+
+                  <p class="leading-relaxed text-zinc-300 mb-3">${escapeHtml(ep.synopsis || 'Sinopse indisponível.')}</p>
+
+                  <div class="flex items-center gap-2">
+                    <button onclick="toggleCommentsSection('${ep.id}', event)"
+                      id="btn-comment-trigger-${ep.id}"
+                      class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-950 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs transition"
+                      title="Comentários do episódio">
+                      <i class="fa-regular fa-comment text-sm"></i>
+                      <span>Comentários</span>
+                      <span id="comment-btn-count-${ep.id}" class="text-[10px] bg-zinc-800 px-1.5 py-0.2 rounded font-bold text-zinc-300 ${cachedCommentsCount > 0 ? '' : 'hidden'}">${cachedCommentsCount}</span>
+                    </button>
+                  </div>
+
+                  <div id="comments-section-${ep.id}" class="hidden mt-3 pt-3 border-t border-zinc-800/80"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="mt-4 pt-3 border-t border-zinc-800/80" onclick="event.stopPropagation()">
+          <button onclick="toggleEpisodesPanel('${item.id}', event)"
+            class="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800/80 border border-zinc-800 text-xs transition">
+            <div class="flex items-center gap-2 font-semibold text-zinc-200">
+              <i class="fa-solid fa-clapperboard text-yellow-500"></i>
+              <span>Episódios</span>
+              <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800 ${watchedEpCount === episodes.length ? 'text-emerald-400 border-emerald-700/50' : 'text-zinc-400'}">
+                ${watchedEpCount}/${episodes.length} assistidos
+              </span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <div class="hidden sm:block w-20 h-1.5 bg-zinc-950 rounded-full overflow-hidden border border-zinc-800">
+                <div class="h-full bg-marvel-red transition-all duration-300" style="width: ${pct}%"></div>
+              </div>
+              <i id="ep-panel-icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-400 text-[11px] transition-transform duration-300 ${isPanelOpen ? 'rotate-180' : ''}"></i>
+            </div>
+          </button>
+
+          <div id="episodes-panel-${item.id}" class="${isPanelOpen ? '' : 'hidden'} mt-2.5 space-y-2">
+            ${rowsHtml}
+          </div>
+        </div>
+      `;
+    }
+
     function renderList() {
       // 1. Sort items
       let sorted = [...mcuData];
@@ -1605,16 +2031,20 @@
       // 3. Render HTML
       container.innerHTML = filtered.map((item, index) => {
         const isWatched = watchedIds.has(item.id);
+        const isOpen = openDetailsIds.has(item.id);
         const orderNumber = index + 1;
         const fallbackPoster = 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=400&q=80';
         const posterUrl = item.cover_url || fallbackPoster;
         const titlePt = item.title_pt || item.title;
         const titleEn = item.title_en || item.original_title;
         const hasDiffEn = titleEn && titleEn.toLowerCase() !== titlePt.toLowerCase();
+        const cachedCount = (commentsCache[item.id] || []).length;
 
         if (item.type === 'series') {
+          const eps = item.episodes || [];
+          const watchedEps = eps.filter(ep => isEpisodeWatched(item, ep.id)).length;
           return `
-            <div class="group relative flex flex-col p-2.5 sm:px-4 rounded-xl border border-zinc-800/50 bg-zinc-950/60 hover:bg-zinc-900/60 transition ${isWatched ? 'opacity-40' : 'opacity-80 hover:opacity-100'}">
+            <div class="group relative flex flex-col p-2.5 sm:px-4 rounded-xl border transition ${isWatched ? 'border-zinc-800/50 bg-zinc-950/70 opacity-55' : 'border-zinc-800/80 bg-zinc-900/75 hover:bg-zinc-900 hover:border-yellow-500/30'}">
               <div class="flex items-center justify-between cursor-pointer" onclick="toggleDetails('${item.id}')">
                 <div class="flex items-center gap-2.5 sm:gap-3">
                   <input type="checkbox" ${isWatched ? 'checked' : ''} onclick="toggleWatched('${item.id}', event)"
@@ -1630,25 +2060,32 @@
                   ` : ''}
 
                   <div>
-                    <small class="text-xs text-zinc-400 group-hover:text-zinc-200 transition font-normal flex flex-wrap items-center gap-1.5 sm:gap-2">
-                      <span class="text-[10px] bg-zinc-800 text-yellow-500 px-1.5 py-0.2 rounded uppercase font-semibold">Série</span>
-                      <span class="${isWatched ? 'line-through text-zinc-500' : 'font-medium text-zinc-200'}">${titlePt}</span>
+                    <small class="text-xs text-zinc-300 group-hover:text-white transition font-normal flex flex-wrap items-center gap-1.5 sm:gap-2">
+                      <span class="text-[10px] bg-zinc-800 text-yellow-400 px-1.5 py-0.2 rounded uppercase font-semibold">Série</span>
+                      <span class="${isWatched ? 'line-through text-zinc-500' : 'font-semibold text-zinc-100'}">${titlePt}</span>
                       ${hasDiffEn ? `<span class="text-[11px] text-zinc-400 italic">(${titleEn})</span>` : ''}
-                      <span class="text-[10px] text-zinc-500">(${item.year})</span>
+                      <span class="text-[10px] text-zinc-400">(${item.year})</span>
                     </small>
-                    <div class="text-[10px] text-zinc-500 mt-0.5">
-                      ${currentOrder === 'chrono' ? item.chronoDetail : `Lançamento: ${item.year}`} • Fase ${item.phase} (Opcional)
+                    <div class="text-[10px] text-zinc-400 mt-0.5 flex flex-wrap items-center gap-1.5">
+                      <span>${currentOrder === 'chrono' ? item.chronoDetail : `Lançamento: ${item.year}`} • Fase ${item.phase} (Opcional)</span>
+                      ${eps.length > 0 ? `
+                        <button type="button" onclick="openSeriesEpisodesDirect('${item.id}', event)"
+                          class="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded bg-zinc-950/90 hover:bg-zinc-800 border border-zinc-700/80 ${watchedEps === eps.length ? 'text-emerald-400 border-emerald-700/50' : 'text-amber-300 hover:text-white'} transition"
+                          title="Abrir lista de episódios">
+                          <i class="fa-solid fa-clapperboard text-[9px]"></i> ${watchedEps}/${eps.length} eps
+                        </button>
+                      ` : ''}
                     </div>
                   </div>
                 </div>
                 <div class="flex items-center gap-3">
                   <span class="text-[10px] text-zinc-600 italic hidden sm:inline">Ignorável</span>
-                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-600 text-xs transition-transform duration-300"></i>
+                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-600 text-xs transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}"></i>
                 </div>
               </div>
               
               <!-- Accordion Content -->
-              <div id="details-${item.id}" class="hidden mt-3 pt-3 border-t border-zinc-800/60 text-xs text-zinc-300">
+              <div id="details-${item.id}" class="${isOpen ? '' : 'hidden'} mt-3 pt-3 border-t border-zinc-800/60 text-xs text-zinc-300">
                 <div class="flex flex-col sm:flex-row gap-4 items-start">
                   ${item.cover_url ? `
                     <div class="w-20 sm:w-24 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-md cursor-zoom-in group/poster relative"
@@ -1659,7 +2096,7 @@
                       </div>
                     </div>
                   ` : ''}
-                  <div class="flex-1">
+                  <div class="flex-1 w-full">
                     <div class="flex flex-wrap items-center gap-2 mb-2 pb-2 border-b border-zinc-800/60 text-xs">
                       <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-zinc-900 border border-zinc-800 rounded text-zinc-300">
                         <span>🇧🇷</span> <strong>PT:</strong> ${titlePt}
@@ -1695,12 +2132,15 @@
                         class="inline-flex items-center gap-1.5 px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg text-xs transition"
                         title="Comentários e discussões">
                         <i class="fa-regular fa-comment text-sm"></i>
-                        <span id="comment-btn-count-${item.id}" class="text-[11px] font-medium hidden">0</span>
+                        <span id="comment-btn-count-${item.id}" class="text-[11px] font-medium ${cachedCount > 0 ? '' : 'hidden'}">${cachedCount}</span>
                       </button>
                     </div>
 
                     <!-- Discrete Comments Drawer Container -->
                     <div id="comments-section-${item.id}" class="hidden mt-4 pt-3 border-t border-zinc-800/80"></div>
+
+                    <!-- Series Episode Expander -->
+                    ${renderSeriesEpisodesHTML(item, fallbackPoster)}
                   </div>
                 </div>
               </div>
@@ -1754,12 +2194,12 @@
                   <span class="hidden sm:inline-flex px-2.5 py-1 text-[11px] font-semibold rounded-md uppercase tracking-wider bg-red-950/40 text-red-300 border border-red-900/50">
                     MCU Canon
                   </span>
-                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300"></i>
+                  <i id="icon-${item.id}" class="fa-solid fa-chevron-down text-zinc-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}"></i>
                 </div>
               </div>
               
               <!-- Accordion Content with Poster & Trailer -->
-              <div id="details-${item.id}" class="hidden mt-3 pt-3 border-t border-zinc-800 text-sm text-zinc-300">
+              <div id="details-${item.id}" class="${isOpen ? '' : 'hidden'} mt-3 pt-3 border-t border-zinc-800 text-sm text-zinc-300">
                 <div class="flex flex-col sm:flex-row gap-4 items-start">
                   ${item.cover_url ? `
                     <div class="w-24 sm:w-28 shrink-0 rounded-lg overflow-hidden border border-zinc-800 shadow-xl bg-black cursor-zoom-in group/poster relative"
@@ -1816,7 +2256,7 @@
                         title="Comentários e discussões">
                         <i class="fa-regular fa-comment text-sm"></i>
                         <span class="text-xs">Comentários</span>
-                        <span id="comment-btn-count-${item.id}" class="text-[10px] bg-zinc-800 px-1.5 py-0.2 rounded font-bold text-zinc-300 hidden">0</span>
+                        <span id="comment-btn-count-${item.id}" class="text-[10px] bg-zinc-800 px-1.5 py-0.2 rounded font-bold text-zinc-300 ${cachedCount > 0 ? '' : 'hidden'}">${cachedCount}</span>
                       </button>
                     </div>
 
@@ -1829,6 +2269,16 @@
           `;
         }
       }).join('');
+
+      // Restaura gavetas de comentários abertas após re-renderização
+      openCommentsIds.forEach(cid => {
+        const sec = document.getElementById(`comments-section-${cid}`);
+        if (sec) {
+          sec.classList.remove('hidden');
+          if (commentsCache[cid]) renderCommentsUI(cid);
+          else loadComments(cid);
+        }
+      });
     }
 
     // Phase Filter Chips Listeners
@@ -1863,7 +2313,7 @@
     // Load data from mcu_data.json
     async function loadMCUData() {
       try {
-        const response = await fetch('mcu_data.json');
+        const response = await fetch('mcu_data.json?v=20261111', { cache: 'no-store' });
         if (!response.ok) throw new Error('Network error');
         mcuData = await response.json();
       } catch (err) {
@@ -1872,6 +2322,9 @@
         if (window.__MCU_FALLBACK_DATA__) {
           mcuData = window.__MCU_FALLBACK_DATA__;
         }
+      }
+      if (reconcileSeriesCompletionFromEpisodes()) {
+        saveState();
       }
       updateProgress();
       renderList();

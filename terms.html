@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termos de Serviço - Guia de Maratona MCU</title>
+  <meta name="theme-color" content="#E23636">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marvel: {
+              red: '#E23636',
+              darkred: '#8B0000',
+              deep: '#150505',
+              gold: '#F4B41A',
+              card: '#18181b',
+              accent: '#301b1e'
+            }
+          },
+          fontFamily: {
+            marvel: ['Impact', 'Trebuchet MS', 'sans-serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .marvel-badge {
+      font-family: 'Impact', 'Trebuchet MS', -apple-system, sans-serif;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      transform: scaleY(0.95);
+      display: inline-block;
+    }
+  </style>
+</head>
+<body class="bg-[#0b0b0e] text-zinc-200 min-h-screen font-sans selection:bg-marvel-red selection:text-white flex flex-col">
+
+  <!-- Top Navigation Bar -->
+  <nav class="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-40">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2.5 group">
+        <span class="bg-marvel-red text-white text-base tracking-[1px] px-2 py-0.5 rounded shadow uppercase marvel-badge">
+          MARVEL
+        </span>
+        <span class="text-zinc-400 group-hover:text-white font-bold tracking-widest text-[11px] uppercase transition">Guia de Maratona MCU</span>
+      </a>
+      <a href="index.html" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white transition">
+        <i class="fa-solid fa-arrow-left text-[11px]"></i> Voltar ao Guia
+      </a>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-4 py-10 flex-1 space-y-8">
+    <header class="space-y-2 border-b border-zinc-800 pb-6">
+      <h1 class="text-2xl sm:text-3xl font-black text-white tracking-tight">Termos de Serviço</h1>
+      <p class="text-xs text-zinc-400">Última atualização: Novembro de 2026 • Guia de Maratona MCU</p>
+    </header>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-film text-marvel-red text-sm"></i> 1. Natureza do Projeto
+      </h2>
+      <p>
+        O <strong>Guia de Maratona MCU</strong> é uma ferramenta gratuita e de código aberto criada por fã com fins puramente informativos e de organização pessoal. Este projeto não possui qualquer vínculo, afiliação ou patrocínio da Marvel Studios ou da The Walt Disney Company.
+      </p>
+    </section>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-comments text-sky-400 text-sm"></i> 2. Conduta na Comunidade e Comentários
+      </h2>
+      <p>Ao utilizar a área de comentários, você concorda em:</p>
+      <ul class="list-disc pl-5 space-y-1.5 text-zinc-300">
+        <li>Manter o respeito com outros usuários, evitando ofensas, assédio, spam ou conteúdo ilícito.</li>
+        <li>Respeitar os limites técnicos da plataforma (até 2.000 caracteres por comentário e limite de 200 comentários por conta).</li>
+        <li>Compreender que os comentários publicados são públicos e visíveis para outros visitantes do guia.</li>
+      </ul>
+    </section>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm"></i> 3. Disponibilidade e Garantia
+      </h2>
+      <p>
+        O serviço é fornecido "como está", sem garantias de disponibilidade contínua. Recomendamos utilizar periodicamente a função de <strong>Exportar JSON</strong> caso deseje manter uma cópia pessoal de segurança do seu progresso.
+      </p>
+    </section>
+
+    <section class="space-y-3 text-sm leading-relaxed text-zinc-300">
+      <h2 class="text-lg font-bold text-white flex items-center gap-2">
+        <i class="fa-solid fa-envelope text-emerald-400 text-sm"></i> 4. Contato
+      </h2>
+      <p>
+        Dúvidas, sugestões ou solicitações de remoção de conteúdo podem ser enviadas pelo repositório no <a href="https://github.com/flou-ainan/mcu-guide" target="_blank" class="text-red-400 hover:underline">GitHub</a> ou para <a href="mailto:flouainan@gmail.com" class="text-red-400 hover:underline">flouainan@gmail.com</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer class="border-t border-zinc-800 py-6 text-center text-xs text-zinc-500">
+    <div class="max-w-4xl mx-auto px-4 flex flex-wrap items-center justify-center gap-4">
+      <a href="index.html" class="hover:text-white transition">Voltar ao Guia</a>
+      <span>•</span>
+      <a href="privacy.html" class="hover:text-white transition">Política de Privacidade</a>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+# Chat context & local AI memory transcripts (private, never committed)
+docs/dev-docs/chat-context.md
+chat-context.md
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Logs & temp
+*.log
+.DS_Store
+.idea/
+.vscode/

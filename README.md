@@ -1,4 +1,4 @@
-## -----------------------------------------------------------------------------------------
+## ----
 
 <div align="center">
 
@@ -14,7 +14,9 @@
 
 <br>
 
-[![Acesse o Guia](docs/assets/readme-preview.png)](https://flou-ainan.github.io/mcu-guide/)
+[![Guia de Maratona MCU](docs/assets/readme-preview.png)](https://flou-ainan.github.io/mcu-guide/)
+
+**[🌐 Acesse o Guia →](https://flou-ainan.github.io/mcu-guide/)**
 
 </div>
 

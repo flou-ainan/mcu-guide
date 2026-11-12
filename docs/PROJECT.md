@@ -69,9 +69,10 @@ Interactive chronological and release guide for Marvel Cinematic Universe movies
 | `privacy.html` | 125 | Privacy Policy page for Google OAuth compliance and user transparency |
 | `terms.html` | 113 | Terms of Service page |
 | `scraper.py` | 1092 | Python scraper for IMDb covers, YouTube trailers, Cinemeta series episodes + thumbnails, preserving researched `post_credits` data |
-| `data.js` | 3472 | Generated JavaScript fallback bundle containing `window.__MCU_FALLBACK_DATA__` (including movie `post_credits`) |
-| `mcu_data.json` | 3471 | Source JSON representation of 52 MCU titles (all 37 movies with `post_credits`) + 152 scraped series episodes |
-| `README.md` | 51 | Repository presentation and deployment details |
+| `data.js` | 3477 | Generated JavaScript fallback bundle containing `window.__MCU_FALLBACK_DATA__` (including movie `post_credits`) |
+| `mcu_data.json` | 3476 | Source JSON representation of 52 MCU titles (all 37 movies with `post_credits`) + 152 scraped series episodes |
+| `README.md` | 166 | Showcase repository presentation with clickable clean live preview and external link |
+| `docs/assets/readme-preview.png` | - | Clean 1280x720 desktop screenshot of live site for `README.md` |
 | `robots.txt` | 5 | Crawler directive allowing TelegramBot and social media link previews |
 | `hero-banner.webp` | - | High-res (2048x718) MCU collage banner |
 | `og-image-1200x630.jpg` | - | Standard OpenGraph social preview image |

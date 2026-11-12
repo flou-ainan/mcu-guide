@@ -24,7 +24,7 @@
 **File:** `README.md`
 
 - Complete rewrite inspired by top-tier GitHub project READMEs
-- Added live-site screenshot `docs/assets/readme-preview.png` as a clickable link to `https://flou-ainan.github.io/mcu-guide/` with "ACESSE O GUIA →" CTA overlay
+- Added clean live-site screenshot `docs/assets/readme-preview.png` as a clickable link to `https://flou-ainan.github.io/mcu-guide/`, followed by an external clickable text link (`🌐 Acesse o Guia →`) below the image
 - Added shields.io badges (MCU, GitHub Pages live, 52 Titles, Offline First/Supabase)
 - Full feature table covering all Step 01–07 features
 - Content breakdown (52 titles, 37 movies, 15 series, post-credits timestamps)
@@ -39,10 +39,8 @@
 **File:** `docs/assets/readme-preview.png`
 
 - Captured live site at `https://flou-ainan.github.io/mcu-guide/` via headless Chrome → `/tmp/raw_site.png` (1280×1040px)
-- Cropped and resized to 1280×720px with Pillow
-- Applied dark vignette gradient at the bottom 200px
-- Composited red MCU-style pill CTA with text "🛡️ ACESSE O GUIA →" (LiberationSans-Bold, 52pt, white on #be1923)
-- Saved to `docs/assets/readme-preview.png` (641KB)
+- Cropped and resized to a clean 1280×720px screenshot with Pillow (no badge or text overlay inside the image)
+- Saved to `docs/assets/readme-preview.png` (~618KB)
 
 ---
 
@@ -53,7 +51,7 @@
 | `mcu_data.json` | Hulk `post_credits`: count 0→1, added scene + corrected note |
 | `data.js` | Same as above (offline fallback bundle) |
 | `README.md` | Complete overhaul with live preview image |
-| `docs/assets/readme-preview.png` | New: 1280×720 screenshot with CTA overlay |
+| `docs/assets/readme-preview.png` | New: clean 1280×720 screenshot (no overlay) |
 | `docs/dev-docs/devlog/step_08_readme_showcase_and_hulk_fix.md` | This file |
 
 ---

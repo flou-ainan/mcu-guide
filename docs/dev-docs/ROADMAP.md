@@ -2,7 +2,7 @@
 
 **The one list of what is left.** Keep this list updated as tasks are planned and executed.
 
-**Last updated:** 2026-11-11 (step 07 published to GitHub Pages: unclipped card badges, collapsible Markdown toolbar + `Markdown Permitido` badge, `#insert-image-modal` with preview & ImgBB info).
+**Last updated:** 2026-11-11 (step 09 published: updated live site `og-image-1200x630.jpg` + `?v=2` OG meta tags and added GitHub Social Preview `docs/assets/github-social-preview.jpg`).
 
 ## Now: external configuration
 
@@ -56,6 +56,12 @@
   - Removed `content-visibility: auto` paint containment on `.mcu-timeline-card` so floating `Canônico MCU` / `Ignorável` badges render completely unclipped.
   - Added `Markdown Permitido` badge beside `Escrever / Preview` tabs and hid the formatting toolbar behind a discrete `Formatar` toggle button (`toggleMarkdownToolbar`).
   - Replaced `Img` snippet insertion with `#insert-image-modal` featuring an `(i)` ImgBB hosting recommendation, description input, URL input with live preview, and direct Markdown insertion; published to `origin/main` (GitHub Pages).
+- **Step 08 (2026-11-11, Plan 08):**
+  - Corrected *O Incrível Hulk* `post_credits` (`count: 0 -> 1`, Tony Stark / Avengers Initiative stinger at `~01:47:00`) in `mcu_data.json` and `data.js`.
+  - Overhauled `README.md` with badges, full feature tables, Quick Start, clean `docs/assets/readme-preview.png` (`1280x720`), and external `🌐 Acesse o Guia →` link.
+- **Step 09 (2026-11-11, Plan 09):**
+  - Replaced `og-image-1200x630.jpg` with Variation 2 (MCU Trinity + live app UI mockup with PT-BR comment box, `Canônico MCU`, `2 Cenas Pós-Créditos • Timestamps`, and `68%` progress bar) and bumped `index.html` OG/Twitter/Schema meta tags to `?v=2` with updated feature descriptions.
+  - Created distinct developer-focused `docs/assets/github-social-preview.jpg` (`1280x640`, ~192 KB) for manual upload in GitHub Settings → Social preview.
 
 ## Plans at a glance
 
@@ -68,3 +74,5 @@
 | [plan_05_markdown_links_edit_pagespeed_postcredits.md](planning/plan_05_markdown_links_edit_pagespeed_postcredits.md) | done |
 | [plan_06_watched_filter_and_profile_customization.md](planning/plan_06_watched_filter_and_profile_customization.md) | done |
 | [plan_07_badge_clip_toolbar_image_modal.md](planning/plan_07_badge_clip_toolbar_image_modal.md) | done |
+| [plan_08_readme_showcase_and_preview.md](planning/plan_08_readme_showcase_and_preview.md) | done |
+| [plan_09_link_previews.md](planning/plan_09_link_previews.md) | done |

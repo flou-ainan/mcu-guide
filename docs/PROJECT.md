@@ -75,7 +75,8 @@ Interactive chronological and release guide for Marvel Cinematic Universe movies
 | `docs/assets/readme-preview.png` | - | Clean 1280x720 desktop screenshot of live site for `README.md` |
 | `robots.txt` | 5 | Crawler directive allowing TelegramBot and social media link previews |
 | `hero-banner.webp` | - | High-res (2048x718) MCU collage banner |
-| `og-image-1200x630.jpg` | - | Standard OpenGraph social preview image |
+| `og-image-1200x630.jpg` | - | OpenGraph/Telegram/WhatsApp social preview (`1200x630`) showcasing MCU triad + app UI mockup (canon badge, post-credits timestamps, progress bar, comments) |
+| `docs/assets/github-social-preview.jpg` | - | Open-source GitHub Repository Social Preview (`1280x640`, ~192 KB) for manual upload in GitHub Repository Settings |
 | `AGENTS.md` | 40 | Agent workflows, rules, and documentation standards |
 | `.gitignore` | 15 | Local excludes: ignores `docs/dev-docs/chat-context.md`, temp files, pycache |
 | `.ai-memory.toml` | 2 | Project binding for ai-memory MCP |
